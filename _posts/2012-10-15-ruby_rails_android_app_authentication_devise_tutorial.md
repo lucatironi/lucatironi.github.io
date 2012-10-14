@@ -81,7 +81,7 @@ attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 ```
 
 #### Bonus: email confirmation from web, skip it from the Android app
-The users of our Android app don't want to wait to use it, so we skip the confirmation email check provided by Devise with the <code>confirmable</code> module. 
+The users of our Android app don't want to wait to use it, so we skip the confirmation email check provided by Devise with the <code>confirmable</code> module.
 If you still want to use the module for the users that register from the webapp, just add this lines to the code.
 
 Uncomment the following lines in the migration that are relative to the <code>confirmable</code> module:
@@ -359,7 +359,7 @@ http://mobile.tutsplus.com/articles/news/learn-android-sdk-development-from-scra
 
 Once you have Eclipse up and running with everything you need, we can start coding our app.
 
-### App creation and setup 
+### App creation and setup
 Open up Eclipse and navigate the menus to create a new Android application:
 
 <code>File > New > Other ... > Android Application Project</code>
@@ -475,13 +475,13 @@ private class GetTasksTask extends UrlJsonAsyncTask {
 
                 ListView tasksListView = (ListView) findViewById (R.id.tasks_list_view);
                 if (tasksListView != null) {
-                    tasksListView.setAdapter(new ArrayAdapter<String>(HomeActivity.this, 
+                    tasksListView.setAdapter(new ArrayAdapter<String>(HomeActivity.this,
                       android.R.layout.simple_list_item_1, tasksTitles));
                 }
             } catch (Exception e) {
-            Toast.makeText(context, e.getMessage(), 
+            Toast.makeText(context, e.getMessage(),
                 Toast.LENGTH_LONG).show();
-        } finally { 
+        } finally {
             super.onPostExecute(json);
         }
     }
@@ -551,7 +551,7 @@ We'll do it by adding another override method <code>onResume()</code>:
 ```java
 // file: HomeActivity.java
 private SharedPreferences mPreferences;
-  
+
 @Override
 public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -573,7 +573,7 @@ public void onResume() {
 }
 ```
 
-As you can see, we moved the <code>loadTasksFromAPI()</code> call from the <code>onCreate()</code> method to the newly added one. 
+As you can see, we moved the <code>loadTasksFromAPI()</code> call from the <code>onCreate()</code> method to the newly added one.
 The <code>mPreferences</code> variable has been added and we will use the <code>SharedPreferences</code> class to store our login informations later on. More information about this interface can be found here: http://developer.android.com/guide/topics/data/data-storage.html#pref
 
 What we are going to do now with this code, is to check whether or not there's an auth_token set for our user. If it's present, just load the tasks; if not launch the <code>WelcomeActivity</code>.
@@ -594,7 +594,7 @@ public void onCreate(Bundle savedInstanceState) {
             @Override
             public void onClick(View v) {
                 // No account, load new account view
-                Intent intent = new Intent(WelcomeActivity.this, 
+                Intent intent = new Intent(WelcomeActivity.this,
                     RegisterActivity.class);
                 startActivityForResult(intent, 0);
             }
@@ -605,7 +605,7 @@ public void onCreate(Bundle savedInstanceState) {
             @Override
             public void onClick(View v) {
                 // Existing Account, load login view
-                Intent intent = new Intent(WelcomeActivity.this, 
+                Intent intent = new Intent(WelcomeActivity.this,
                     LoginActivity.class);
                 startActivityForResult(intent, 0);
             }
@@ -819,7 +819,7 @@ private class LoginTask extends UrlJsonAsyncTask {
                 // something goes wrong
                 json.put("success", false);
                 json.put("info", "Something went wrong. Retry!");
-                // add the user email and password to 
+                // add the user email and password to
                 // the params
                 userObj.put("email", mUserEmail);
                 userObj.put("password", mUserPassword);
@@ -834,7 +834,7 @@ private class LoginTask extends UrlJsonAsyncTask {
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 response = client.execute(post, responseHandler);
                 json = new JSONObject(response);
-            
+
             } catch (HttpResponseException e) {
                 e.printStackTrace();
                 Log.e("ClientProtocol", "" + e);
@@ -847,7 +847,7 @@ private class LoginTask extends UrlJsonAsyncTask {
             e.printStackTrace();
             Log.e("JSON", "" + e);
         }
-    
+
         return json;
     }
 
@@ -869,10 +869,10 @@ private class LoginTask extends UrlJsonAsyncTask {
             }
             Toast.makeText(context, json.getString("info"), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            // something went wrong: show a Toast 
+            // something went wrong: show a Toast
             // with the exception message
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-        } finally { 
+        } finally {
             super.onPostExecute(json);
         }
     }
@@ -895,7 +895,7 @@ Before switching to the <code>RegisterActivity</code> class, don't forget to add
 </activity>
 ```
 
-The <code>android:noHistory</code> attribute is added for the same reasons we did it with the WelcomeActivity. 
+The <code>android:noHistory</code> attribute is added for the same reasons we did it with the WelcomeActivity.
 
 ## RegisterActivity
 Our app is almost completed (for the sake of this tutorial!) and what's left is adding the possibility for our potential users to register themselves directly on the app itself.
@@ -977,7 +977,7 @@ The layout file is again a ScrollView, containing our EditText fields for the us
 </ScrollView>
 ```
 
-The implementation of the <code>RegisterActivity</code> class is really similar to what we did for the login. 
+The implementation of the <code>RegisterActivity</code> class is really similar to what we did for the login.
 
 The <code>registerNewAccount()</code> method is called whenever the user click on the register button. We then collect the data from the EditText fields and check if they are empty or not and also if the password and its confirmation are the same.
 
@@ -1010,7 +1010,7 @@ public void registerNewAccount(View button) {
     mUserPassword = userPasswordField.getText().toString();
     EditText userPasswordConfirmationField = (EditText) findViewById(R.id.userPasswordConfirmation);
     mUserPasswordConfirmation = userPasswordConfirmationField.getText().toString();
-    
+
     if (mUserEmail.length() == 0 || mUserName.length() == 0 || mUserPassword.length() == 0 || mUserPasswordConfirmation.length() == 0) {
         // input fields are empty
         Toast.makeText(this, "Please complete all the fields",
@@ -1104,13 +1104,13 @@ private class RegisterTask extends UrlJsonAsyncTask {
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
                 finish();
-            } 
+            }
             Toast.makeText(context, json.getString("info"), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            // something went wrong: show a Toast 
+            // something went wrong: show a Toast
             // with the exception message
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-        } finally { 
+        } finally {
             super.onPostExecute(json);
         }
     }
@@ -1136,9 +1136,9 @@ In order to use all the efforts we made until now, we need to edit just a line o
 ```java
 // file: HomeActivity.java
 private void loadTasksFromAPI(String url) {
-		GetTasksTask getTasksTask = new GetTasksTask(HomeActivity.this);
-		getTasksTask.setMessageLoading("Loading tasks...");
-		getTasksTask.execute(url + "?auth_token=" + mPreferences.getString("AuthToken", ""));
+    GetTasksTask getTasksTask = new GetTasksTask(HomeActivity.this);
+    getTasksTask.setMessageLoading("Loading tasks...");
+    getTasksTask.execute(url + "?auth_token=" + mPreferences.getString("AuthToken", ""));
 }
 ```
 
