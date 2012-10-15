@@ -156,7 +156,7 @@ Here's the simple layout with the ListView ready to display our tasks.
 </LinearLayout>
 {% endhighlight %}
 
-Further information on the ListView can be found here: http://developer.android.com/guide/topics/ui/layout/listview.html
+Further information on the ListView can be found here: [developer.android.com/guide/topics/ui/layout/listview](http://developer.android.com/guide/topics/ui/layout/listview.html)
 
 It's important to add the permission to use the internet connection in the Manifest: without it our app couldn't reach the API, even on our localhost machine and running the emulator.
 
@@ -547,7 +547,7 @@ Before switching to the <code>RegisterActivity</code> class, don't forget to add
 </activity>
 {% endhighlight %}
 
-The <code>android:noHistory</code> attribute is added for the same reasons we did it with the WelcomeActivity.
+The <code>android:noHistory</code> attribute is added for the same reasons we did it for the WelcomeActivity.
 
 ## RegisterActivity
 Our app is almost completed (for the sake of this tutorial!) and what's left is adding the possibility for our potential users to register themselves directly on the app itself.
@@ -684,7 +684,7 @@ public void registerNewAccount(View button) {
 }
 {% endhighlight %}
 
-We need now to add the <code>RegisterTask</code> class implementation just like we did for the login. The details are really similar and maybe we can consider a refactor of the code to avoid some un-necessary receptions. But I leave this chore to you.
+We need now to add the <code>RegisterTask</code> class implementation just like we did for the login. The details are really similar and maybe we can consider a refactor of the code to avoid some un-necessary repetitions. But I leave this chore to you.
 
 {% highlight java %}
 // file: RegisterActivity.java
@@ -822,7 +822,7 @@ All versions of the libraries must be the same at this time.
 Jar mismatch! Fix your dependencies
 {% endhighlight %}
 
-The problem can be solved by deleting the <code>android-support-v4.jar</code> in the <code>"libs"</code> directory of our projects: right-click on it, browsing the Package Explorer and select <code>"delete"</code>.
+The problem can be solved by deleting the <code>android-support-v4.jar</code> in the <code>"libs"</code> directory of our projects: browsing the Package Explorer, right-click on it and select <code>"delete"</code>.
 
 ### Updating the existing code
 To use all the nice features that ABS provides, we need to alter some code, starting from changing the parent class of our Activities. Instead of extending the <code>android.app.Activity</code>, we need to extend the <code>SherlockActivity</code> like so:
@@ -838,7 +838,7 @@ public class HomeActivity extends SherlockActivity {
 
 Do the same for all the other activities and remember to remove the old imports of <code>import android.app.Activity;</code>.
 
-In the HomeActivity there will be some problems with the code that manage the creation of the Menu. The fix is quick and consists in changing the method called to get the menu inflater (<code>getMenuInflater()</code>) with  <code>getSupportMenuInflater()</code> provided by the SherlockActivity class.
+In the HomeActivity there will be some problems with the code that manage the creation of the Menu. The fix is quick and consists in changing the method called to get the menu inflater - <code>getMenuInflater()</code> - with <code>getSupportMenuInflater()</code> provided by the SherlockActivity class.
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -862,11 +862,12 @@ Finally, change the default theme for the application in the <code>AndroidManife
 You can choose the default dark one or <code>Theme.Sherlock.Light</code> and <code>Theme.Sherlock.Light.DarkActionBar</code>. For more information, check out the official documentation at [actionbarsherlock.com/theming](http://actionbarsherlock.com/theming.html)
 
 # Conclusion
-That's all! It was a wild ride, spanning a lot of topics and languages. I hope you enjoyed and if you have anything to ask or critics to raise, let me know.
+That's all! It was a wild ride, spanning a lot of topics and languages. I hope you enjoyed and if you have anything to ask or critics to make, let me know at [luca.tironi@gmail.com](mailto:luca.tironi@gmail.com).
 
-I hope the information provided with this tutorial could be the basis for wonderful applications. I tried to write it as the tutorial I wished I had had when I started addressing these topics in my apps coding.
+I hope the information provided with this tutorial could be the basis for your wonderful applications. I tried to write it as the tutorial I wished I had when I started addressing these topics in coding my apps.
 
 I wish it could helpful to you now.
 
 Bye,
+
 Luca
