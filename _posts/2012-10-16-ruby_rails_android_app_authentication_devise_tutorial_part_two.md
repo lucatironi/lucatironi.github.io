@@ -396,7 +396,7 @@ Once we have the LoginActivity file created, let's start with the layout file:
 
 As you can see we added two EditText fields and a Button to a ScrollView, in order to allow the controls to show no matter what the screen size/rotation.
 
-Let's now put a good use of this interface. Open the <code>LoginActivity.java</code> file and add this variables and methods.
+Let's now put a good use of this interface. Open the <code>LoginActivity.java</code> file and add these variables and methods.
 
 {% highlight java %}
 // file: LoginActivity.java
