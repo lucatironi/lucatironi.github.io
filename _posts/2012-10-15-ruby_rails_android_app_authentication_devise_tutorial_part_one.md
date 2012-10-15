@@ -10,7 +10,7 @@ tags: [ruby on rails, android, devise, authentication]
 ## Intro
 In this two-part tutorial, I want to explain with a step-by-step guide, how to build a complete solution that can be used as a base for a more complex scenario.
 
-You'll learn how to build an authentication API that can allow external users to register, login and logout through JSON requests. After having successfully logged in, a user will receive an authentication_token that could be used in following API requests to authorize the user, securing the access to your application's resources.
+You'll learn how to build an authentication API that can allow external users to register, login and logout through JSON requests. After having successfully logged in, a user will receive an authentication token that could be used in following API requests to authorize the user, securing the access to your application's resources.
 
 In the second part of this tutorial, you will learn how to build an Android application that will be able to consume this API, allowing the user to register and login directly from the app.
 

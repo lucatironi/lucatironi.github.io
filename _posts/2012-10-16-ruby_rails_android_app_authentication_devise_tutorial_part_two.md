@@ -83,7 +83,7 @@ To add this nice set of tools, just download the package from Github ([github.co
 
 In the following snippet of code I will show you the code I added to the HomeActivity that Eclipse automatically wrote when we created our app.
 
-In order to access our local Rails server from the Android Emulator, we need to use the <code>10.0.2.2</code> IP address that the Emulator maps to the localhost on our machine. Keep in mind to change this constant to the actual address (or port) you will use in production.
+In order to access our local Rails server from the Android Emulator, we need to use the <code>10.0.2.2</code> IP address that the Emulator maps to the localhost on our machine. Keep in mind to change this constant to the actual address (and port) you will use in production.
 
 The <code>onCreate()</code> method, after the usual initialization, calls the <code>loadTasksFromAPI()</code> where we create and initialize the <code>GetTasksTask</code> (I know ...) that extends the <code>UrlJsonAsyncTask</code> class.
 
@@ -230,7 +230,7 @@ The <code>mPreferences</code> variable has been added and we will use the <code>
 
 What we are going to do now with this code, is to check whether or not there's an auth_token set for our user. If it's present, just load the tasks; if not launch the <code>WelcomeActivity</code>.
 
-To add a new activity, click on the menu <code>File > New > Other ... > Android activity</code> and select a blank one and call it "WelcomeActivity".
+To add a new activity, click on the menu <code>"File > New > Other ... > Android activity"</code> and select a blank one and call it <code>"WelcomeActivity"</code>.
 
 This activity will be really simple, just presenting a message and two buttons: Register and Login.
 
@@ -396,7 +396,7 @@ Once we have the LoginActivity file created, let's start with the layout file:
 
 As you can see we added two EditText fields and a Button to a ScrollView, in order to allow the controls to show no matter what the screen size/rotation.
 
-Let's now put a good use of this interface. Open the LoginActivity.java file and add this variables and methods.
+Let's now put a good use of this interface. Open the <code>LoginActivity.java</code> file and add this variables and methods.
 
 {% highlight java %}
 // file: LoginActivity.java
