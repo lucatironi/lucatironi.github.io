@@ -165,6 +165,11 @@ It's important to add the permission to use the internet connection in the Manif
 <uses-permission android:name="android.permission.INTERNET"/>
 {% endhighlight %}
 
+![HomeActivity](/assets/uploads/images/HomeActivity_api10.png)
+![HomeActivity](/assets/uploads/images/HomeActivity_api16.png)
+
+*The HomeActivity layout (GingerBread 2.3 left and Jelly Bean 4.1 right)*
+
 ### Bonus: Menus
 I wanted to add a "Refresh" action to our activity so I added these two methods (the first should be already there at the creation) to setup the menu/actionbar and respond to clicks on their items.
 
@@ -342,6 +347,11 @@ Finally, register the new activity in the <code>AndroidManifest.xml</code> file:
 {% endhighlight %}
 
 I added the <code>android:noHistory</code> attribute because I don't want to allow the user to return to this activity once he or she successfully logged in.
+
+![WelcomeActivity](/assets/uploads/images/WelcomeActivity_api10.png)
+![WelcomeActivity](/assets/uploads/images/WelcomeActivity_api16.png)
+
+*The WelcomeActivity layout (GingerBread 2.3 left and Jelly Bean 4.1 right)*
 
 ## LoginActivity
 Right now the app won't start because we didn't create the LoginActivity and RegisterActivity yet. Let's proceed with the usual method we already covered for the WelcomeActivity.
@@ -548,6 +558,11 @@ Before switching to the <code>RegisterActivity</code> class, don't forget to add
 {% endhighlight %}
 
 The <code>android:noHistory</code> attribute is added for the same reasons we did it for the WelcomeActivity.
+
+![LoginActivity](/assets/uploads/images/LoginActivity_api10.png)
+![LoginActivity](/assets/uploads/images/LoginActivity_api16.png)
+
+*The LoginActivity layout (GingerBread 2.3 left and Jelly Bean 4.1 right)*
 
 ## RegisterActivity
 Our app is almost completed (for the sake of this tutorial!) and what's left is adding the possibility for our potential users to register themselves directly on the app itself.
@@ -782,6 +797,11 @@ Almost there, just remember to add the activity to the manifest and we are done!
 </activity>
 {% endhighlight %}
 
+![RegisterActivity](/assets/uploads/images/RegisterActivity_api10.png)
+![RegisterActivity](/assets/uploads/images/RegisterActivity_api16.png)
+
+*The RegisterActivity layout (GingerBread 2.3 left and Jelly Bean 4.1 right)*
+
 ## Use the authentication
 In order to use all the efforts we made until now, we need to edit just a line of code in our HomeActivity code. We have to pass the auth_token we set in the SharedPreferences after a successful login or registration and append it to the request url to the API.
 
@@ -860,6 +880,14 @@ Finally, change the default theme for the application in the <code>AndroidManife
 {% endhighlight %}
 
 You can choose the default dark one or <code>Theme.Sherlock.Light</code> and <code>Theme.Sherlock.Light.DarkActionBar</code>. For more information, check out the official documentation at [actionbarsherlock.com/theming](http://actionbarsherlock.com/theming.html)
+
+
+![HomeActivity](/assets/uploads/images/HomeActivity_api10_abs.png)
+![WelcomeActivity](/assets/uploads/images/WelcomeActivity_api10_abs.png)
+![LoginActivity](/assets/uploads/images/LoginActivity_api10_abs.png)
+![RegisterActivity](/assets/uploads/images/RegisterActivity_api10_abs.png)
+
+*The final results: GingerBread with the Sherlock Holo theme*
 
 # Conclusion
 That's all! It was a wild ride, spanning a lot of topics and languages. I hope you enjoyed and if you have anything to ask or critics to make, let me know at [luca.tironi@gmail.com](mailto:luca.tironi@gmail.com).
