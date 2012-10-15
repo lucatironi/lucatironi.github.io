@@ -358,7 +358,7 @@ In the next steps we will be building an Android app from scratch that will cons
 
 This tutorial won't delve to much on the details of deploying a Rails app on the service, but you can read more on the official documentation: [devcenter.heroku.com](http://devcenter.heroku.com).
 
-Download the Heroku toolbelt and create an account if you don't have one.
+Download the [Heroku toolbelt](https://toolbelt.heroku.com) and create an account if you don't have one.
 
 Let's start creating a Git repository and pushing it to Heroku. Take note of the app's name that Heroku will create for you (something.herokuapp.com).
 
