@@ -176,10 +176,6 @@ header ul a strong {
   color: #fff;
   -webkit-font-smoothing: antialiased;
 }
-.twitter-share-button {
-  vertical-align: text-bottom;
-}
-
 
 section {
   padding: 15px 20px;
@@ -290,6 +286,14 @@ hr {
   background: #aaa;
   height: 1px;
   margin: 0 0 20px;
+}
+
+.social div {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  width: 90px;
+  overflow: hidden;
 }
 
 footer {
