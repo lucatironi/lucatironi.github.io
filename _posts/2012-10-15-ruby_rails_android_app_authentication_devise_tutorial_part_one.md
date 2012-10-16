@@ -4,6 +4,7 @@ title: Ruby on Rails and Android Authentication Part One
 tagline: The Rails Web Application
 category: tutorial
 tags: [ruby on rails, android, devise, authentication]
+comments: true
 ---
 {% include JB/setup %}
 
