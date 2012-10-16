@@ -6,8 +6,28 @@
 
 <hr>
 
-<h4>Published on {{ page.date | date_to_long_string }}</h4>
+<h4>Published on {{ page.date | date_to_long_string }} <a style="float:right;" href="#">^Back to top</a></h4>
 
 <hr>
+
+<div>
+  <!-- Facebook share button -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=291969060902918";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Twitter share button -->
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+  <div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+  <a href="https://twitter.com/share" class="twitter-share-button" data-via="lucatironi">Tweet</a>
+
+</div>
+<br />
 
 {% include JB/comments %}

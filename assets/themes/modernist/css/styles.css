@@ -176,6 +176,10 @@ header ul a strong {
   color: #fff;
   -webkit-font-smoothing: antialiased;
 }
+.twitter-share-button {
+  vertical-align: text-bottom;
+}
+
 
 section {
   padding: 15px 20px;
