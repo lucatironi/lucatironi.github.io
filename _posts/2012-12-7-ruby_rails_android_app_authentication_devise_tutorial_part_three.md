@@ -11,13 +11,13 @@ In the previous two parts of the tutorial ([first part](/tutorial/2012/10/15/rub
 
 In this third part of the tutorial I want to further extend the functionalities of our Android app and its Rails backend in order to allow the actual creation and editing of tasks through the exposed API.
 
-Let's start by securing a bit more the API, then we will procede to enable the creation of new tasks
+Let's start by securing a bit more the API, then we will proceed to enable the creation of new tasks
 
 ## Security
 
-Since I posted the tutorial I got some good advices on how to improve the API's security, for example not passing the <code>auth_token</code> as a GET paramater but in the HTTP Headers.
+Since I posted the tutorial I got some good advices on how to improve the API's security, for example not passing the <code>auth_token</code> as a GET parameter but in the HTTP Headers.
 
-Accoding to [this response](https://groups.google.com/d/msg/plataformatec-devise/o3Gqgl0yUZo/tR6-ulld0yYJ) to a similar question on the official Devise Support Group, we need to override the <code>params_auth_hash</code> of the <code>TokenAuthenticatable</code> module.
+According to [this response](https://groups.google.com/d/msg/plataformatec-devise/o3Gqgl0yUZo/tR6-ulld0yYJ) to a similar question on the official Devise Support Group, we need to override the <code>params_auth_hash</code> of the <code>TokenAuthenticatable</code> module.
 
 Add the following code to the <code>devise.rb</code> initializer in the <code>config/initializers/</code> directory, just inside the <code>Devise.setup</code> block (for example at the end, before the closing "end").
 
@@ -48,13 +48,13 @@ Having done so it's now possible to request the tasks to the API passing the aut
 $ curl http://localhost:3000/api/v1/tasks.json -H 'Authorization: Token token="N8N5MPqFNdDz3G1jRsC9"'
 {% endhighlight %}
 
-You should recieve the hard-coded tasks as usual.
+You should receive the hard-coded tasks as usual.
 
 It's now the turn of our Android app to be modified to send the auth_token as a header when asking the tasks to the API.
 To do this I decided to slightly modify the <code>UrlJsonAsyncTask</code> and <code>JsonHelper</code> from the library we used created by [Tony Lukasavage](https://github.com/tonylukasavage/com.savagelook.android).
 I forked the original project on GitHub and made the modifications to the code. You can download the forked library [here](https://github.com/lucatironi/com.savagelook.android).
 
-I added to the <code>JsonHelper</code> a new paramater - <code>authToken</code> to be passed to the <code>get*FromUrl()</code> methods that will be added to the HTTP Headers in the <code>getStringFromUrl()</code> method:
+I added to the <code>JsonHelper</code> a new parameter - <code>authToken</code> to be passed to the <code>get*FromUrl()</code> methods that will be added to the HTTP Headers in the <code>getStringFromUrl()</code> method:
 
 {% highlight java %}
 // file: com.savagelook.android/JsonHelper.java
@@ -145,7 +145,7 @@ Finally migrate the database.
 
 ### Tasks API
 
-To generate the API from our controller we wil use the [Rabl gem](https://github.com/nesquena/rabl). It's basically a builder to render JSON views and you can watch a nice [screencast](http://railscasts.com/episodes/322-rabl) by Ryan Bates to learn more about it.
+To generate the API from our controller we will use the [Rabl gem](https://github.com/nesquena/rabl). It's basically a builder to render JSON views and you can watch a nice [screencast](http://railscasts.com/episodes/322-rabl) by Ryan Bates to learn more about it.
 
 Let's just add the gem to our Gemfile:
 
@@ -170,7 +170,7 @@ end
 
 #### Index action
 
-It's now time to remove our fake index action JSON respons from the TasksController and provide some real data to our Android app.
+It's now time to remove our fake index action JSON response from the TasksController and provide some real data to our Android app.
 
 {% highlight ruby %}
 # file: app/controllers/api/v1/tasks_controller.rb
@@ -186,7 +186,7 @@ class Api::V1::TasksController < ApplicationController
 end
 {% endhighlight %}
 
-The index action is really simple! We just finde the tasks associated with the current user, authenticated through the auth_token provided with each request to the API. All the work done so far is finally paying off.
+The index action is really simple! We just find the tasks associated with the current user, authenticated through the auth_token provided with each request to the API. All the work done so far is finally paying off.
 
 {% highlight ruby %}
 # file: app/views/api/v1/tasks/index.json.rabl
@@ -213,7 +213,7 @@ I added two nodes with a success and info information that will be used by the A
 
 I also added a node with the tasks count that can come in handy.
 
-You can test the real index action through the API with a curl command (the tasks will be empty if you havent created any).
+You can test the real index action through the API with a curl command (the tasks will be empty if you haven't created any).
 
 {% highlight bash %}
 curl -v -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Token token="N8N5MPqFNdDz3G1jRsC9"' http://localhost:3000/api/v1/tasks.json
@@ -440,13 +440,13 @@ public class NewTaskActivity extends SherlockActivity {
 
 The Activity is very similar to the <code>RegisterActivity</code> and as you can see the code is almost copied verbatim.
 
-The differencies are mainly in the <code>CreateTaskTask</code> class extend from <code>UrlJsonAsyncTask</code> that is called by the <code>saveTask()</code> method when the user click on the save button.
+The differences are mainly in the <code>CreateTaskTask</code> class extend from <code>UrlJsonAsyncTask</code> that is called by the <code>saveTask()</code> method when the user click on the save button.
 
 The <code>CreateTaskStak doInBackground()</code> method sets up the JSON request with all the right attributes (the auth_token taken from the <code>SharedPreferences</code> and the value of the text field) and sends them to the API end point.
 
 The <code>onPostExecute</code> method instead close the activity in case of success and launch the <code>HomeActivity</code> again.
 
-The following code is the actual layout used for the <code>NewTaskActivity</code>: it's a simple <code>EditText</code> field and a <code>Button</code>. Rememeber to add all the necessary strings to the strings.xml resource file.
+The following code is the actual layout used for the <code>NewTaskActivity</code>: it's a simple <code>EditText</code> field and a <code>Button</code>. Remember to add all the necessary strings to the strings.xml resource file.
 
 {% highlight xml %}
 <!-- file: res/layout/activity_new_task.xml -->
@@ -592,7 +592,7 @@ put 'tasks/:id/complete' => 'tasks#complete', :as => 'complete_task'
 
 Finally add these two new actions to the routes, inside the <code>:api</code> namespace, after the tasks index route.
 
-You can try the complete action via the API with the usual curl acommand (provided you have a task already created):
+You can try the complete action via the API with the usual curl command (provided you have a task already created):
 
 {% highlight bash %}
 curl -v -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Authorization: Token token="9DLsDhFhqE8mnRbsPmXw"' -X PUT http://localhost:3000/api/v1/tasks/1/complete.json
