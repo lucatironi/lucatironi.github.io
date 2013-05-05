@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Ruby on Rails and Android Authentication Part Three
-tagline: A Complete App & Backend
+tagline: A Complete Android App with a Rails API Backend
+description: I wanted to add some more features to the Android app and its Rails backend. Now the user can create and complete tasks just like in a real ToDo mobile application.
 category: tutorial
 tags: [ruby on rails, android, devise, authentication, API]
 ---

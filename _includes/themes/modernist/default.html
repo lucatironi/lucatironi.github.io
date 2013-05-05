@@ -33,18 +33,17 @@
       <section>
         {{ content }}
       </section>
+      <footer>
+        <p>
+          You should follow me on twitter <a href="http://twitter.com/{{ site.author.twitter }}">here</a>
+        </p>
+        <p style="text-align:right;">
+          &copy; {{ site.author.name }} 2013<br />
+          with the help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a><br />
+          and based on the theme by <a target="_blank" href="https://github.com/orderedlist">orderedlist</a>
+        </p>
+      </footer>
     </div>
-
-    <footer>
-      <p>
-        You should follow me on twitter <a href="http://twitter.com/{{ site.author.twitter }}">here</a>
-      </p>
-      <p style="text-align:right;">
-        &copy; {{ site.author.name }} 2012<br />
-        with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a><br />
-        and theme by <a target="_blank" href="https://github.com/orderedlist">orderedlist</a>
-      </p>
-    </footer>
 
     {% include JB/analytics %}
   </body>

@@ -2,6 +2,7 @@
 layout: post
 title: Ruby on Rails and Android Authentication Part Two
 tagline: The Android App
+description: The second part of the tutorial will let you code an Android app that uses the JSON authentication API developed in the previous tutorial.
 category: tutorial
 tags: [ruby on rails, android, devise, authentication]
 comments: true
