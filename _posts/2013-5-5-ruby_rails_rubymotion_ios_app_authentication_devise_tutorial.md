@@ -31,7 +31,7 @@ To start the coding of our Rubymotion app, let's have a look to the config/make 
 
 Before we can start, we have to change the <code>SessionsController.rb</code> in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
 
-To avoid this, just add <code>:store => false</code> to the <code>warde.authenticate!</code> parameters used in the create and destoy methods like this:
+To avoid this, just add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods like this:
 
 {% highlight ruby %}
 # file: app/controller/api/v1/sessions_controller.rb
@@ -490,6 +490,12 @@ end
 {% endhighlight %}
 
 # Conclusion
+
+If you haven't done it yet, launch the app with the <code>rake</code> command and see it in action in the simulator:
+
+{% highlight bash %}
+$ rake
+{% endhighlight %}
 
 That's it for now! I will post the second part of this tutorial soon: it will feature the completion of this ToDo app in order to get the list of user's tasks from the backend, the creation of new tasks and their flagging as "completed".
 
