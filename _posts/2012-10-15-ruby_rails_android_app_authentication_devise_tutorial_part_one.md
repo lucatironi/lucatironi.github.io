@@ -2,7 +2,7 @@
 layout: post
 title: Ruby on Rails and Android Authentication Part One
 tagline: The Rails Web Application
-description: In this two-part tutorial you'll learn how to build an authentication API that can allow external users to register, login and logout through JSON requests, with Ruby On Rails.
+description: In this ~~two-~~three-part tutorial you'll learn how to build an authentication API that can allow external users to register, login and logout through JSON requests, with Ruby On Rails.
 category: tutorial
 tags: [ruby on rails, android, devise, authentication]
 comments: true
@@ -10,7 +10,7 @@ comments: true
 {% include JB/setup %}
 
 ## Intro
-In this two-part tutorial you'll learn first how to build an authentication API that can allow external users to register, login and logout through JSON requests. After having successfully logged in, a user will receive an authentication token that could be used in following API requests to authorize the user, securing the access to your application's resources.
+In this ~~two-~~three-part tutorial you'll learn first how to build an authentication API that can allow external users to register, login and logout through JSON requests. After having successfully logged in, a user will receive an authentication token that could be used in following API requests to authorize the user, securing the access to your application's resources.
 
 In the second part, you will build an Android application that will be able to consume this API, allowing the user to register and login directly from the app.
 
