@@ -2,7 +2,7 @@
 layout: post
 title: Ruby on Rails and RubyMotion Authentication Part One
 tagline: A Complete iOS App with a Rails API backend
-description: Using the same backend we developed in the previous tutorials, I'll guide you through the coding of a iOS (iPhone) app using Rubymotion that will use the same JSON API as the Android app.
+description: Using the same backend we developed in the previous tutorials, I'll guide you through the coding of an iOS (iPhone) app using Rubymotion that will use the same JSON API as the Android app.
 category: tutorial
 tags: [ruby on rails, Rubymotion, iPhone, iOS, devise, authentication, API]
 ---
@@ -26,6 +26,38 @@ $ cd AuthExample
 If you have read the previous tutorials you already knows what our app should do: send POST and GET HTTP requests with JSON attributes to the register/login authentication endpoint. To do so we'll need to create some controllers to display the register and login forms.
 
 To start the coding of our Rubymotion app, let's have a look to the config/make file that will compile and launch the app in the iOS simulator: the <code>Rakefile</code>. If you need some more information on what <code>rake</code> is and can do, go to the [official documentation](http://rake.rubyforge.org/).
+
+## A small change to the Authentication API
+
+Before we can start, we have to change the <code>SessionsController.rb</code> in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
+
+To avoid this, just add <code>:store => false</code> to the <code>warde.authenticate!</code> parameters used in the create and destoy methods like this:
+
+{% highlight ruby %}
+# file: app/controller/api/v1/sessions_controller.rb
+class Api::V1::SessionsController < Devise::SessionsController
+  # Other code
+
+  def create
+    warden.authenticate!(:scope => resource_name, :store => false, :recall => "#{controller_path}#failure")
+    render :status => 200,
+           :json => { :success => true,
+                      :info => "Logged in",
+                      :data => { :auth_token => current_user.authentication_token } }
+  end
+
+  def destroy
+    warden.authenticate!(:scope => resource_name, :store => false, :recall => "#{controller_path}#failure")
+    current_user.update_column(:authentication_token, nil)
+    render :status => 200,
+           :json => { :success => true,
+                      :info => "Logged out",
+                      :data => {} }
+  end
+
+  # Other code
+end
+{% endhighlight %}
 
 ## The Rakefile: configuration and dependencies
 
