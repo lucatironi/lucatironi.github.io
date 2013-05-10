@@ -30,8 +30,16 @@ header, section, footer {
   display: block;
 }
 
-a {
+a, a:visited {
   color: #069;
+  text-decoration: underline;
+}
+a:hover, a:active {
+  color: #07b;
+}
+h1 a, h1 a:visited,
+h2 a, h2 a:visited,
+h3 a, h3 a:visited {
   text-decoration: none;
 }
 
@@ -298,9 +306,11 @@ footer {
   color: #5891b5;
   overflow: hidden;
 }
-footer a {
+footer a,
+footer a:visited {
   color: #fff;
   font-weight: bold;
+  text-decoration: none;
 }
 footer p {
   float: left;
