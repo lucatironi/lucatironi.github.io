@@ -15,7 +15,7 @@ I hope they can be useful for your projects, feel free to fork and contribute to
 ### Ruby on Rails Backend/API
 Repository: [github.com/lucatironi/authexample-ror-tutorial](https://github.com/lucatironi/authexample-ror-tutorial)
 
-You can find the guide to create this Android application in the [part one](http://lucatironi.github.io/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one) and [part three](http://lucatironi.github.io/tutorial/2012/12/07/ruby_rails_android_app_authentication_devise_tutorial_part_three) of the authenticaion tutorials.
+You can find the guide to create this Android application in the [part one](http://lucatironi.github.io/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one) and [part three](http://lucatironi.github.io/tutorial/2012/12/07/ruby_rails_android_app_authentication_devise_tutorial_part_three) of the authentication tutorials.
 
 #### Installation
 
