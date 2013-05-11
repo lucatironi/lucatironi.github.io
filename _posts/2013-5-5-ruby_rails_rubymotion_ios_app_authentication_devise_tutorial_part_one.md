@@ -8,6 +8,8 @@ tags: [Ruby on Rails, Rubymotion, iPhone, iOS, Devise, authentication, API]
 ---
 {% include JB/setup %}
 
+**UPDATED on May 11th: typos and small changed according to the [2.0 release of Rubymotion](http://blog.rubymotion.com/post/49943751398/rubymotion-goes-2-0-and-gets-os-x-support-templates).**
+
 Hi all and welcome back in 2013. In the first three tutorials (part [one](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one), [two](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two) and [three](/tutorial/2012/12/07/ruby_rails_android_app_authentication_devise_tutorial_part_three)) I walked you through the developing of a complete Android app backed by a web application in Ruby on Rails and communicating via a JSON API.
 
 With this new series of two tutorials I want to help you develop an iOS app using the same Rails API coded in the first tutorials. The iOS app will use the [RubyMotion](http://www.rubymotion.com) toolchain that allows to create native app using the Ruby language instead of Objective-C.
@@ -63,10 +65,28 @@ end
 
 I will use some cool features provided by [BubbleWrap](https://github.com/rubymotion/BubbleWrap) like the <code>App::Persistence</code> helper that wraps <code>NSUserDefaults</code>, <code>BW::JSON</code> for JSON encoding and parsing and <code>BW::HTTP</code> that wraps <code>NSURLRequest, NSURLConnection</code> in order to communicate with our Rails API. BubbleWrap provides a ruby-like interface to common Cocoa and iOS APIs: go and check out the documentation if you want learn some more.
 
-To use BubbleWrap just open the Terminal and install the gem:
+UPDATE May 11th: I decided to switch to use [Bundler](http://gembundler.com). For more information on why, check [this useful guide](http://thunderboltlabs.com/posts/using-bundler-with-rubymotion.html).
+
+To use BubbleWrap just open the Terminal and install the bundler gem:
 
 {% highlight bash %}
-$ gem install bubblewrap
+$ gem install bundler
+{% endhighlight %}
+
+Then create a new file called <code>Gemfile</code> in the root directory of the project.
+
+{% highlight ruby %}
+# file Gemfile
+source :rubygems
+
+gem 'bubble-wrap', '1.3.0.osx'
+gem 'motion-cocoapods'
+{% endhighlight %}
+
+And finally use Bundler to install the gem(s) you specify in the Gemfile:
+
+{% highlight bash %}
+$ bundle install
 {% endhighlight %}
 
 Let's now setup the RubyMotion app's Rakefile with all our dependencies and configurations:
@@ -75,12 +95,10 @@ Let's now setup the RubyMotion app's Rakefile with all our dependencies and conf
 # file Rakefile
 # -*- coding: utf-8 -*-
 $:.unshift("/Library/RubyMotion/lib")
-require 'rubygems'
-require 'motion/project'
-require 'formotion'
-require 'bubble-wrap/http'
-require 'bubble-wrap/core'
-require 'motion-cocoapods'
+
+require 'motion/project/template/ios'
+require 'bundler'
+Bundler.require
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
@@ -148,6 +166,7 @@ This is the main entry point of the application: it's a simple controller that w
 I used some simple geometry trick to place te buttons accordingly to the phone screen's dimensions, nothing fancy. You can see the end result after the block of code.
 
 {% highlight ruby %}
+# file app/controllers/WelcomeController.rb
 class WelcomeController < UIViewController
 
   def self.controller
@@ -221,10 +240,16 @@ Until now we covered some pretty basic stuff. It's time to do some more and delv
 
 In order to ease the creation of interfaces with user input forms, I will use [Formotion](http://clayallsopp.github.com/formotion) by the great Clay Allsopp: it provides a simple "ruby-fu" approach to populate your forms with every type of inputs iOS could provide.
 
-To install it, just open the Terminal and install the Formotion gem.
+To install it, add the Formotion gem to the <code>Gemfile</code> and open the Terminal and install the Formotion gem.
+
+{% highlight ruby %}
+# file Gemfile
+# other code
+gem 'formotion'
+{% endhighlight %}
 
 {% highlight bash %}
-$ gem install formotion
+$ bundle install
 {% endhighlight %}
 
 ### RegisterContoller
