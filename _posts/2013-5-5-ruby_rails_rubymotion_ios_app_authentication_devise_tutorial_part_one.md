@@ -33,7 +33,7 @@ To start the coding of our Rubymotion app, let's have a look to the config/make 
 
 ## A small change to the Authentication API
 
-Before we can start, we have to change the <code>SessionsController.rb</code> in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
+Before we can start, we have to make some changes in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
 
 To avoid this, edit the Devise initializer and add the <code>:token_auth</code> to the <code>skip_session_storage</code> array and add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods in the <code>Api::V1::SessionsController</code> and the <code>sign_in</code> in the <code>API::V1::RegistrationsController</code>:
 
