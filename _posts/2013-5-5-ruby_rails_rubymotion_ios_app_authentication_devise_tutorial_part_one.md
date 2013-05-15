@@ -2,13 +2,14 @@
 layout: post
 title: Ruby on Rails and RubyMotion Authentication Part One
 tagline: A Complete iOS App with a Rails API backend
-description: Using the same backend we developed in the previous tutorials, I'll guide you through the coding of an iOS (iPhone) app using Rubymotion that will use the same JSON API as the Android app.
+description: Using the same backend we developed in the previous tutorials, I'll guide you through the coding of an iOS (iPhone) app using Rubymotion that will use the same JSON API as the Android app. **UPDATED on May 15th: fixed session storage bug, some typos and some small changes according to the [2.0 release of Rubymotion](http://blog.rubymotion.com/post/49943751398/rubymotion-goes-2-0-and-gets-os-x-support-templates).**
+
 category: tutorial
 tags: [Ruby on Rails, Rubymotion, iPhone, iOS, Devise, authentication, API]
 ---
 {% include JB/setup %}
 
-**UPDATED on May 11th: typos and small changed according to the [2.0 release of Rubymotion](http://blog.rubymotion.com/post/49943751398/rubymotion-goes-2-0-and-gets-os-x-support-templates).**
+**UPDATED on May 15th: fixed session storage bug, some typos and some small changes according to the [2.0 release of Rubymotion](http://blog.rubymotion.com/post/49943751398/rubymotion-goes-2-0-and-gets-os-x-support-templates).**
 
 Hi all and welcome back in 2013. In the first three tutorials (part [one](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one), [two](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two) and [three](/tutorial/2012/12/07/ruby_rails_android_app_authentication_devise_tutorial_part_three)) I walked you through the developing of a complete Android app backed by a web application in Ruby on Rails and communicating via a JSON API.
 
@@ -33,7 +34,17 @@ To start the coding of our Rubymotion app, let's have a look to the config/make 
 
 Before we can start, we have to change the <code>SessionsController.rb</code> in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
 
-To avoid this, just add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods like this:
+To avoid this, edit the Devise initializer and add the <code>:token_auth</code> to the <code>skip_session_storage</code> array and add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods in the <code>Api::V1::SessionController</code>:
+
+{% highlight ruby %}
+# file: initializer/devise.rb
+  # By default Devise will store the user in session. You can skip storage for
+  # :http_auth and :token_auth by adding those symbols to the array below.
+  # Notice that if you are skipping storage for all authentication paths, you
+  # may want to disable generating routes to Devise's sessions controller by
+  # passing :skip => :sessions to `devise_for` in your config/routes.rb
+  config.skip_session_storage = [:http_auth, :token_auth]
+{% endhighlight %}
 
 {% highlight ruby %}
 # file: app/controller/api/v1/sessions_controller.rb
@@ -50,7 +61,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def destroy
     warden.authenticate!(:scope => resource_name, :store => false, :recall => "#{controller_path}#failure")
-    current_user.update_column(:authentication_token, nil)
+    current_user.reset_authentication_token!
     render :status => 200,
            :json => { :success => true,
                       :info => "Logged out",
