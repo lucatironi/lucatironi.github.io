@@ -35,7 +35,7 @@ To start the coding of our Rubymotion app, let's have a look to the config/make 
 
 Before we can start, we have to change the <code>SessionsController.rb</code> in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
 
-To avoid this, edit the Devise initializer and add the <code>:token_auth</code> to the <code>skip_session_storage</code> array and add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods in the <code>Api::V1::SessionController</code>:
+To avoid this, edit the Devise initializer and add the <code>:token_auth</code> to the <code>skip_session_storage</code> array and add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods in the <code>Api::V1::SessionsController</code> and the <code>sign_in</code> in the <code>API::V1::RegistrationsController</code>:
 
 {% highlight ruby %}
 # file: initializer/devise.rb
@@ -45,6 +45,31 @@ To avoid this, edit the Devise initializer and add the <code>:token_auth</code> 
   # may want to disable generating routes to Devise's sessions controller by
   # passing :skip => :sessions to `devise_for` in your config/routes.rb
   config.skip_session_storage = [:http_auth, :token_auth]
+{% endhighlight %}
+
+{% highlight ruby %}
+# file: app/controller/api/v1/registrations_controller.rb
+class Api::V1::RegistrationsController < Devise::RegistrationsController
+  # Other code
+
+  def create
+    build_resource
+    resource.skip_confirmation!
+    if resource.save
+      sign_in(resource, :store => false)
+      render :status => 200,
+           :json => { :success => true,
+                      :info => "Registered",
+                      :data => { :user => resource,
+                                 :auth_token => current_user.authentication_token } }
+    else
+      render :status => :unprocessable_entity,
+             :json => { :success => false,
+                        :info => resource.errors,
+                        :data => {} }
+    end
+  end
+end
 {% endhighlight %}
 
 {% highlight ruby %}
