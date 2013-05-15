@@ -2,11 +2,14 @@
 layout: post
 title: Ruby on Rails and RubyMotion Authentication Part One
 tagline: A Complete iOS App with a Rails API backend
-description: Using the same backend we developed in the previous tutorials, I'll guide you through the coding of an iOS (iPhone) app using Rubymotion that will use the same JSON API as the Android app.
+description: Using the same backend we developed in the previous tutorials, I'll guide you through the coding of an iOS (iPhone) app using Rubymotion that will use the same JSON API as the Android app. **UPDATED on May 15th: fixed session storage bug, some typos and some small changes according to the [2.0 release of Rubymotion](http://blog.rubymotion.com/post/49943751398/rubymotion-goes-2-0-and-gets-os-x-support-templates).**
+
 category: tutorial
-tags: [ruby on rails, Rubymotion, iPhone, iOS, devise, authentication, API]
+tags: [Ruby on Rails, Rubymotion, iPhone, iOS, Devise, authentication, API]
 ---
 {% include JB/setup %}
+
+**UPDATED on May 15th: fixed session storage bug, some typos and some small changes according to the [2.0 release of Rubymotion](http://blog.rubymotion.com/post/49943751398/rubymotion-goes-2-0-and-gets-os-x-support-templates).**
 
 Hi all and welcome back in 2013. In the first three tutorials (part [one](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one), [two](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two) and [three](/tutorial/2012/12/07/ruby_rails_android_app_authentication_devise_tutorial_part_three)) I walked you through the developing of a complete Android app backed by a web application in Ruby on Rails and communicating via a JSON API.
 
@@ -31,7 +34,17 @@ To start the coding of our Rubymotion app, let's have a look to the config/make 
 
 Before we can start, we have to change the <code>SessionsController.rb</code> in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
 
-To avoid this, just add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods like this:
+To avoid this, edit the Devise initializer and add the <code>:token_auth</code> to the <code>skip_session_storage</code> array and add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods in the <code>Api::V1::SessionController</code>:
+
+{% highlight ruby %}
+# file: initializer/devise.rb
+  # By default Devise will store the user in session. You can skip storage for
+  # :http_auth and :token_auth by adding those symbols to the array below.
+  # Notice that if you are skipping storage for all authentication paths, you
+  # may want to disable generating routes to Devise's sessions controller by
+  # passing :skip => :sessions to `devise_for` in your config/routes.rb
+  config.skip_session_storage = [:http_auth, :token_auth]
+{% endhighlight %}
 
 {% highlight ruby %}
 # file: app/controller/api/v1/sessions_controller.rb
@@ -48,7 +61,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def destroy
     warden.authenticate!(:scope => resource_name, :store => false, :recall => "#{controller_path}#failure")
-    current_user.update_column(:authentication_token, nil)
+    current_user.reset_authentication_token!
     render :status => 200,
            :json => { :success => true,
                       :info => "Logged out",
@@ -63,10 +76,28 @@ end
 
 I will use some cool features provided by [BubbleWrap](https://github.com/rubymotion/BubbleWrap) like the <code>App::Persistence</code> helper that wraps <code>NSUserDefaults</code>, <code>BW::JSON</code> for JSON encoding and parsing and <code>BW::HTTP</code> that wraps <code>NSURLRequest, NSURLConnection</code> in order to communicate with our Rails API. BubbleWrap provides a ruby-like interface to common Cocoa and iOS APIs: go and check out the documentation if you want learn some more.
 
-To use BubbleWrap just open the Terminal and install the gem:
+UPDATE May 11th: I decided to switch to use [Bundler](http://gembundler.com). For more information on why, check [this useful guide](http://thunderboltlabs.com/posts/using-bundler-with-rubymotion.html).
+
+To use BubbleWrap just open the Terminal and install the bundler gem:
 
 {% highlight bash %}
-$ gem install bubblewrap
+$ gem install bundler
+{% endhighlight %}
+
+Then create a new file called <code>Gemfile</code> in the root directory of the project.
+
+{% highlight ruby %}
+# file Gemfile
+source :rubygems
+
+gem 'bubble-wrap', '1.3.0.osx'
+gem 'motion-cocoapods'
+{% endhighlight %}
+
+And finally use Bundler to install the gem(s) you specify in the Gemfile:
+
+{% highlight bash %}
+$ bundle install
 {% endhighlight %}
 
 Let's now setup the RubyMotion app's Rakefile with all our dependencies and configurations:
@@ -75,12 +106,10 @@ Let's now setup the RubyMotion app's Rakefile with all our dependencies and conf
 # file Rakefile
 # -*- coding: utf-8 -*-
 $:.unshift("/Library/RubyMotion/lib")
-require 'rubygems'
-require 'motion/project'
-require 'formotion'
-require 'bubble-wrap/http'
-require 'bubble-wrap/core'
-require 'motion-cocoapods'
+
+require 'motion/project/template/ios'
+require 'bundler'
+Bundler.require
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
@@ -148,6 +177,7 @@ This is the main entry point of the application: it's a simple controller that w
 I used some simple geometry trick to place te buttons accordingly to the phone screen's dimensions, nothing fancy. You can see the end result after the block of code.
 
 {% highlight ruby %}
+# file app/controllers/WelcomeController.rb
 class WelcomeController < UIViewController
 
   def self.controller
@@ -221,10 +251,16 @@ Until now we covered some pretty basic stuff. It's time to do some more and delv
 
 In order to ease the creation of interfaces with user input forms, I will use [Formotion](http://clayallsopp.github.com/formotion) by the great Clay Allsopp: it provides a simple "ruby-fu" approach to populate your forms with every type of inputs iOS could provide.
 
-To install it, just open the Terminal and install the Formotion gem.
+To install it, add the Formotion gem to the <code>Gemfile</code> and open the Terminal and install the Formotion gem.
+
+{% highlight ruby %}
+# file Gemfile
+# other code
+gem 'formotion'
+{% endhighlight %}
 
 {% highlight bash %}
-$ gem install formotion
+$ bundle install
 {% endhighlight %}
 
 ### RegisterContoller
