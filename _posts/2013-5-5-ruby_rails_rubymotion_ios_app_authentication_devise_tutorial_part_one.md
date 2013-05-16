@@ -35,10 +35,10 @@ To start the coding of our Rubymotion app, let's have a look to the config/make 
 
 Before we can start, we have to make some changes in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
 
-To avoid this, edit the Devise initializer and add the <code>:token_auth</code> to the <code>skip_session_storage</code> array and add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods in the <code>Api::V1::SessionsController</code> and the <code>sign_in</code> in the <code>API::V1::RegistrationsController</code>:
+To avoid this, edit the Devise initializer and add the <code>:token_auth</code> to the <code>skip_session_storage</code> array and add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods in the <code>Api::V1::SessionsController</code> and the <code>sign_in</code> method call in the <code>API::V1::RegistrationsController</code>:
 
 {% highlight ruby %}
-# file: initializer/devise.rb
+# file: config/initializers/devise.rb
   # By default Devise will store the user in session. You can skip storage for
   # :http_auth and :token_auth by adding those symbols to the array below.
   # Notice that if you are skipping storage for all authentication paths, you
