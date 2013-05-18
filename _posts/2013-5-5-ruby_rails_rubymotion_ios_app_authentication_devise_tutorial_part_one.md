@@ -269,7 +269,7 @@ There are just two extra methods that will be called when the user touch the but
 
 *The WelcomeController*
 
-## Create a new acount and login users
+## Create a new user account and log users in
 
 Until now we covered some pretty basic stuff. It's time to do some more and delve into the cool aspects of Rubymotion.
 
