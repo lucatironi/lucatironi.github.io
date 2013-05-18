@@ -102,7 +102,7 @@ end
 
 I will use some cool features provided by [BubbleWrap](https://github.com/rubymotion/BubbleWrap) like the <code>App::Persistence</code> helper that wraps <code>NSUserDefaults</code>, <code>BW::JSON</code> for JSON encoding and parsing and <code>BW::HTTP</code> that wraps <code>NSURLRequest, NSURLConnection</code> in order to communicate with our Rails API. BubbleWrap provides a ruby-like interface to common Cocoa and iOS APIs: go and check out the documentation if you want learn some more.
 
-UPDATE May 11th: I decided to switch to use [Bundler](http://gembundler.com). For more information on why, check [this useful guide](http://thunderboltlabs.com/posts/using-bundler-with-rubymotion.html).
+UPDATE May 15th: I decided start using [Bundler](http://gembundler.com). For more information on why, check [this useful guide](http://thunderboltlabs.com/posts/using-bundler-with-rubymotion.html).
 
 To use BubbleWrap just open the Terminal and install the bundler gem:
 
