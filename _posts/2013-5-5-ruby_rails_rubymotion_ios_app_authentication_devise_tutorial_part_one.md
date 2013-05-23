@@ -48,7 +48,7 @@ To avoid this, edit the Devise initializer and add the <code>:token_auth</code> 
 {% endhighlight %}
 
 {% highlight ruby %}
-# file: app/controller/api/v1/registrations_controller.rb
+# file: app/controllers/api/v1/registrations_controller.rb
 class Api::V1::RegistrationsController < Devise::RegistrationsController
   # Other code
 
@@ -73,7 +73,7 @@ end
 {% endhighlight %}
 
 {% highlight ruby %}
-# file: app/controller/api/v1/sessions_controller.rb
+# file: app/controllers/api/v1/sessions_controller.rb
 class Api::V1::SessionsController < Devise::SessionsController
   # Other code
 
