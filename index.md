@@ -6,7 +6,7 @@ description:
 ---
 {% include JB/setup %}
 
-I'm Luca, I'm 29 and I live in Milano, Italy. I like to code.
+I'm Luca, I'm 30 and I live in Milano, Italy. I like to code.
 
 Here's some of the stuff I'd like to share.
 
