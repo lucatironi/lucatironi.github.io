@@ -13,17 +13,24 @@ layout: default
 
   <ul class="post-list">
     {% for post in site.posts %}
+      {% unless post.draft %}
       <li>
         <span class="post-meta">{{ post.date | date_to_long_string }}</span>
 
         <h2>
           <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
         </h2>
-        {% if post.description %}<p>
+        {% if post.description %}
+        <p>
           {{ post.description }}
-          {% if post.updated %}<br><strong>{{ post.updated }}</strong>{% endif %}
-        </p>{% endif %}
+          {% if post.updated %}
+          <br>
+          <strong>{{ post.updated }}</strong>
+          {% endif %}
+        </p>
+        {% endif %}
       </li>
+      {% endunless %}
     {% endfor %}
   </ul>
 

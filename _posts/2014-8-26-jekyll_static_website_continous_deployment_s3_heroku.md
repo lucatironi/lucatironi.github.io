@@ -5,6 +5,7 @@ tagline: Develop a static website with Jekyll and deploy automatically to S3 and
 description: Jekyll can be extendend to use a Rails-like assets pipeline to develop even complex Single Page Applications and can be configured to be automatically deployed to a public S3 bucket and/or to Heroku, using a Continous Deployment service like Codeshio.io
 category: tutorial
 tags: [Ruby, Jekyll, S3, Heroku, Codeship.io]
+draft: true
 ---
 
 ## Requirements
