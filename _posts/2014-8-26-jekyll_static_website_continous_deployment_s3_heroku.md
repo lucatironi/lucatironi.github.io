@@ -30,7 +30,7 @@ Create a new jekyll project
 
 {% highlight bash %}
 $ jekyll new example_website
-$ cd  example_website
+$ cd example_website
 {% endhighlight %}
 
 Run the jekyll server
