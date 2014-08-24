@@ -9,7 +9,7 @@ baseurl:           /
 email:             luca.tironi@gmail.com
 twitter_username:  lucatironi
 github_username:   lucatironi
-disqus_identifier: codelucatironi
+disqus_shortname:  codelucatironi
 
 exclude: ["README.md"]
 highlighter: pygments
