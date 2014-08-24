@@ -7,7 +7,6 @@ category: tutorial
 tags: [Ruby on Rails, Android, Devise, authentication]
 comments: true
 ---
-{% include JB/setup %}
 
 In the [first part of the tutorial](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one), you have been guided through the coding of a complete Ruby on Rails backend that can be used to register and login users through a JSON API.
 
@@ -16,7 +15,7 @@ In the second part then, you'll learn how to code an Android native app that wil
 Once you have Eclipse up and running with everything you need, we can start coding our app.
 
 ### App creation and setup
-Open up Eclipse and navigate the menus to create a new Android application: <code>"File > New > Other ... > Android Application Project"</code>
+Open up Eclipse and navigate the menus to create a new Android application: `"File > New > Other ... > Android Application Project"`
 
 Choose the Application/Project/Package names appropriately and select these SDKs:
 
@@ -25,7 +24,7 @@ Choose the Application/Project/Package names appropriately and select these SDKs
 
 We target the latest Android version and we support devices down to Froyo.
 
-Choose if you want to create a Launcher Icon or not and create a blank activity and call it <code>HomeActivity</code>.
+Choose if you want to create a Launcher Icon or not and create a blank activity and call it `HomeActivity`.
 
 ## HomeActivity
 
@@ -79,17 +78,17 @@ You can test this new resource at the address [http://localhost:3000/api/v1/task
 ### Reading JSON asynchronously with UrlJsonAsyncTask
 The HomeActivity will be the core of our simple app, it retrieves the tasks saved on the Rails backend and show them as a list.
 
-To read the JSON from the application, without interrupting the UI thread, we will use an helper (with some additional classes) written by Tony Lukasavage ([savagelook.com](http://savagelook.com)) called <code>UrlJsonAsyncTask</code>.
+To read the JSON from the application, without interrupting the UI thread, we will use an helper (with some additional classes) written by Tony Lukasavage ([savagelook.com](http://savagelook.com)) called `UrlJsonAsyncTask`.
 
-To add this nice set of tools, just download the package from Github ([github.com/tonylukasavage/com.savagelook.android](https://github.com/tonylukasavage/com.savagelook.android)) and drag and drop the unzipped "com" directory and its content into the Package Explorer in Eclipse. If you did it right, a <code>com.savagelook.android</code> new package will appear under the "src" directory.
+To add this nice set of tools, just download the package from Github ([github.com/tonylukasavage/com.savagelook.android](https://github.com/tonylukasavage/com.savagelook.android)) and drag and drop the unzipped "com" directory and its content into the Package Explorer in Eclipse. If you did it right, a `com.savagelook.android` new package will appear under the "src" directory.
 
 In the following snippet of code I will show you the code I added to the HomeActivity that Eclipse automatically wrote when we created our app.
 
-In order to access our local Rails server from the Android Emulator, we need to use the <code>10.0.2.2</code> IP address that the Emulator maps to the localhost on our machine. Keep in mind to change this constant to the actual address (and port) you will use in production.
+In order to access our local Rails server from the Android Emulator, we need to use the `10.0.2.2` IP address that the Emulator maps to the localhost on our machine. Keep in mind to change this constant to the actual address (and port) you will use in production.
 
-The <code>onCreate()</code> method, after the usual initialization, calls the <code>loadTasksFromAPI()</code> where we create and initialize the <code>GetTasksTask</code> (I know ...) that extends the <code>UrlJsonAsyncTask</code> class.
+The `onCreate()` method, after the usual initialization, calls the `loadTasksFromAPI()` where we create and initialize the `GetTasksTask` (I know ...) that extends the `UrlJsonAsyncTask` class.
 
-The important thing to understand about this useful helper is that we need to override the <code>onPostExecute()</code> method, telling how to use the JSON we hopefully received from the backend.
+The important thing to understand about this useful helper is that we need to override the `onPostExecute()` method, telling how to use the JSON we hopefully received from the backend.
 
 In this case we just extract the tasks array and setup the adapter with the list of task's titles found.
 
@@ -196,7 +195,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 }
 {% endhighlight %}
 
-A default file called <code>res/menu/activity_home.xml</code> should be found, edit it accordantly to the above code with the right id and strings.
+A default file called `res/menu/activity_home.xml` should be found, edit it accordantly to the above code with the right id and strings.
 
 Clicking on refresh should now retrieve the tasks list again.
 
@@ -205,7 +204,7 @@ Before adding the functionality to authorize the access to our tasks to an authe
 
 To do so, we will change the HomeActivity to check if the user already obtained an authorization token from our Rails backend.
 
-We'll do it by adding another override method <code>onResume()</code>:
+We'll do it by adding another override method `onResume()`:
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -232,12 +231,12 @@ public void onResume() {
 }
 {% endhighlight %}
 
-As you can see, we moved the <code>loadTasksFromAPI()</code> call from the <code>onCreate()</code> method to the newly added one.
-The <code>mPreferences</code> variable has been added and we will use the <code>SharedPreferences</code> class to store our login informations later on. More information about this interface can be found here: [developer.android.com/guide/topics/data/data-storage.html#pref](http://developer.android.com/guide/topics/data/data-storage.html#pref)
+As you can see, we moved the `loadTasksFromAPI()` call from the `onCreate()` method to the newly added one.
+The `mPreferences` variable has been added and we will use the `SharedPreferences` class to store our login informations later on. More information about this interface can be found here: [developer.android.com/guide/topics/data/data-storage.html#pref](http://developer.android.com/guide/topics/data/data-storage.html#pref)
 
-What we are going to do now with this code, is to check whether or not there's an auth_token set for our user. If it's present, just load the tasks; if not launch the <code>WelcomeActivity</code>.
+What we are going to do now with this code, is to check whether or not there's an auth_token set for our user. If it's present, just load the tasks; if not launch the `WelcomeActivity`.
 
-To add a new activity, click on the menu <code>"File > New > Other ... > Android activity"</code> and select a blank one and call it <code>"WelcomeActivity"</code>.
+To add a new activity, click on the menu `"File > New > Other ... > Android activity"` and select a blank one and call it `"WelcomeActivity"`.
 
 This activity will be really simple, just presenting a message and two buttons: Register and Login.
 
@@ -281,9 +280,9 @@ public void onBackPressed() {
 }
 {% endhighlight %}
 
-Inside the <code>onCreate()</code> method we simply set the layout and add two onClickListener to the buttons: to start the RegisterActivity from the Register button and to start the LoginActivity from the Login button.
+Inside the `onCreate()` method we simply set the layout and add two onClickListener to the buttons: to start the RegisterActivity from the Register button and to start the LoginActivity from the Login button.
 
-I also added another override - <code>onBackPressed()</code> - because I want to consider this activity as the "main" one until the user has been logged in. So whenever he or she wants to exit our app without having registered/signed in, he or she will be sent back to the Home screen of the phone without going back to the HomeActivity. In other words, he or she won't see the HomeActivity until logged in: the WelcomeActivity will be considered as the actual main activity.
+I also added another override - `onBackPressed()` - because I want to consider this activity as the "main" one until the user has been logged in. So whenever he or she wants to exit our app without having registered/signed in, he or she will be sent back to the Home screen of the phone without going back to the HomeActivity. In other words, he or she won't see the HomeActivity until logged in: the WelcomeActivity will be considered as the actual main activity.
 
 Here's the simple layout for our WelcomeActivity:
 
@@ -335,9 +334,9 @@ Here's the simple layout for our WelcomeActivity:
 </LinearLayout>
 {% endhighlight %}
 
-Don't forget to add the needed strings to the <code>res/values/strings.xml</code> file.
+Don't forget to add the needed strings to the `res/values/strings.xml` file.
 
-Finally, register the new activity in the <code>AndroidManifest.xml</code> file:
+Finally, register the new activity in the `AndroidManifest.xml` file:
 
 {% highlight xml %}
 <!-- file: AndroidManifest.xml -->
@@ -348,7 +347,7 @@ Finally, register the new activity in the <code>AndroidManifest.xml</code> file:
 </activity>
 {% endhighlight %}
 
-I added the <code>android:noHistory</code> attribute because I don't want to allow the user to return to this activity once he or she successfully logged in.
+I added the `android:noHistory` attribute because I don't want to allow the user to return to this activity once he or she successfully logged in.
 
 ![WelcomeActivity](/assets/uploads/images/WelcomeActivity_api10.png)
 ![WelcomeActivity](/assets/uploads/images/WelcomeActivity_api16.png)
@@ -408,7 +407,7 @@ Once we have the LoginActivity file created, let's start with the layout file:
 
 As you can see we added two EditText fields and a Button to a ScrollView, in order to allow the controls to show no matter what the screen size/rotation.
 
-Let's now put a good use of this interface. Open the <code>LoginActivity.java</code> file and add these variables and methods.
+Let's now put a good use of this interface. Open the `LoginActivity.java` file and add these variables and methods.
 
 {% highlight java %}
 // file: LoginActivity.java
@@ -426,7 +425,7 @@ public void onCreate(Bundle savedInstanceState) {
 }
 {% endhighlight %}
 
-If you recall the <code>activity_login.xml</code> layout file, we added an <code>android:onClick</code> attribute to the Button, with a <code>login</code> value. This is the method <code>login()</code> we have to add to our Activity that will be called when the user click on the button.
+If you recall the `activity_login.xml` layout file, we added an `android:onClick` attribute to the Button, with a `login` value. This is the method `login()` we have to add to our Activity that will be called when the user click on the button.
 
 
 {% highlight java %}
@@ -450,16 +449,16 @@ public void login(View button) {
 }
 {% endhighlight %}
 
-The method just collect the values from the two EditText fields and save the user's email and password into our two variables, <code>mUserEmail</code> and <code>mUserPassword</code>.
+The method just collect the values from the two EditText fields and save the user's email and password into our two variables, `mUserEmail` and `mUserPassword`.
 We then check if they are not empty strings and alert the users if they are, prompting him or her to provide all the information to login in.
 
-If everything seems ok, we create a new <code>LoginTask</code> to execute the actual authentication with our Rails backend.
+If everything seems ok, we create a new `LoginTask` to execute the actual authentication with our Rails backend.
 
-The <code>LoginTask</code> is another class we extend from <code>UrlJsonAsyncTask</code> just like we did in the <code>HomeActivity</code> to load the tasks from the API.
-This time, though, we will override not only the <code>onPostExecute()</code> method but also the <code> doInBackground()</code> one.
+The `LoginTask` is another class we extend from `UrlJsonAsyncTask` just like we did in the `HomeActivity` to load the tasks from the API.
+This time, though, we will override not only the `onPostExecute()` method but also the ` doInBackground()` one.
 We have to do this because the standard implementation doesn't allow us to post data to the JSON API, but it's really easy to do otherwise.
 
-Add this new class inside the <code>LoginActivity</code> class.
+Add this new class inside the `LoginActivity` class.
 
 {% highlight java %}
 // file: LoginActivity.java
@@ -544,11 +543,11 @@ private class LoginTask extends UrlJsonAsyncTask {
 {% endhighlight %}
 
 The code should be easy to follow. The important things are that we have to setup the params for our HTTP POST request, adding the user's email and password and setting the correct headers.
-The method then tries to contact the request's url (our API) and if everything goes ok, return to the <code>onPostExecute()</code> method the results.
+The method then tries to contact the request's url (our API) and if everything goes ok, return to the `onPostExecute()` method the results.
 
-If the user exists and the password is correct, the <code>auth_token</code> will be returned from the API with the success info. We then proceed to save it in the <code>SharedPreferences</code> and launch the HomeActivity again, closing this one and showing a simple Toast.
+If the user exists and the password is correct, the `auth_token` will be returned from the API with the success info. We then proceed to save it in the `SharedPreferences` and launch the HomeActivity again, closing this one and showing a simple Toast.
 
-Before switching to the <code>RegisterActivity</code> class, don't forget to add this new activity to the application's manifest.
+Before switching to the `RegisterActivity` class, don't forget to add this new activity to the application's manifest.
 
 {% highlight xml %}
 <!-- file: AndroidManifest.xml -->
@@ -559,7 +558,7 @@ Before switching to the <code>RegisterActivity</code> class, don't forget to add
 </activity>
 {% endhighlight %}
 
-The <code>android:noHistory</code> attribute is added for the same reasons we did it for the WelcomeActivity.
+The `android:noHistory` attribute is added for the same reasons we did it for the WelcomeActivity.
 
 ![LoginActivity](/assets/uploads/images/LoginActivity_api10.png)
 ![LoginActivity](/assets/uploads/images/LoginActivity_api16.png)
@@ -569,7 +568,7 @@ The <code>android:noHistory</code> attribute is added for the same reasons we di
 ## RegisterActivity
 Our app is almost completed (for the sake of this tutorial!) and what's left is adding the possibility for our potential users to register themselves directly on the app itself.
 
-Create now (if you didn't do it before) a new Activity with the usual method and call it <code>RegisterActivity</code>
+Create now (if you didn't do it before) a new Activity with the usual method and call it `RegisterActivity`
 
 The layout file is again a ScrollView, containing our EditText fields for the user's information: email, username, password and password confirmation.
 
@@ -646,12 +645,12 @@ The layout file is again a ScrollView, containing our EditText fields for the us
 </ScrollView>
 {% endhighlight %}
 
-The implementation of the <code>RegisterActivity</code> class is really similar to what we did for the login.
+The implementation of the `RegisterActivity` class is really similar to what we did for the login.
 
-The <code>registerNewAccount()</code> method is called whenever the user click on the register button. We then collect the data from the EditText fields and check if they are empty or not and also if the password and its confirmation are the same.
+The `registerNewAccount()` method is called whenever the user click on the register button. We then collect the data from the EditText fields and check if they are empty or not and also if the password and its confirmation are the same.
 
-We then proceed to send all the information about the new user to the API, using again a custom implementation of the <code>
-UrlJsonAsyncTask</code> class.
+We then proceed to send all the information about the new user to the API, using again a custom implementation of the `
+UrlJsonAsyncTask` class.
 
 {% highlight java %}
 // file: RegisterActivity.java
@@ -701,7 +700,7 @@ public void registerNewAccount(View button) {
 }
 {% endhighlight %}
 
-We need now to add the <code>RegisterTask</code> class implementation just like we did for the login. The details are really similar and maybe we can consider a refactor of the code to avoid some un-necessary repetitions. But I leave this chore to you.
+We need now to add the `RegisterTask` class implementation just like we did for the login. The details are really similar and maybe we can consider a refactor of the code to avoid some un-necessary repetitions. But I leave this chore to you.
 
 {% highlight java %}
 // file: RegisterActivity.java
@@ -818,7 +817,7 @@ private void loadTasksFromAPI(String url) {
 
 The Android app is now complete and it can be extended to be a fully capable application that consumes every data you want to provide via your API.
 
-The very last thing to do is to uncomment the <code>before_filter :authenticate_user!</code> in the <code>TasksController</code> inside the Rails application. Without that filter every data is available without an authentication; with it an user can access to the data only with a proper authentication token.
+The very last thing to do is to uncomment the `before_filter :authenticate_user!` in the `TasksController` inside the Rails application. Without that filter every data is available without an authentication; with it an user can access to the data only with a proper authentication token.
 
 ## Bonus: ActionBarSherlock
 Before concluding this long tutorial, I want to add just a little bonus that will enhance the user's experience of the app for the users that have not the latest and shiniest Android handset.
@@ -830,11 +829,11 @@ Before concluding this long tutorial, I want to add just a little bonus that wil
 > Source: [actionbarsherlock.com](http://www.actionbarsherlock.com)
 
 ### Installing ActionBarSherlock
-Download and extract the actionbarsherlock files from the site and add the library to the current workspace in Eclipse: <code>"File > New > Other ... > Android Project from Existing Code"</code>
+Download and extract the actionbarsherlock files from the site and add the library to the current workspace in Eclipse: `"File > New > Other ... > Android Project from Existing Code"`
 
-Navigate the ActionBarSherlock directory and select the "library" dir. Ignore the warning/error that may arise and right-click on the new project and select <code>"Refactor > Rename"</code> and rename the project *"ABS 4.0"* (or whatever you like).
+Navigate the ActionBarSherlock directory and select the "library" dir. Ignore the warning/error that may arise and right-click on the new project and select `"Refactor > Rename"` and rename the project *"ABS 4.0"* (or whatever you like).
 
-Right-click on the AuthExample project and select <code>"Properties"</code>: click on the <code>"Android"</code> section and add the just added ABS library in the <code>"Library"</code> sub-section.
+Right-click on the AuthExample project and select `"Properties"`: click on the `"Android"` section and add the just added ABS library in the `"Library"` sub-section.
 
 Eclipse should now give you an error like this:
 
@@ -844,10 +843,10 @@ All versions of the libraries must be the same at this time.
 Jar mismatch! Fix your dependencies
 {% endhighlight %}
 
-The problem can be solved by deleting the <code>android-support-v4.jar</code> in the <code>"libs"</code> directory of our projects: browsing the Package Explorer, right-click on it and select <code>"delete"</code>.
+The problem can be solved by deleting the `android-support-v4.jar` in the `"libs"` directory of our projects: browsing the Package Explorer, right-click on it and select `"delete"`.
 
 ### Updating the existing code
-To use all the nice features that ABS provides, we need to alter some code, starting from changing the parent class of our Activities. Instead of extending the <code>android.app.Activity</code>, we need to extend the <code>SherlockActivity</code> like so:
+To use all the nice features that ABS provides, we need to alter some code, starting from changing the parent class of our Activities. Instead of extending the `android.app.Activity`, we need to extend the `SherlockActivity` like so:
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -858,9 +857,9 @@ public class HomeActivity extends SherlockActivity {
 }
 {% endhighlight %}
 
-Do the same for all the other activities and remember to remove the old imports of <code>import android.app.Activity;</code>.
+Do the same for all the other activities and remember to remove the old imports of `import android.app.Activity;`.
 
-In the HomeActivity there will be some problems with the code that manage the creation of the Menu. The fix is quick and consists in changing the method called to get the menu inflater - <code>getMenuInflater()</code> - with <code>getSupportMenuInflater()</code> provided by the SherlockActivity class.
+In the HomeActivity there will be some problems with the code that manage the creation of the Menu. The fix is quick and consists in changing the method called to get the menu inflater - `getMenuInflater()` - with `getSupportMenuInflater()` provided by the SherlockActivity class.
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -871,7 +870,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
 }
 {% endhighlight %}
 
-Finally, change the default theme for the application in the <code>AndroidManifest.xml</code> file.
+Finally, change the default theme for the application in the `AndroidManifest.xml` file.
 
 {% highlight xml %}
 <!-- file: AndroidManifest.xml -->
@@ -881,7 +880,7 @@ Finally, change the default theme for the application in the <code>AndroidManife
         android:theme="@style/Theme.Sherlock" >
 {% endhighlight %}
 
-You can choose the default dark one or <code>Theme.Sherlock.Light</code> and <code>Theme.Sherlock.Light.DarkActionBar</code>. For more information, check out the official documentation at [actionbarsherlock.com/theming](http://actionbarsherlock.com/theming.html)
+You can choose the default dark one or `Theme.Sherlock.Light` and `Theme.Sherlock.Light.DarkActionBar`. For more information, check out the official documentation at [actionbarsherlock.com/theming](http://actionbarsherlock.com/theming.html)
 
 
 ![HomeActivity](/assets/uploads/images/HomeActivity_api10_abs.png)

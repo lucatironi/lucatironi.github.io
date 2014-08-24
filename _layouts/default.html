@@ -1,6 +1,35 @@
----
-theme :
-  name : modernist
----
-{% include JB/setup %}
-{% include themes/modernist/default.html %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  {% include head.html %}
+
+  <body>
+
+    <div class="container">
+
+      <header class="masthead">
+        <h3 class="masthead-title">
+          <a href="{{ site.baseurl }}" title="Home">{{ site.title }}</a>
+          <small>{{ site.tagline }}</small>
+        </h3>
+      </header>
+
+      {{ content }}
+
+      <hr>
+
+      <footer class="footer">
+        <p>
+          You should follow <a href="http://twitter.com/{{ site.twitter_username }}">me on twitter</a> and check <a href="https://github.com/{{ site.github_username }}">my Github account</a>
+        </p>
+        <small>
+          &copy; 2012-{{ site.time | date: '%Y' }}. All rights reserved.
+        </small>
+      </footer>
+
+    </div>
+
+    {% include analytics.html %}
+
+  </body>
+</html>

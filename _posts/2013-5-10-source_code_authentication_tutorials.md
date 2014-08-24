@@ -6,7 +6,6 @@ description: Following several requests, I've decided to publish the revised cod
 category: code
 tags: [Ruby on Rails, Devise, authentication, API]
 ---
-{% include JB/setup %}
 
 Following several requests, I've decided to publish the revised code that I used to write the previous tutorials. I revised the code since the first post and pushed them to Github.
 
