@@ -4,7 +4,6 @@ title: Ruby on Rails and RubyMotion Authentication Part One
 tagline: A Complete iOS App with a Rails API backend
 description: Using the same backend we developed in the previous tutorials, I'll guide you through the coding of an iOS (iPhone) app using Rubymotion that will use the same JSON API as the Android app.
 updated: UPDATED on May 15th
-
 category: tutorial
 tags: [Ruby on Rails, Rubymotion, iPhone, iOS, Devise, authentication, API]
 ---
@@ -28,13 +27,13 @@ $ cd AuthExample
 
 If you have read the previous tutorials you already knows what our app should do: send POST and GET HTTP requests with JSON attributes to the register/login authentication endpoint. To do so we'll need to create some controllers to display the register and login forms.
 
-To start the coding of our Rubymotion app, let's have a look to the config/make file that will compile and launch the app in the iOS simulator: the <code>Rakefile</code>. If you need some more information on what <code>rake</code> is and can do, go to the [official documentation](http://rake.rubyforge.org/).
+To start the coding of our Rubymotion app, let's have a look to the config/make file that will compile and launch the app in the iOS simulator: the `Rakefile`. If you need some more information on what `rake` is and can do, go to the [official documentation](http://rake.rubyforge.org/).
 
 ## A small change to the Authentication API
 
 Before we can start, we have to make some changes in the Ruby on Rails application in order to remove the session caching using Warden. We must do so because iOS uses the sessions (if they're present in the HTTP response headers) and it messes up the authentication with the API (ie: you still keep the same authenticated user even if you logout and login with another one).
 
-To avoid this, edit the Devise initializer and add the <code>:token_auth</code> to the <code>skip_session_storage</code> array and add <code>:store => false</code> to the <code>warden.authenticate!</code> parameters used in the create and destoy methods in the <code>Api::V1::SessionsController</code> and the <code>sign_in</code> method call in the <code>API::V1::RegistrationsController</code>:
+To avoid this, edit the Devise initializer and add the `:token_auth` to the `skip_session_storage` array and add `:store => false` to the `warden.authenticate!` parameters used in the create and destoy methods in the `Api::V1::SessionsController` and the `sign_in` method call in the `API::V1::RegistrationsController`:
 
 {% highlight ruby %}
 # file: config/initializers/devise.rb
@@ -99,7 +98,7 @@ end
 
 ## The Rakefile: configuration and dependencies
 
-I will use some cool features provided by [BubbleWrap](https://github.com/rubymotion/BubbleWrap) like the <code>App::Persistence</code> helper that wraps <code>NSUserDefaults</code>, <code>BW::JSON</code> for JSON encoding and parsing and <code>BW::HTTP</code> that wraps <code>NSURLRequest, NSURLConnection</code> in order to communicate with our Rails API. BubbleWrap provides a ruby-like interface to common Cocoa and iOS APIs: go and check out the documentation if you want learn some more.
+I will use some cool features provided by [BubbleWrap](https://github.com/rubymotion/BubbleWrap) like the `App::Persistence` helper that wraps `NSUserDefaults`, `BW::JSON` for JSON encoding and parsing and `BW::HTTP` that wraps `NSURLRequest, NSURLConnection` in order to communicate with our Rails API. BubbleWrap provides a ruby-like interface to common Cocoa and iOS APIs: go and check out the documentation if you want learn some more.
 
 UPDATE May 15th: I decided to start using [Bundler](http://gembundler.com). For more information on why, check [this useful guide](http://thunderboltlabs.com/posts/using-bundler-with-rubymotion.html).
 
@@ -109,7 +108,7 @@ To use BubbleWrap just open the Terminal and install the bundler gem:
 $ gem install bundler
 {% endhighlight %}
 
-Then create a new file called <code>Gemfile</code> in the root directory of the project.
+Then create a new file called `Gemfile` in the root directory of the project.
 
 {% highlight ruby %}
 # file Gemfile
@@ -189,11 +188,11 @@ class AppDelegate
 end
 {% endhighlight %}
 
-In this simple app we just define the <code>application:didFinishLaunchingWithOptions</code> and an auxiliary method that shows a modal window with the Welcome view.
+In this simple app we just define the `application:didFinishLaunchingWithOptions` and an auxiliary method that shows a modal window with the Welcome view.
 
-The method <code>application:didFinishLaunchingWithOptions</code> creates a new window from the class <code>UIWindow</code> to contain the main <code>UINavigationController</code> in which the <code>TaskListController</code> is pushed on top of the stack and set it as the root controller of the window.
+The method `application:didFinishLaunchingWithOptions` creates a new window from the class `UIWindow` to contain the main `UINavigationController` in which the `TaskListController` is pushed on top of the stack and set it as the root controller of the window.
 
-It then checks if there's an <code>authToken</code> key already present within the <code>App::Persistence</code> interface: if it's not there that means that the user isn't logged in yet and so the welcome screen with the choice between login and register has to be diplayed, calling the <code>showWelcomeController</code> method defined below.
+It then checks if there's an `authToken` key already present within the `App::Persistence` interface: if it's not there that means that the user isn't logged in yet and so the welcome screen with the choice between login and register has to be diplayed, calling the `showWelcomeController` method defined below.
 
 ## The first controller
 
@@ -276,7 +275,7 @@ Until now we covered some pretty basic stuff. It's time to do some more and delv
 
 In order to ease the creation of interfaces with user input forms, I will use [Formotion](http://clayallsopp.github.com/formotion) by the great Clay Allsopp: it provides a simple "ruby-fu" approach to populate your forms with every type of inputs iOS could provide.
 
-To install it, add the Formotion gem to the <code>Gemfile</code> and open the Terminal and install the Formotion gem.
+To install it, add the Formotion gem to the `Gemfile` and open the Terminal and install the Formotion gem.
 
 {% highlight ruby %}
 # file Gemfile
@@ -290,9 +289,9 @@ $ bundle install
 
 ### RegisterContoller
 
-The first controller we are going to create is the <code>RegisterController</code>: it displays the mandatory fields for the creation of a new user and sends them to the API authentication endpoint to validate them and return a valid authentication token.
+The first controller we are going to create is the `RegisterController`: it displays the mandatory fields for the creation of a new user and sends them to the API authentication endpoint to validate them and return a valid authentication token.
 
-The code should be self explanatory, but just to have an overview the entry point is the <code>init</code> method: a new <code>Formotion::Form</code> is created with a dictonary defining the structure of the fields. The method called when the user submits the form is added to the <code>on_submit</code> block and the form is finally initialized.
+The code should be self explanatory, but just to have an overview the entry point is the `init` method: a new `Formotion::Form` is created with a dictonary defining the structure of the fields. The method called when the user submits the form is added to the `on_submit` block and the form is finally initialized.
 
 For more information on the Formotion DSL, check the [official documentation](http://clayallsopp.github.com/formotion).
 
@@ -394,21 +393,21 @@ class RegisterController < Formotion::FormController
 end
 {% endhighlight %}
 
-The other important method of this controller is the <code>register</code> one that is called on submit. As you can see it sets the correct content type in the HTTP headers and compile te JSON object containing the value from the fields using the <code>form.render[:name_of_the_field]</code> method.
+The other important method of this controller is the `register` one that is called on submit. As you can see it sets the correct content type in the HTTP headers and compile te JSON object containing the value from the fields using the `form.render[:name_of_the_field]` method.
 
 Before actually sending the JSON request to the API, we check if all the required fields have been compiled and if the password and the password confirmation are the same, displaying an alert informing the user if they are not.
 
-If everything is fine, it's time to use the BubbleWrap's <code>BW::HTTP.post</code> method to send the HTTP request to the Rails application: before doing so though I will use <code>SVProgressHUD</code> in order to show a nice "loading" alert to give some feedback to the user. The <code>SVProgressHUD</code> is a simple Cocoa library that we actually added using (Motion) CocoaPods in the Rakefile. More info could be found in the [Motion CocoaPods documentation](https://github.com/HipByte/motion-cocoapods).
+If everything is fine, it's time to use the BubbleWrap's `BW::HTTP.post` method to send the HTTP request to the Rails application: before doing so though I will use `SVProgressHUD` in order to show a nice "loading" alert to give some feedback to the user. The `SVProgressHUD` is a simple Cocoa library that we actually added using (Motion) CocoaPods in the Rakefile. More info could be found in the [Motion CocoaPods documentation](https://github.com/HipByte/motion-cocoapods).
 
-Inside the <code>BW::HTTP.post</code> block we check if the response is ok or ko, displaying an alert iforming the user if something went wrong. If the response is ok, we use the <code>BW::JSON.parse</code> method to parse the response and retrieve the <code>auth_token</code> for the brand new user, saving it in the persistence key-value store.
+Inside the `BW::HTTP.post` block we check if the response is ok or ko, displaying an alert iforming the user if something went wrong. If the response is ok, we use the `BW::JSON.parse` method to parse the response and retrieve the `auth_token` for the brand new user, saving it in the persistence key-value store.
 
-Finally the whole navigation controller that contains this and the WelcomeController is dismissed and the <code>TasksListController.controller.refresh</code> is called to actually retrieve the user's tasks. More infor about that later.
+Finally the whole navigation controller that contains this and the WelcomeController is dismissed and the `TasksListController.controller.refresh` is called to actually retrieve the user's tasks. More infor about that later.
 
 ### LoginController
 
-The <code>LoginController</code> is actually really similar to the register one. It uses Formotion to setup the form fields and the <code>login</code> method sends the data to the JSON API, providing feedback if something has gone wrong or the credentials aren't valid.
+The `LoginController` is actually really similar to the register one. It uses Formotion to setup the form fields and the `login` method sends the data to the JSON API, providing feedback if something has gone wrong or the credentials aren't valid.
 
-The most important thing is that - if the authentication with the backend is succesful - we save the <code>auth_token</code> contained in the API response in the <code>App::Persistence</code> store.
+The most important thing is that - if the authentication with the backend is succesful - we save the `auth_token` contained in the API response in the `App::Persistence` store.
 
 {% highlight ruby %}
 # file app/controllers/LoginController.rb
@@ -490,7 +489,7 @@ end
 
 Finally we come to the main view of our app: the Tasks list. First though, we need to setup a simple object to store our tasks retrieved from the API and interact with them within our iOS application.
 
-For this first part of the tutorial, the <code>TaskController</code> is just a placeholder for the completion of the authentication process and that will hold the functional logout button, more will be added in the next part.
+For this first part of the tutorial, the `TaskController` is just a placeholder for the completion of the authentication process and that will hold the functional logout button, more will be added in the next part.
 
 {% highlight ruby %}
 # file app/controllers/TasksListController.rb
@@ -527,9 +526,9 @@ class TasksListController < UIViewController
 end
 {% endhighlight %}
 
-In order to make the logout work, we need to add the <code>logout</code> method to the <code>AppDelegate</code> class: it uses the <code>BW::HTTP.delete</code> method to send a reset of the authentication token to the API and deleting the local value in the Persistence store.
+In order to make the logout work, we need to add the `logout` method to the `AppDelegate` class: it uses the `BW::HTTP.delete` method to send a reset of the authentication token to the API and deleting the local value in the Persistence store.
 
-Finally calls the <code>showWelcomeController</code> method to let the user choose if he/she wants to login again or register a new user.
+Finally calls the `showWelcomeController` method to let the user choose if he/she wants to login again or register a new user.
 
 {% highlight ruby %}
 # file app/app_delegate.rb
@@ -552,7 +551,7 @@ end
 
 # Conclusion
 
-If you haven't done it yet, launch the app with the <code>rake</code> command and see it in action in the simulator:
+If you haven't done it yet, launch the app with the `rake` command and see it in action in the simulator:
 
 {% highlight bash %}
 $ rake

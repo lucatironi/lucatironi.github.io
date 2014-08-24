@@ -3,7 +3,6 @@ layout: post
 title: Jekyll Static Website with Continous Deployment to S3/Heroku
 tagline: Develop a static website with Jekyll and deploy automatically to S3 and/or Heroku
 description: Jekyll can be extendend to use a Rails-like assets pipeline to develop even complex Single Page Applications and can be configured to be automatically deployed to a public S3 bucket and/or to Heroku, using a Continous Deployment service like Codeshio.io
-
 category: tutorial
 tags: [Ruby, Jekyll, S3, Heroku, Codeship.io]
 ---
@@ -315,7 +314,7 @@ If everything went ok, you can push your website for real, by removing the `--dr
 $ s3_website push
 {% endhighlight %}
 
-You can now check on your AWS management console if the files were uploaded and visit the S3 url to see your new shiny pages. The url will be composed by your BUCKET_NAME and the REGION were you created your bucket. More information on the [S3 documentation](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteEndpoints.html) about website endpoints.
+You can now check on your AWS management console if the files were uploaded and visit the S3 url to see your new shiny pages. The url will be composed by your `BUCKET_NAME` and the `REGION` were you created your bucket. More information on the [S3 documentation](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteEndpoints.html) about website endpoints.
 
 {% highlight bash %}
 http://BUCKET_NAME.s3-website-REGION.amazonaws.com

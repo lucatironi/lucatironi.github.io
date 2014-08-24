@@ -17,7 +17,7 @@ layout: default
         <span class="post-meta">{{ post.date | date_to_long_string }}</span>
 
         <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
         </h2>
         {% if post.description %}<p>
           {{ post.description }}
@@ -27,6 +27,6 @@ layout: default
     {% endfor %}
   </ul>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+  <p class="rss-subscribe">subscribe <a href="{{ "feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
 </div>

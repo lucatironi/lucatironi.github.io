@@ -31,7 +31,7 @@ Here's the list of what we are going to use in this tutorial:
 - ActionBarSherlock - [actionbarsherlock.com](http://actionbarsherlock.com)
 
 ## The Rails Backend
-Start by creating a new Rails app. At the moment I'm writing the latest version of rails is 3.2.8, check yours by using <code>rails -v</code> in the command line.
+Start by creating a new Rails app. At the moment I'm writing the latest version of rails is 3.2.8, check yours by using `rails -v` in the command line.
 
 {% highlight bash %}
 $ rails new authexample_webapp
@@ -54,7 +54,7 @@ $ rails generate devise:install
 $ rails generate devise user
 {% endhighlight %}
 
-Uncomment the following lines in the migration that are relative to the <code>token_authenticatable</code> module:
+Uncomment the following lines in the migration that are relative to the `token_authenticatable` module:
 
 {% highlight ruby %}
 # file: db/migrate/<timestamp>_devise_create_users.rb
@@ -63,7 +63,7 @@ t.string :authentication_token
 add_index :users, :authentication_token, :unique => true
 {% endhighlight %}
 
-Add the <code>:token_authenticatable</code> to the devise modules in the user model:
+Add the `:token_authenticatable` to the devise modules in the user model:
 
 {% highlight ruby %}
 # file: app/models/user.rb
@@ -72,7 +72,7 @@ devise :database_authenticatable, :registerable,
        :token_authenticatable
 {% endhighlight %}
 
-Add the before filter <code>:ensure_authentication_token</code> to the user model:
+Add the before filter `:ensure_authentication_token` to the user model:
 
 {% highlight ruby %}
 # file: app/models/user.rb
@@ -89,9 +89,9 @@ config.token_authentication_key = :auth_token
 {% endhighlight %}
 
 #### Bonus: add username to the user model
-In our Android app we want to give possibility to the user to specify a username in the registration form. Let's add this column to the table 'users' and the attribute to the <code>attr_accesible</code> list in the user model.
+In our Android app we want to give possibility to the user to specify a username in the registration form. Let's add this column to the table 'users' and the attribute to the `attr_accesible` list in the user model.
 
-Add the following line to the <code>change</code> method in the migration.
+Add the following line to the `change` method in the migration.
 
 {% highlight ruby %}
 # file: db/migrate/<timestamp>_devise_create_users.rb
@@ -104,10 +104,10 @@ attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 {% endhighlight %}
 
 #### Bonus: email confirmation from web, skip it from the Android app
-The users of our Android app don't want to wait to use it, so we skip the confirmation email check provided by Devise with the <code>confirmable</code> module.
+The users of our Android app don't want to wait to use it, so we skip the confirmation email check provided by Devise with the `confirmable` module.
 If you still want to use the module for the users that register from the webapp, just add this lines to the code.
 
-Uncomment the following lines in the migration that are relative to the <code>confirmable</code> module:
+Uncomment the following lines in the migration that are relative to the `confirmable` module:
 
 {% highlight ruby %}
 # file: db/migrate/<timestamp>_devise_create_users.rb
@@ -118,7 +118,7 @@ t.datetime :confirmation_sent_at
 add_index :users, :confirmation_token,   :unique => true
 {% endhighlight %}
 
-Add the <code>:confirmable</code> to the devise available modules in the user model:
+Add the `:confirmable` to the devise available modules in the user model:
 
 {% highlight ruby %}
 # file: app/models/user.rb
@@ -127,7 +127,7 @@ devise :database_authenticatable, :registerable,
        :confirmable, :token_authenticatable
 {% endhighlight %}
 
-We need a way to bypass the confirmation step after the creation of a new user: setting a date to the <code>confirmed_at</code> will do this. We add a new method to the user model that will be used in our Api controller.
+We need a way to bypass the confirmation step after the creation of a new user: setting a date to the `confirmed_at` will do this. We add a new method to the user model that will be used in our Api controller.
 
 {% highlight ruby %}
 # file: app/models/user.rb
@@ -144,9 +144,9 @@ $ rake db:create db:migrate
 
 ### API Sessions Controller (login and logout)
 Let's start coding the sessions controller that will be used by our Android app to authenticate the users.
-I want to use a namespace and a version for our API, so its controllers will be under the <code>app/controller/api/v1/</code> folder.
+I want to use a namespace and a version for our API, so its controllers will be under the `app/controller/api/v1/` folder.
 
-The sessions controller has two actions: create for login and destroy for logout. The first accepts a <code>user</code> JSON object as POST data with an <code>email</code> and a <code>password</code> parameters and returns an <code>auth_token</code> if the user exists in the database and the password is correct. The logout action expects an <code>auth_token</code> parameter in the url.
+The sessions controller has two actions: create for login and destroy for logout. The first accepts a `user` JSON object as POST data with an `email` and a `password` parameters and returns an `auth_token` if the user exists in the database and the password is correct. The logout action expects an `auth_token` parameter in the url.
 
 {% highlight ruby %}
 # file: app/controller/api/v1/sessions_controller.rb
@@ -197,7 +197,7 @@ end
 {% endhighlight %}
 
 #### Test the login
-Let's create a user to test the login with, open the rails console with <code>rails console</code> in the command line and write:
+Let's create a user to test the login with, open the rails console with `rails console` in the command line and write:
 
 {% highlight ruby %}
 user = User.new(:name => 'testuser', :email => 'user@example.com', :password => 'secret', :password_confirmation => 'secret')
@@ -205,7 +205,7 @@ user.skip_confirmation!
 user.save
 {% endhighlight %}
 
-Close the console and fire up the <code>rails server</code> and in another command line use curl to invoke our new login API:
+Close the console and fire up the `rails server` and in another command line use curl to invoke our new login API:
 
 {% highlight bash %}
 curl -v -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST http://localhost:3000/api/v1/sessions -d "{\"user\":{\"email\":\"user@example.com\",\"password\":\"secret\"}}"
@@ -218,7 +218,7 @@ If everything went fine, you should see the last line saying this (the auth_toke
 {% endhighlight %}
 
 #### Test the logout
-Using the auth_token that the API gave us back when we logged in and specifying the <code>DELETE</code> verb we can reset the authentication token of the user, logging him out.
+Using the auth_token that the API gave us back when we logged in and specifying the `DELETE` verb we can reset the authentication token of the user, logging him out.
 
 {% highlight bash %}
 curl -v -H 'Content-Type: application/json' -H 'Accept: application/json' -X DELETE http://localhost:3000/api/v1/sessions/\?auth_token\=JRYodzXgrLsk157ioYHf
@@ -299,7 +299,7 @@ gem 'activeadmin'
 gem 'meta_search', '>= 1.1.0.pre' # activeadmin needs this if Rails >= 3.1
 {% endhighlight %}
 
-Don't forget to launch the <code>bundle install</code> command.
+Don't forget to launch the `bundle install` command.
 ActiveAdmin will then generate the configuration file and some migrations. You can find more information in the official documentation: www.activeadmin.info
 
 {% highlight bash %}
@@ -308,7 +308,7 @@ $ rails generate active_admin:install
 $ rake db:migrate
 {% endhighlight %}
 
-Add a new file to the <code>app/admin</code> folder to configure the users admin interface:
+Add a new file to the `app/admin` folder to configure the users admin interface:
 
 {% highlight ruby %}
 # file: app/admin/user.rb
@@ -350,7 +350,7 @@ ActiveAdmin.register User do
 end
 {% endhighlight %}
 
-Launch the <code>rails server</code> and go to [http://localhost:3000/admin](http://localhost:3000/admin) and login with the default ActiveAdmin credentials:
+Launch the `rails server` and go to [http://localhost:3000/admin](http://localhost:3000/admin) and login with the default ActiveAdmin credentials:
 - User: admin@example.com
 - Password: password
 
@@ -373,7 +373,7 @@ $ git push heroku master
 $ heroku run rake db:migrate
 {% endhighlight %}
 
-Now go to the address that Heroku created for your app and see if everything worked or not. More details on issues can be spotted with the <code>heroku logs</code> command.
+Now go to the address that Heroku created for your app and see if everything worked or not. More details on issues can be spotted with the `heroku logs` command.
 
 ## Part Two: The Android App
 Proceed now to the [second part of the tutorial](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two), to learn how to build a fully featured Android App that can interact with the Ruby on Rails backend we just coded.

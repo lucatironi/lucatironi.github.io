@@ -15,11 +15,11 @@ Let's start by securing a bit more the API, then we will proceed to enable the c
 
 ## Security
 
-Since I posted the tutorial I got some good advices on how to improve the API's security, for example not passing the <code>auth_token</code> as a GET parameter but in the HTTP Headers.
+Since I posted the tutorial I got some good advices on how to improve the API's security, for example not passing the `auth_token` as a GET parameter but in the HTTP Headers.
 
-According to [this response](https://groups.google.com/d/msg/plataformatec-devise/o3Gqgl0yUZo/tR6-ulld0yYJ) to a similar question on the official Devise Support Group, we need to override the <code>params_auth_hash</code> of the <code>TokenAuthenticatable</code> module.
+According to [this response](https://groups.google.com/d/msg/plataformatec-devise/o3Gqgl0yUZo/tR6-ulld0yYJ) to a similar question on the official Devise Support Group, we need to override the `params_auth_hash` of the `TokenAuthenticatable` module.
 
-Add the following code to the <code>devise.rb</code> initializer in the <code>config/initializers/</code> directory, just inside the <code>Devise.setup</code> block (for example at the end, before the closing "end").
+Add the following code to the `devise.rb` initializer in the `config/initializers/` directory, just inside the `Devise.setup` block (for example at the end, before the closing "end").
 
 {% highlight ruby %}
 # file: config/initializers/devise.rb
@@ -51,10 +51,10 @@ $ curl http://localhost:3000/api/v1/tasks.json -H 'Authorization: Token token="N
 You should receive the hard-coded tasks as usual.
 
 It's now the turn of our Android app to be modified to send the auth_token as a header when asking the tasks to the API.
-To do this I decided to slightly modify the <code>UrlJsonAsyncTask</code> and <code>JsonHelper</code> from the library we used created by [Tony Lukasavage](https://github.com/tonylukasavage/com.savagelook.android).
+To do this I decided to slightly modify the `UrlJsonAsyncTask` and `JsonHelper` from the library we used created by [Tony Lukasavage](https://github.com/tonylukasavage/com.savagelook.android).
 I forked the original project on GitHub and made the modifications to the code. You can download the forked library [here](https://github.com/lucatironi/com.savagelook.android).
 
-I added to the <code>JsonHelper</code> a new parameter - <code>authToken</code> to be passed to the <code>get*FromUrl()</code> methods that will be added to the HTTP Headers in the <code>getStringFromUrl()</code> method:
+I added to the `JsonHelper` a new parameter - `authToken` to be passed to the `get*FromUrl()` methods that will be added to the HTTP Headers in the `getStringFromUrl()` method:
 
 {% highlight java %}
 // file: com.savagelook.android/JsonHelper.java
@@ -68,9 +68,9 @@ private static String getStringFromUrl(String url, int connectTimeout, int readT
 }
 {% endhighlight %}
 
-The <code>auth_token</code> will be passed to the <code>JsonHelper</code> from the modified <code>UrlJsonAsyncTask</code> that has gained a new attribute <code>authToken</code>, with its own getter and setter. We will use the latter in our <code>HomeActivity</code> to pass the saved token our app received and saved in the properties after the login.
+The `auth_token` will be passed to the `JsonHelper` from the modified `UrlJsonAsyncTask` that has gained a new attribute `authToken`, with its own getter and setter. We will use the latter in our `HomeActivity` to pass the saved token our app received and saved in the properties after the login.
 
-To finish up all this changes made to our app, just modify the <code>loadTasksFromAPI()</code> method in the <code>HomeActivity</code>
+To finish up all this changes made to our app, just modify the `loadTasksFromAPI()` method in the `HomeActivity`
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -82,13 +82,13 @@ private void loadTasksFromAPI(String url) {
 }
 {% endhighlight %}
 
-As you can see we are not passing the token as a GET parameter in the url but passing it to the <code>GetTasksTask</code> (that is extended from <code>UrlJsonAsyncTask</code>) thanks to the new setter method.
+As you can see we are not passing the token as a GET parameter in the url but passing it to the `GetTasksTask` (that is extended from `UrlJsonAsyncTask`) thanks to the new setter method.
 
 It's now time to compile the app and test it. Everything should run as before, but now it will be more secure!
 
 ## A real task
 
-First of all we need to get rid of our fake tasks we setup in the previous tutorial. Let's start creating a real model for the Task. We just need a <code>title</code> and a <code>completed</code> attributes. I also associate every task to the user who creates it.
+First of all we need to get rid of our fake tasks we setup in the previous tutorial. Let's start creating a real model for the Task. We just need a `title` and a `completed` attributes. I also associate every task to the user who creates it.
 
 {% highlight bash %}
 $ rails g model task user_id:integer title:string completed:boolean
@@ -135,7 +135,7 @@ class User < ActiveRecord::Base
 end
 {% endhighlight %}
 
-Don't forget to add the <code>has_many</code> association to the User model.
+Don't forget to add the `has_many` association to the User model.
 
 {% highlight bash %}
 $ rake db:migrate
@@ -158,7 +158,7 @@ gem 'rabl'
 $ bundle install
 {% endhighlight %}
 
-And run the <code>bundle install</code> command to install it. You also should add an initializer to the app to specify that you don't want to add a root element to the JSON response and the children elements of the API. More info about that can be found in the Railscast linked above and in the official documentation of the Rabl gem.
+And run the `bundle install` command to install it. You also should add an initializer to the app to specify that you don't want to add a root element to the JSON response and the children elements of the API. More info about that can be found in the Railscast linked above and in the official documentation of the Rabl gem.
 
 {% highlight ruby %}
 # file: config/initializers/rabl_config.rb
@@ -207,7 +207,7 @@ Rabl, in my opinion, is not so easy to understand at first; but using the docume
 
 In this view I wanted to provide the same JSON format we faked before and use the same fields of the other part of the API, such as the user registration and authentication.
 
-The <code>object false</code> tells to the Rabl builder we don't want to map the root-level of the response directly to any object and we construct the nodes freely.
+The `object false` tells to the Rabl builder we don't want to map the root-level of the response directly to any object and we construct the nodes freely.
 
 I added two nodes with a success and info information that will be used by the Android app to check if everything is ok with the response and provide a message.
 
@@ -298,7 +298,7 @@ curl -v -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Au
 
 Having completed the coding of the backend end point of the API, it's now time to add the new feature to the Android app. In order to create a new task, the app should provide a new Activity with a text field and a save button.
 
-This new Activity would be launched from the app action bar/menu, so we need to add a new item to it and catch the click on the new task button. Add the new <code>menu_new_task</code> string to the strings.xml resource file.
+This new Activity would be launched from the app action bar/menu, so we need to add a new item to it and catch the click on the new task button. Add the new `menu_new_task` string to the strings.xml resource file.
 
 {% highlight xml %}
 <!-- file: res/menu/activity_home.xml -->
@@ -314,7 +314,7 @@ This new Activity would be launched from the app action bar/menu, so we need to 
 </menu>
 {% endhighlight %}
 
-In order to launch the new task Activity, add a new id to the switch case in the <code>onOptionsItemSelected()</code> method of the <code>HomeActivity</code> class. When a user will click on the "New Task", the <code>NewTaskActivity</code> will be launched.
+In order to launch the new task Activity, add a new id to the switch case in the `onOptionsItemSelected()` method of the `HomeActivity` class. When a user will click on the "New Task", the `NewTaskActivity` will be launched.
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -335,9 +335,9 @@ public boolean onOptionsItemSelected(MenuItem item) {
 }
 {% endhighlight %}
 
-Having added the additional code to manage the launch of the <code>NewTaskActivity</code>, it's time to actually create this new activity:
+Having added the additional code to manage the launch of the `NewTaskActivity`, it's time to actually create this new activity:
 
-Open the menu <code>File > New > Other ... > Android Activity</code> and name the new file <code>NewTaskActivity</code>.
+Open the menu `File > New > Other ... > Android Activity` and name the new file `NewTaskActivity`.
 
 You can see the code for this new class here:
 
@@ -438,15 +438,15 @@ public class NewTaskActivity extends SherlockActivity {
 }
 {% endhighlight %}
 
-The Activity is very similar to the <code>RegisterActivity</code> and as you can see the code is almost copied verbatim.
+The Activity is very similar to the `RegisterActivity` and as you can see the code is almost copied verbatim.
 
-The differences are mainly in the <code>CreateTaskTask</code> class extend from <code>UrlJsonAsyncTask</code> that is called by the <code>saveTask()</code> method when the user click on the save button.
+The differences are mainly in the `CreateTaskTask` class extend from `UrlJsonAsyncTask` that is called by the `saveTask()` method when the user click on the save button.
 
-The <code>CreateTaskStak doInBackground()</code> method sets up the JSON request with all the right attributes (the auth_token taken from the <code>SharedPreferences</code> and the value of the text field) and sends them to the API end point.
+The `CreateTaskStak doInBackground()` method sets up the JSON request with all the right attributes (the auth_token taken from the `SharedPreferences` and the value of the text field) and sends them to the API end point.
 
-The <code>onPostExecute</code> method instead close the activity in case of success and launch the <code>HomeActivity</code> again.
+The `onPostExecute` method instead close the activity in case of success and launch the `HomeActivity` again.
 
-The following code is the actual layout used for the <code>NewTaskActivity</code>: it's a simple <code>EditText</code> field and a <code>Button</code>. Remember to add all the necessary strings to the strings.xml resource file.
+The following code is the actual layout used for the `NewTaskActivity`: it's a simple `EditText` field and a `Button`. Remember to add all the necessary strings to the strings.xml resource file.
 
 {% highlight xml %}
 <!-- file: res/layout/activity_new_task.xml -->
@@ -508,7 +508,7 @@ This is the last stretch of this long tutorial, bear with me just for a few line
 
 To actually do something with our tasks, we need a way to check them as "completed". We already have an handy attribute to mark the task but it lacks a method to do so.
 
-Reopen the Rails application and add these two new methods to the <code>Task</code> model.
+Reopen the Rails application and add these two new methods to the `Task` model.
 
 {% highlight ruby %}
 # file: app/models/task.rb
@@ -590,7 +590,7 @@ put 'tasks/:id/open' => 'tasks#open', :as => 'open_task'
 put 'tasks/:id/complete' => 'tasks#complete', :as => 'complete_task'
 {% endhighlight %}
 
-Finally add these two new actions to the routes, inside the <code>:api</code> namespace, after the tasks index route.
+Finally add these two new actions to the routes, inside the `:api` namespace, after the tasks index route.
 
 You can try the complete action via the API with the usual curl command (provided you have a task already created):
 
@@ -606,20 +606,20 @@ curl -v -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Au
 
 For the last time in this series of tutorials, we need to open Eclipse and make some changes to the code of the Android app.
 
-Open the <code>HomeActivity</code> file and start coding the last lines of code. I add another constant with the url of the tasks "toggle" endpoint of the API. We will add the task id and the required method (open or complete) when we will send the request in another method.
+Open the `HomeActivity` file and start coding the last lines of code. I add another constant with the url of the tasks "toggle" endpoint of the API. We will add the task id and the required method (open or complete) when we will send the request in another method.
 
 {% highlight java %}
 // file: HomeActivity.java
 private static final String TOGGLE_TASKS_URL = "http://10.0.2.2:3000/api/v1/tasks/";
 {% endhighlight %}
 
-Before starting to add the code to actually toggle the completion of a task, we need to refactor some existing methods. When the <code>GetTasksTask</code> class populates the tasks list with the objects retrieved from the API, instead of pushing just the titles of the tasks from the JSON response in an array, the methods populates an <code>ArrayList</code> of <code>Task</code> objects.
+Before starting to add the code to actually toggle the completion of a task, we need to refactor some existing methods. When the `GetTasksTask` class populates the tasks list with the objects retrieved from the API, instead of pushing just the titles of the tasks from the JSON response in an array, the methods populates an `ArrayList` of `Task` objects.
 
 The for loop creates the new tasks to be added to the array with the given attributes extracted from the JSON response.
 
-I also changed the way we handle the <code>ListView</code> items, creating a custom <code>Adapter</code> instead of using a normal <code>ArrayAdapter</code>.
+I also changed the way we handle the `ListView` items, creating a custom `Adapter` instead of using a normal `ArrayAdapter`.
 
-Note that I changed the layout for the list items from <code>simple_list_item1</code> to <code>simple_list_item_checked</code> that uses the <code>CheckedTextView</code> instead of a simple <code>TextView</code> to render the items.
+Note that I changed the layout for the list items from `simple_list_item1` to `simple_list_item_checked` that uses the `CheckedTextView` instead of a simple `TextView` to render the items.
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -655,9 +655,9 @@ private class GetTasksTask extends UrlJsonAsyncTask {
 }
 {% endhighlight %}
 
-The actual code of the <code>Task</code> class is as follow. It's basically a Java implementation of the Ruby class, with the <code>id</code>, <code>title</code> and <code>completed</code> attributes and their getters and setters.
+The actual code of the `Task` class is as follow. It's basically a Java implementation of the Ruby class, with the `id`, `title` and `completed` attributes and their getters and setters.
 
-Just create a new class from the menu <code>File > New > Class</code> and name it <code>Task</code>.
+Just create a new class from the menu `File > New > Class` and name it `Task`.
 
 {% highlight java %}
 // file: Task.java
@@ -692,17 +692,17 @@ public class Task {
 }
 {% endhighlight %}
 
-The code for the custom adapter could be added inside the <code>HomeActivity</code> class file at the end before the closing braket.
+The code for the custom adapter could be added inside the `HomeActivity` class file at the end before the closing braket.
 
 More info about adapters can be found in the [official documentation](http://developer.android.com/reference/android/widget/Adapter.html).
 
-Particular interest in this code should be noted to the <code>getView()</code> method where it sets the <code>CheckedTextView</code> attributes from the <code>Task</code>:
-- the <code>setText()</code> method uses the task's title
-- the <code>setChecked()</code> method sets the "checked" mark based on the state of the completed attribute of the task
-- a <code>onClickListener()</code> is set for the list item (see the <code>onClick()</code> method)
-- the <code>setTag()</code> method assigns the task's id to the tag to grab it when it's clicked and use it to call the API
+Particular interest in this code should be noted to the `getView()` method where it sets the `CheckedTextView` attributes from the `Task`:
+- the `setText()` method uses the task's title
+- the `setChecked()` method sets the "checked" mark based on the state of the completed attribute of the task
+- a `onClickListener()` is set for the list item (see the `onClick()` method)
+- the `setTag()` method assigns the task's id to the tag to grab it when it's clicked and use it to call the API
 
-The <code>onClick()</code> method simply calls the API based on the checked status of the clicked list item: if it's checked (e.g. completed) send the request to the "open" action, otherwise to the "complete" one. The url is composed of the constant we set earlier, the task's id extracted with the <code>getTag()</code> method from the list item and the correct action to call (open or complete).
+The `onClick()` method simply calls the API based on the checked status of the clicked list item: if it's checked (e.g. completed) send the request to the "open" action, otherwise to the "complete" one. The url is composed of the constant we set earlier, the task's id extracted with the `getTag()` method from the list item and the correct action to call (open or complete).
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -751,7 +751,7 @@ private class TaskAdapter extends ArrayAdapter<Task> implements OnClickListener 
 }
 {% endhighlight %}
 
-The <code>toggleTasksWithAPI()</code> method is very simple and it just instantiates another class extended from the <code>UrlJsonAsyncTask</code> and sets the title for the dialog and calls the execute method with the provided url as we have seen above.
+The `toggleTasksWithAPI()` method is very simple and it just instantiates another class extended from the `UrlJsonAsyncTask` and sets the title for the dialog and calls the execute method with the provided url as we have seen above.
 
 {% highlight java %}
 // file: HomeActivity.java
@@ -762,11 +762,11 @@ private void toggleTasksWithAPI(String url) {
 }
 {% endhighlight %}
 
-We are almost there! The last class we need to add to the <code>HomeActivity</code> is the aforementioned <code>ToggleTaskTask</code>. As you can see it's very similar to the <code>RegisterTask</code> we coded in the previous part: it setups the json request with the correct headers with the auth token and executes.
+We are almost there! The last class we need to add to the `HomeActivity` is the aforementioned `ToggleTaskTask`. As you can see it's very similar to the `RegisterTask` we coded in the previous part: it setups the json request with the correct headers with the auth token and executes.
 
-Note that we are using the <code>HttpPut</code> class instead of the <code>HttpPost</code> one because our API responds to the PUT http verb for the open and complete actions.
+Note that we are using the `HttpPut` class instead of the `HttpPost` one because our API responds to the PUT http verb for the open and complete actions.
 
-The <code>onPostExecute()</code> method just shows a <code>Toast</code> with the success or error message coming from the API.
+The `onPostExecute()` method just shows a `Toast` with the success or error message coming from the API.
 
 {% highlight java %}
 // file: HomeActivity.java

@@ -13,9 +13,9 @@ In this second part we will complete the app with the missing features like disp
 
 ## Displaying User's Tasks
 
-Last time we left the <code>TasksListController</code> with just a blank view and nothing to show besides a title bar. In order to retrieve, create and update the user's tasks from the backend, we need something that will manage this kind of activities.
+Last time we left the `TasksListController` with just a blank view and nothing to show besides a title bar. In order to retrieve, create and update the user's tasks from the backend, we need something that will manage this kind of activities.
 
-To do so we create a simple Ruby model/class called <code>Task</code> and we use some Ruby meta-programming to create some accessors method (getters and setters). It seems complicated but it's not: for each of the the Task's properties (id, title and completed flag) we create a getter and a setter through <code>attr_accessor</code> and we override the <code>initialize</code> method to pass an Hash of values to the <code>Task.new</code> call to set them to the correct property.
+To do so we create a simple Ruby model/class called `Task` and we use some Ruby meta-programming to create some accessors method (getters and setters). It seems complicated but it's not: for each of the the Task's properties (id, title and completed flag) we create a getter and a setter through `attr_accessor` and we override the `initialize` method to pass an Hash of values to the `Task.new` call to set them to the correct property.
 
 To learn more about this topic, I suggest to have a look to [this tutorial](http://rubymotion-tutorial.com/7-models).
 
@@ -66,15 +66,15 @@ class Task
 end
 {% endhighlight %}
 
-The <code>Task.all</code> is a similar to an ActiveRecord "find all" method. It will call the API and retrieve the user's tasks and call the block, passing the tasks to it to do something with them (ie: populating a list).
+The `Task.all` is a similar to an ActiveRecord "find all" method. It will call the API and retrieve the user's tasks and call the block, passing the tasks to it to do something with them (ie: populating a list).
 
-To put this code in good use, we'll add some lines to the <code>TasksListController</code> and transform it in a TableView: in the <code>viewDidLoad</code> method a <code>@tasksTableView</code> instance variable is created with <code>UITableView.alloc.initWithFrame</code>.
+To put this code in good use, we'll add some lines to the `TasksListController` and transform it in a TableView: in the `viewDidLoad` method a `@tasksTableView` instance variable is created with `UITableView.alloc.initWithFrame`.
 
-The delegate and datasource is set to the controller itself, so it is necessary to add some method to it to populate and manage the tableview's cells: <code>tableView(tableView, numberOfRowsInSection:section)</code> to return the cell's count and <code>tableView(tableView, cellForRowAtIndexPath:indexPath)</code> to return the cell at the given position.
+The delegate and datasource is set to the controller itself, so it is necessary to add some method to it to populate and manage the tableview's cells: `tableView(tableView, numberOfRowsInSection:section)` to return the cell's count and `tableView(tableView, cellForRowAtIndexPath:indexPath)` to return the cell at the given position.
 
-Don't forget to add the <code>attr_accessor :tasks</code> at the beginning of the file: it sets up an instance variable to store the tasks as an array.
+Don't forget to add the `attr_accessor :tasks` at the beginning of the file: it sets up an instance variable to store the tasks as an array.
 
-Finally we add the actual code for the <code>refresh</code> method that is called clicking on the refresh button and at the end of the <code>viewDidLoad</code> method in order to populate the table list with the task retrieved from the API.
+Finally we add the actual code for the `refresh` method that is called clicking on the refresh button and at the end of the `viewDidLoad` method in order to populate the table list with the task retrieved from the API.
 
 {% highlight ruby %}
 # file app/controllers/TasksController.rb
@@ -152,9 +152,9 @@ class TasksListController < UIViewController
 end
 {% endhighlight %}
 
-In the <code>refresh</code> method we first clear the controller instance variable <code>tasks</code> and we use the <code>Task.all</code> method to retrieve the user's tasks and set them to the same variable. We then reload the data inside the <code>@tasksTableView</code>.
+In the `refresh` method we first clear the controller instance variable `tasks` and we use the `Task.all` method to retrieve the user's tasks and set them to the same variable. We then reload the data inside the `@tasksTableView`.
 
-The actual cells with the correct task's title will be set by the <code>tableView(tableView, cellForRowAtIndexPath:indexPath)</code> with the updated tasks list.
+The actual cells with the correct task's title will be set by the `tableView(tableView, cellForRowAtIndexPath:indexPath)` with the updated tasks list.
 
 ![TasksListController](/assets/uploads/images/TasksListController.png)
 
@@ -164,7 +164,7 @@ The actual cells with the correct task's title will be set by the <code>tableVie
 
 Unless you want to send curl command in order to create new tasks, we need to add the most important feature of the app: the "new task" view.
 
-First thing first, modify the <code>viewDidLoad</code> method inside the <code>TasksListController</code> adding the "+" button to the right of the navigation bar, besides the refresh button.
+First thing first, modify the `viewDidLoad` method inside the `TasksListController` adding the "+" button to the right of the navigation bar, besides the refresh button.
 
 {% highlight ruby %}
 # file app/controllers/TasksListController.rb
@@ -183,7 +183,7 @@ class TasksListController < UIViewController
 end
 {% endhighlight %}
 
-Then add another instance method - <code>addNewTask</code> - at the end of the file that will be called when the user click on the "+" button we just added.
+Then add another instance method - `addNewTask` - at the end of the file that will be called when the user click on the "+" button we just added.
 
 {% highlight ruby %}
 # file app/controllers/TasksListController.rb
@@ -200,9 +200,9 @@ class TasksListController < UIViewController
 end
 {% endhighlight %}
 
-As you can see, what this method does is similar to the way we launch the <code>WelcomeController</code> in the app delegate: we create a new instance of this new view controller - <code>NewTaskController</code> - we are about to code, we push it in the stack of a <code>UINavigationController</code> and we present the whole thing as a modal, sliding up from the bottom.
+As you can see, what this method does is similar to the way we launch the `WelcomeController` in the app delegate: we create a new instance of this new view controller - `NewTaskController` - we are about to code, we push it in the stack of a `UINavigationController` and we present the whole thing as a modal, sliding up from the bottom.
 
-The actual <code>NewTaskController</code> is a simple <code>Formotion::FormContoller</code> similar to the login and register one: just a text field and a button to create the new task.
+The actual `NewTaskController` is a simple `Formotion::FormContoller` similar to the login and register one: just a text field and a button to create the new task.
 
 {% highlight ruby %}
 # file app/controllers/NewTaskController.rb
@@ -249,11 +249,11 @@ class NewTaskController < Formotion::FormController
 end
 {% endhighlight %}
 
-Take a look to the bare foundation of this controller: it sets the text field and the button using the <code>init</code> method, it sets the "cancel" button in the navigation bar and defines the method to actually cancel the create action and dismiss the controller.
+Take a look to the bare foundation of this controller: it sets the text field and the button using the `init` method, it sets the "cancel" button in the navigation bar and defines the method to actually cancel the create action and dismiss the controller.
 
-Before going deeper, we have to go back to the <code>Task</code> model to add a new class method that we'll use to create new tasks and send them to the backend through the API.
+Before going deeper, we have to go back to the `Task` model to add a new class method that we'll use to create new tasks and send them to the backend through the API.
 
-The <code>Task.create</code> method does this thing in a simple way, leveraring on the code we already used in other places like the login action: it sends a POST request to the API endpoint dedicated to the creation of new tasks, with the task's parameters in the payload. Hopefully, if everything is correct, it sends back the request's response and calls the provided block.
+The `Task.create` method does this thing in a simple way, leveraring on the code we already used in other places like the login action: it sends a POST request to the API endpoint dedicated to the creation of new tasks, with the task's parameters in the payload. Hopefully, if everything is correct, it sends back the request's response and calls the provided block.
 
 {% highlight ruby %}
 # file app/models/Task.rb
@@ -281,7 +281,7 @@ class Task
 end
 {% endhighlight %}
 
-To use this new feature in the <code>NewTaskController</code> we need to add a new method called <code>createTask</code> to it:
+To use this new feature in the `NewTaskController` we need to add a new method called `createTask` to it:
 
 {% highlight ruby %}
 # file app/controllers/NewTaskController.rb
@@ -309,7 +309,7 @@ end
 
 As you can see, before passing the user's input to the method, we checks if the submitted title isn't blank and providing an alert if it is.
 
-If the task's title isn't blank, we use the <code>Task.create</code> with a block that provides feedback to the user and dismiss the controller view, asking to the <code>TasksListController</code> to refresh the table view with the newly created task.
+If the task's title isn't blank, we use the `Task.create` with a block that provides feedback to the user and dismiss the controller view, asking to the `TasksListController` to refresh the table view with the newly created task.
 
 ![NewTaskController](/assets/uploads/images/NewTaskController.png)
 
@@ -319,9 +319,9 @@ If the task's title isn't blank, we use the <code>Task.create</code> with a bloc
 
 We almost done, we just miss the second most important feature in a ToDo list application: the ability to mark an item as "completed" (and reopening it if it isn't done yet).
 
-To do so we need to add one more method to the <code>TasksListController</code> tableview delegate and modify the <code>tableView(tableView, cellForRowAtIndexPath:indexPath)</code> method to show a <code>UITableViewCellAccessoryCheckmark</code> (a small "v" checkmark on the right) and change the their title's font color to a light grey if they are completed.
+To do so we need to add one more method to the `TasksListController` tableview delegate and modify the `tableView(tableView, cellForRowAtIndexPath:indexPath)` method to show a `UITableViewCellAccessoryCheckmark` (a small "v" checkmark on the right) and change the their title's font color to a light grey if they are completed.
 
-The last method to add is <code>tableView(tableView, didSelectRowAtIndexPath:indexPath)</code> and as its name suggests, it's called whenever the user click on a cell in the table, passing the position of the item in the list.
+The last method to add is `tableView(tableView, didSelectRowAtIndexPath:indexPath)` and as its name suggests, it's called whenever the user click on a cell in the table, passing the position of the item in the list.
 
 {% highlight ruby %}
 # file app/controllers/TasksListController.rb
@@ -361,9 +361,9 @@ class TasksListController < UIViewController
 end
 {% endhighlight %}
 
-What the app does when the task is clicked is simple: first it deselect the cell because we don't want to leaving it highlighted; then we find the task inside the <code>tasks</code> array and finally we call a new method - <code>toggle_completed</code> - on it, passing it a block where we just refresh the updated list.
+What the app does when the task is clicked is simple: first it deselect the cell because we don't want to leaving it highlighted; then we find the task inside the `tasks` array and finally we call a new method - `toggle_completed` - on it, passing it a block where we just refresh the updated list.
 
-The last piece of code we are going to write to complete the application has to be added to the <code>Task</code> model and it's an instance method this time.
+The last piece of code we are going to write to complete the application has to be added to the `Task` model and it's an instance method this time.
 
 It accepts a block and it just makes an HTTP PUT request to the usual API endpoint, checking if the task is already completed or not and using the correct url then.
 
