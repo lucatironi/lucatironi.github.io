@@ -1,5 +1,33 @@
 ---
 layout: default
 ---
-{% include JB/setup %}
-{% include themes/modernist/post.html %}
+
+<article class="post">
+
+  <h1 class="post-title">{{ page.title }}</h1>
+
+  <div class="entry">
+    {% if page.tagline %}<p class="lead">{{ page.tagline }}</p>{% endif %}
+
+    <hr>
+
+    {{ content }}
+  </div>
+
+  <hr>
+
+  <div class="date">
+    <small>Published on {{ page.date | date_to_long_string }}</small> <a style="float:right;" href="#">^Back to top</a>
+  </div>
+
+  <hr>
+
+  <div class="sharing">
+    {% include sharing.html %}
+  </div>
+
+  <div class="comments">
+    {% include disqus.html disqus_identifier=page.disqus_identifier %}
+  </div>
+
+</article>

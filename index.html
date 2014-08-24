@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+<div class="home">
+
+  <p class="lead">
+    I'm Luca, I'm 31 and I live in Berlin, Germany. I like to code.<br>
+    Here's some of the stuff I'd like to share.
+  </p>
+
+  <hr>
+
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date_to_long_string }}</span>
+
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+        {% if post.description %}<p>
+          {{ post.description }}
+          {% if post.updated %}<br><strong>{{ post.updated }}</strong>{% endif %}
+        </p>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+
+</div>

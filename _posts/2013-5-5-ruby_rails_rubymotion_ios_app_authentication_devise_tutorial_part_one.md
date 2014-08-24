@@ -8,7 +8,6 @@ updated: UPDATED on May 15th
 category: tutorial
 tags: [Ruby on Rails, Rubymotion, iPhone, iOS, Devise, authentication, API]
 ---
-{% include JB/setup %}
 
 **UPDATED on May 15th: fixed session storage bug, some typos and some small changes according to the [2.0 release of Rubymotion](http://blog.rubymotion.com/post/49943751398/rubymotion-goes-2-0-and-gets-os-x-support-templates).**
 

@@ -7,7 +7,6 @@ category: tutorial
 tags: [Ruby on Rails, Android, Devise, authentication]
 comments: true
 ---
-{% include JB/setup %}
 
 In the [first part of the tutorial](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one), you have been guided through the coding of a complete Ruby on Rails backend that can be used to register and login users through a JSON API.
 

@@ -6,7 +6,6 @@ description: I wanted to add some more features to the Android app and its Rails
 category: tutorial
 tags: [Ruby on Rails, Android, Devise, authentication, API]
 ---
-{% include JB/setup %}
 
 In the previous two parts of the tutorial ([first part](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one) and [second part](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two)), you have been guided through the coding of a complete Ruby on Rails backend in part one, that can be used to register and login users through a JSON API that can be consumed by the Android native app we coded in part two.
 

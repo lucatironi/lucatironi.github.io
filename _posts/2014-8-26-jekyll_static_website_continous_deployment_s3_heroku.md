@@ -7,7 +7,6 @@ description: Jekyll can be extendend to use a Rails-like assets pipeline to deve
 category: tutorial
 tags: [Ruby, Jekyll, S3, Heroku, Codeship.io]
 ---
-{% include JB/setup %}
 
 ## Requirements
 
