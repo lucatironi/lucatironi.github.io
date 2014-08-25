@@ -2,7 +2,7 @@
 layout: post
 title: Jekyll Static Website with Continous Deployment/Delivery to S3/Heroku
 tagline: Develop a static website with Jekyll and deploy it automatically to S3 and/or Heroku
-description: Jekyll - the Static Website generator gem - can be extendend to use a Rails-like assets pipeline to develop even complex Single Page Applications and can be configured to be automatically deployed to a public S3 bucket and/or to Heroku, using a Continous Deployment/Delivery service like Codeshio.io
+description: Jekyll - the Static Website generator gem - can be extendend to use a Rails-like assets pipeline to develop even complex Single Page Applications and can be configured to be automatically deployed to a public S3 bucket and/or to Heroku, using a Continous Deployment/Delivery service like Codeship.io
 category: tutorial
 tags: [Ruby, Jekyll, S3, Heroku, Codeship.io]
 ---
