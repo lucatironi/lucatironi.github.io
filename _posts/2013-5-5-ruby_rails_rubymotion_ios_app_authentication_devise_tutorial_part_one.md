@@ -21,8 +21,8 @@ I advise to read the nice [getting started tutorial](http://rubymotion-tutorial.
 In order to start a new project, just open the Terminal in a directory of your choice and write:
 
 {% highlight bash %}
-$ motion create AuthExample
-$ cd AuthExample
+motion create AuthExample
+cd AuthExample
 {% endhighlight %}
 
 If you have read the previous tutorials you already knows what our app should do: send POST and GET HTTP requests with JSON attributes to the register/login authentication endpoint. To do so we'll need to create some controllers to display the register and login forms.
@@ -105,7 +105,7 @@ UPDATE May 15th: I decided to start using [Bundler](http://gembundler.com). For 
 To use BubbleWrap just open the Terminal and install the bundler gem:
 
 {% highlight bash %}
-$ gem install bundler
+gem install bundler
 {% endhighlight %}
 
 Then create a new file called `Gemfile` in the root directory of the project.
@@ -121,7 +121,7 @@ gem 'motion-cocoapods'
 And finally use Bundler to install the gem(s) you specify in the Gemfile:
 
 {% highlight bash %}
-$ bundle install
+bundle install
 {% endhighlight %}
 
 Let's now setup the RubyMotion app's Rakefile with all our dependencies and configurations:
@@ -284,7 +284,7 @@ gem 'formotion'
 {% endhighlight %}
 
 {% highlight bash %}
-$ bundle install
+bundle install
 {% endhighlight %}
 
 ### RegisterContoller
@@ -554,7 +554,7 @@ end
 If you haven't done it yet, launch the app with the `rake` command and see it in action in the simulator:
 
 {% highlight bash %}
-$ rake
+rake
 {% endhighlight %}
 
 That's it for now! I will post the second part of this tutorial soon: it will feature the completion of this ToDo app in order to get the list of user's tasks from the backend, the creation of new tasks and their flagging as "completed".

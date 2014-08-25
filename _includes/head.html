@@ -12,7 +12,7 @@
       {{ page.title }} | {{ site.title }}
     {% endif %}
   </title>
-  <meta name="description" content="{{ site.description }}">
+  <meta name="description" content="{{ page.description | site.description }}">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ "atom.xml" | prepend: site.baseurl }}">
 
   <!-- CSS -->
