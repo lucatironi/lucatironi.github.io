@@ -34,8 +34,8 @@ Here's the list of what we are going to use in this tutorial:
 Start by creating a new Rails app. At the moment I'm writing the latest version of rails is 3.2.8, check yours by using `rails -v` in the command line.
 
 {% highlight bash %}
-$ rails new authexample_webapp
-$ cd authexample_webapp
+rails new authexample_webapp
+cd authexample_webapp
 {% endhighlight %}
 
 ### Devise Setup
@@ -49,9 +49,9 @@ gem 'devise'
 Install the gems and create the default user model with the Devise generators.
 
 {% highlight bash %}
-$ bundle install
-$ rails generate devise:install
-$ rails generate devise user
+bundle install
+rails generate devise:install
+rails generate devise user
 {% endhighlight %}
 
 Uncomment the following lines in the migration that are relative to the `token_authenticatable` module:
@@ -139,7 +139,7 @@ end
 We are done with the setup of our user model, we can now launch the rake tasks to create and migrate the database:
 
 {% highlight bash %}
-$ rake db:create db:migrate
+rake db:create db:migrate
 {% endhighlight %}
 
 ### API Sessions Controller (login and logout)
@@ -303,9 +303,9 @@ Don't forget to launch the `bundle install` command.
 ActiveAdmin will then generate the configuration file and some migrations. You can find more information in the official documentation: www.activeadmin.info
 
 {% highlight bash %}
-$ bundle install
-$ rails generate active_admin:install
-$ rake db:migrate
+bundle install
+rails generate active_admin:install
+rake db:migrate
 {% endhighlight %}
 
 Add a new file to the `app/admin` folder to configure the users admin interface:
@@ -364,13 +364,13 @@ Download the [Heroku toolbelt](https://toolbelt.heroku.com) and create an accoun
 Let's start creating a Git repository and pushing it to Heroku. Take note of the app's name that Heroku will create for you (something.herokuapp.com).
 
 {% highlight bash %}
-$ rm public/index.html
-$ git init
-$ git add .
-$ git commit -m "Initial commit"
-$ heroku apps:create
-$ git push heroku master
-$ heroku run rake db:migrate
+rm public/index.html
+git init
+git add .
+git commit -m "Initial commit"
+heroku apps:create
+git push heroku master
+heroku run rake db:migrate
 {% endhighlight %}
 
 Now go to the address that Heroku created for your app and see if everything worked or not. More details on issues can be spotted with the `heroku logs` command.

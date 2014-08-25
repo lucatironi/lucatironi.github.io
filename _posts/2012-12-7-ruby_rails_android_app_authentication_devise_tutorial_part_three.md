@@ -45,7 +45,7 @@ end
 Having done so it's now possible to request the tasks to the API passing the auth_token inside the headers. Restart your Rails application and use curl from the command line to retrieve our (fake) tasks:
 
 {% highlight bash %}
-$ curl http://localhost:3000/api/v1/tasks.json -H 'Authorization: Token token="N8N5MPqFNdDz3G1jRsC9"'
+curl http://localhost:3000/api/v1/tasks.json -H 'Authorization: Token token="N8N5MPqFNdDz3G1jRsC9"'
 {% endhighlight %}
 
 You should receive the hard-coded tasks as usual.
@@ -91,7 +91,7 @@ It's now time to compile the app and test it. Everything should run as before, b
 First of all we need to get rid of our fake tasks we setup in the previous tutorial. Let's start creating a real model for the Task. We just need a `title` and a `completed` attributes. I also associate every task to the user who creates it.
 
 {% highlight bash %}
-$ rails g model task user_id:integer title:string completed:boolean
+rails g model task user_id:integer title:string completed:boolean
 {% endhighlight %}
 
 Generate the new model and the migration:
@@ -138,7 +138,7 @@ end
 Don't forget to add the `has_many` association to the User model.
 
 {% highlight bash %}
-$ rake db:migrate
+rake db:migrate
 {% endhighlight %}
 
 Finally migrate the database.
@@ -155,7 +155,7 @@ gem 'rabl'
 {% endhighlight %}
 
 {% highlight bash %}
-$ bundle install
+bundle install
 {% endhighlight %}
 
 And run the `bundle install` command to install it. You also should add an initializer to the app to specify that you don't want to add a root element to the JSON response and the children elements of the API. More info about that can be found in the Railscast linked above and in the official documentation of the Rabl gem.
