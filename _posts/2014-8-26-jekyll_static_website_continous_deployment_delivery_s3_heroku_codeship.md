@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Jekyll Static Website with Continous Deployment/Delivery to S3/Heroku
+title: Jekyll Static Website with Continuous Deployment/Delivery to S3/Heroku
 tagline: Develop a static website with Jekyll and deploy it automatically to S3 and/or Heroku
-description: Jekyll - the Static Website generator gem - can be extendend to use a Rails-like assets pipeline to develop even complex Single Page Applications and can be configured to be automatically deployed to a public S3 bucket and/or to Heroku, using a Continous Deployment/Delivery service like Codeship.io
+description: Jekyll - the Static Website generator gem - can be extendend to use a Rails-like assets pipeline to develop even complex Single Page Applications and can be configured to be automatically deployed to a public S3 bucket and/or to Heroku, using a Continuous Deployment/Delivery service like Codeship.io
 category: tutorial
 tags: [Ruby, Jekyll, S3, Heroku, Codeship.io]
 ---
@@ -21,7 +21,7 @@ tags: [Ruby, Jekyll, S3, Heroku, Codeship.io]
 
 But what if you don't want to use Github to host your static websites or you want other options instead of hosting them on your own servers?
 
-This tutorial will explain own to use Jekyll and some of its plugins to develop a static website with a Rails-like assets pipeline and deploy it to [Amazon S3](https://aws.amazon.com/s3) and/or [Heroku](http://heroku.com) with a [Continous Deployment/Delivery system](https://github.com/laurilehmijoki/s3_website).
+This tutorial will explain own to use Jekyll and some of its plugins to develop a static website with a Rails-like assets pipeline and deploy it to [Amazon S3](https://aws.amazon.com/s3) and/or [Heroku](http://heroku.com) with a [Continuous Deployment/Delivery system](https://github.com/laurilehmijoki/s3_website).
 
 Let's start by installing and configuring the basics.
 
@@ -464,8 +464,8 @@ git push heroku master
 
 If everything went right, you should be able to reach your website at `YOUR_APP_NAME.herokuapp.com`. For more information on how use your own domain and other things that you can do with your Heroku app, please refer to the [official documentation](https://devcenter.heroku.com/).
 
-## Continous Deployment/Delivery with Codeship.io
-Whether you choose to deploy your website to S3 or to Heroku or both, it would be nice if you can have a [Continous Deployment/Delivery](http://en.wikipedia.org/wiki/Continuous_delivery) process in place: you do some changes to your source code, commit and push and automatically some external system deploys/delivers your compiled website somewhere.
+## Continuous Deployment/Delivery with Codeship.io
+Whether you choose to deploy your website to S3 or to Heroku or both, it would be nice if you can have a [Continuous Deployment/Delivery](http://en.wikipedia.org/wiki/Continuous_delivery) process in place: you do some changes to your source code, commit and push and automatically some external system deploys/delivers your compiled website somewhere.
 
 I use [Codeship](https://codeship.io/) for my own company and personal projects and I will recommend you to try it. You can signup for a free account with 100 included deploys a month (more than enough for a side project) and the setup is really easy if you host your repository on Github or Bitbucket and deploy to Herou or similar system. With a little bit of configuration you can also put complex continous integraion and delivery processes for big applications.
 
