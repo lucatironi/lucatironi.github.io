@@ -54,7 +54,7 @@ For the pourpose of this tutorial, I want to start from a clean slate. I will re
 
 {% highlight bash %}
 rm -fr css _posts _layouts/post.html _layouts/page.html about.md feed.xml
-mkdir -p _assets/javascripts/ _assets/stylesheets/ _plugins/ _vendors/javascripts/ _vendors/stylesheets/ assest/
+mkdir -p _assets/javascripts/ _assets/stylesheets/ _plugins/ _vendors/javascripts/ _vendors/stylesheets/ assets/
 touch _assets/javascripts/application.js.coffee _assets/stylesheets/application.css.scss _plugins/ext.rb Gemfile
 {% endhighlight %}
 
