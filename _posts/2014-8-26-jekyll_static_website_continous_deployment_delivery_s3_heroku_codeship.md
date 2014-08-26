@@ -17,7 +17,9 @@ tags: [Ruby, Jekyll, S3, Heroku, Codeship.io]
 * [CodeShip.io](https://github.com/laurilehmijoki/s3_website) (optional)
 
 ## Intro
-[jekyll](http://jekyllrb.com/) is an awesome and really popular gem to build static websites with powerful tools, like markdown syntax, [liquid](https://github.com/Shopify/liquid) templates, assets pipeline and many more. Github uses it to provide simple to mantain [pages](https://pages.github.com/) to be hosted for free on their servers.
+As a Ruby (on Rails) developer, I sometimes wonder if a web application is always the right solution for all my problems. Most of the time it is not, a simple HTML static website would be enough. But then it would be nice to have some of the nice tools that you can use developing a web application, like templates and partials, an assets pipeline, easy deployment and some sort of intermediate markup or scripting language to dynamically generate pages and assets (like markdown, ERB, SCSS/Less and Coffescript).
+
+To find a viable solution to these needs, I would recommend [jekyll](http://jekyllrb.com/): an awesome and really popular gem to build static websites with powerful tools, like markdown syntax, [liquid](https://github.com/Shopify/liquid) templates, assets pipeline and many more. Github uses it to provide simple to mantain [pages](https://pages.github.com/) to be hosted for free on their servers.
 
 But what if you don't want to use Github to host your static websites or you want other options instead of hosting them on your own servers?
 
@@ -56,7 +58,7 @@ mkdir -p _assets/javascripts/ _assets/stylesheets/ _plugins/ _vendors/javascript
 touch _assets/javascripts/application.js.coffee _assets/stylesheets/application.css.scss _plugins/ext.rb Gemfile
 {% endhighlight %}
 
-Project directory structure
+The project directory structure:
 
 {% highlight bash %}
 example_website
@@ -100,18 +102,18 @@ bundle install
 {% endhighlight %}
 
 ## Assets Pipeline
-Add a the `jekyll-assets` plugin to the `_plugins/ext.rb` file. This plugin allows to use a Rails-like assets pipeline in a Jekyll project, including using CoffeScript, Sass, Less and ERB as intermediate languages to write your assets and pages, automatic minification of code, cache busting and many other cool features that you can discover on the [Github repository](https://github.com/ixti/jekyll-assets) of the plugin.
+Add the `jekyll-assets` plugin to the `_plugins/ext.rb` file. This plugin allows to use a Rails-like assets pipeline in a Jekyll project, including using CoffeScript, Sass, Less and ERB as intermediate languages to write your assets and pages, automatic minification of code, cache busting and many other cool features that you can discover on the [Github repository](https://github.com/ixti/jekyll-assets) of the plugin.
 
 {% highlight ruby %}
 require 'jekyll-assets'
 require 'jekyll-assets/bootstrap'
 {% endhighlight %}
 
-We also added the bootstrap plugin to automatically use the framework in the project. Feel free to skip this if you want to start from scratch or with other frameworks/libraries.
+We also added the bootstrap plugin to automatically use the framework in the project. Feel free to skip this if you want to start from scratch or with an other framework/library.
 
 More information about Jekyll plugins can be found in the [Jekyll documentation](http://jekyllrb.com/docs/plugins/).
 
-In order to use the assets pipeline, we need to add the `assets` configuration to the `_config.yml` file.
+To use the assets pipeline, we need to add the `assets` configuration to the `_config.yml` file.
 
 {% highlight yaml %}
 # Site settings
@@ -251,14 +253,13 @@ jekyll serve --watch
 Visit `localhost:4000` and check the results.
 
 ## Deploy to S3
-
-Add the `s3_website` gem to the `Gemfile`
+Amazon S3 is mostly used as an external storage for assets or files, but can also be configured to serve an entire static website in a scalable, cheap and performant way. To deploy our static website to it, we can use the `s3_website`. To start using it, add the gem to the `Gemfile`.
 
 {% highlight ruby %}
 gem 's3_website'
 {% endhighlight %}
 
-and bundle
+and bundle it.
 
 {% highlight bash %}
 bundle install
@@ -455,7 +456,7 @@ To tell Heroku how to run our Rack application, we need to create a `Procfile` f
 web: bundle exec thin start -p $PORT
 {% endhighlight %}
 
-Finally we come to the point where we can create the Heroku app and push our website to it! We can pass the name that we want to use for the app, `example-static-jekyll` in my case. Rememmber to change it with your own. The app will be then available at the url `YOUR_APP_NAME.herokuapp.com`. In my case I also create the app on the European region, if you are somewhere else, just skip it.
+Finally we came to the point where we can create the Heroku app and push our website to it! We can pass the name that we want to use for the app, `example-static-jekyll` in my case. Remember to change it with your own. The app will be then available at the url `YOUR_APP_NAME.herokuapp.com`. In my case I also create the app on the European region, if you are somewhere else, just skip it.
 
 {% highlight bash %}
 heroku apps:create example-static-jekyll --region eu
