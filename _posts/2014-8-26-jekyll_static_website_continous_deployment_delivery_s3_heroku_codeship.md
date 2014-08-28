@@ -14,7 +14,7 @@ tags: [Ruby, Jekyll, S3, Heroku, Codeship.io]
 * [s3_website](https://github.com/laurilehmijoki/s3_website)
 * [Amazon S3](https://aws.amazon.com/s3)
 * [Heroku](http://heroku.com)
-* [CodeShip.io](https://github.com/laurilehmijoki/s3_website) (optional)
+* [CodeShip.io](https://codeship.io) (optional)
 
 ## Intro
 As a Ruby (on Rails) developer, I sometimes wonder if a web application is always the right solution for all my problems. Most of the time it is not, a simple HTML static website would be enough. But then it would be nice to have some of the nice tools that you can use developing a web application, like templates and partials, an assets pipeline, easy deployment and some sort of intermediate markup or scripting language to dynamically generate pages and assets (like markdown, ERB, SCSS/Less and Coffescript).
