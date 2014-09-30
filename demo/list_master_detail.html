@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title>List & Detail View - AngularJS</title>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <style type="text/css">
+      .list-group {
+        max-height: 420px;
+        overflow-y:scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1 class="page-header">Users</h1>
+      <div ng-view></div>
+      <hr>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+    <script type="text/ng-template" id="user-list.html">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-xs-9">
+              <input ng-model="query" type="text" class="form-control" placeholder="Search user">
+            </div>
+            <div class="col-xs-3">
+              <a href ng-click="newUser()" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Add user</a>
+            </div>
+          </div>
+          <hr>
+          <div class="list-group">
+            <a href ng-click="showUserDetail(user.id)" class="list-group-item" ng-repeat="user in users | orderBy: predicate | filter:{name: query}" ng-class="{'active': user.id == selectedUser.id}">
+              <p class="list-group-item-heading">{{user.name}}</p>
+              <small class="list-group-item-text">{{user.email}}</small>
+            </a>
+          </div>
+        </div>
+      <ng-switch on="anyUserSelected()">
+        <div class="col-md-8" ng-switch-when="true">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{panelTitle}} <span class="text-primary pull-right"><a href ng-click="hideUserDetail()">&times;</a></span></h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="user_name" class="control-label">Full name</label>
+                    <input id="user_name" type="text" ng-model="selectedUser.name" placeholder="User full name" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="user_email" class="control-label">Email address</label>
+                    <input id="user_email" type="email" ng-model="selectedUser.email" placeholder="Email" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="user_username" class="control-label">Username</label>
+                    <input id="user_username" type="text" ng-model="selectedUser.username" placeholder="Username" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="user_phone" class="control-label">Phone</label>
+                    <input id="user_phone" type="text" ng-model="selectedUser.phone" placeholder="Phone" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="user_website" class="control-label">Website</label>
+                    <input id="user_website" type="text" ng-model="selectedUser.website" placeholder="Website" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="user_address_street" class="control-label">Address</label>
+                    <input id="user_address_street" type="text" ng-model="selectedUser.address.street" placeholder="Street" class="form-control">
+                    <input id="user_address_suite" type="text" ng-model="selectedUser.address.suite" placeholder="Suite" class="form-control">
+                    <input id="user_address_city" type="text" ng-model="selectedUser.address.city" placeholder="City" class="form-control">
+                    <input id="user_address_zipcode" type="text" ng-model="selectedUser.address.zipcode" placeholder="Zip code" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="user_company_name" class="control-label">Company</label>
+                    <input id="user_company_name" type="text" ng-model="selectedUser.company.name" placeholder="Name" class="form-control">
+                    <input id="user_company_catch_phrase" type="text" ng-model="selectedUser.company.catchPhrase" placeholder="Catch phrase" class="form-control">
+                    <input id="user_company_bs" type="text" ng-model="selectedUser.company.bs" placeholder="Business" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer clearfix">
+              <a href ng-click="saveUser()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-ok"></span> Save</a>
+              <a href ng-click="deleteUser()" class="btn btn-danger pull-left"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8" ng-switch-default>
+          <div class="alert alert-warning" role="alert">{{panelTitle}}</div>
+        </div>
+      </ng-switch>
+      </div>
+    </script>
+
+    <script type="text/javascript">
+      var app = angular.module('myApp', [
+        'ngRoute',
+        'appControllers',
+        'appFactories'
+      ]);
+
+      app.config(function($routeProvider) {
+        $routeProvider.
+          when('/', {
+            templateUrl: 'user-list.html',
+            controller: 'UsersCtrl'
+          }).
+          otherwise({
+            redirectTo: '/'
+          });
+      });
+
+      var appFactories = angular.module('appFactories', []);
+
+      appFactories.factory('userFactory', function($http) {
+        var userApiUrl = 'http://jsonplaceholder.typicode.com/users';
+        return {
+          list: function(callback) {
+            $http({
+              method: 'GET',
+              url: userApiUrl,
+              cache: true
+            }).success(callback);
+          },
+          find: function(id, callback) {
+            $http({
+              method: 'GET',
+              url: userApiUrl + '/' + id,
+              cache: true
+            }).success(callback);
+          },
+          create: function(params, callback) {
+            $http({
+              method: 'POST',
+              url: userApiUrl,
+              data: params,
+              cache: true
+            }).success(callback);
+          },
+          update: function(id, params, callback) {
+            $http({
+              method: 'PUT',
+              url: userApiUrl + '/' + id,
+              data: params,
+              cache: true
+            }).success(callback);
+          },
+          destroy: function(id, callback) {
+            $http({
+              method: 'DELETE',
+              url: userApiUrl + '/' + id,
+              cache: true
+            }).success(callback);
+          }
+        };
+      });
+
+      app.filter('getById', function() {
+        return function(list, id) {
+          var i = 0, len = list.length;
+          for (; i < len; i++) {
+            if (+list[i].id == +id) {
+              return list[i];
+            }
+          }
+          return null;
+        }
+      });
+
+      var appControllers = angular.module('appControllers', []);
+
+      appControllers.controller('UsersCtrl', function ($scope, $filter, userFactory) {
+        $scope.predicate = '+name';
+
+        userFactory.list(function(users) {
+          $scope.users = users;
+          _resetUserDetail();
+        });
+
+        $scope.anyUserSelected = function() {
+          return $scope.selectedUser !== undefined;
+        };
+
+        $scope.newUser = function() {
+          $scope.panelTitle = 'New User';
+          $scope.selectedUser = {};
+        };
+        $scope.saveUser = function() {
+          if ($scope.anyUserSelected) {
+            if ($scope.selectedUser.id === undefined) {
+              return userFactory.create($scope.selectedUser, function(user) {
+                $scope.users.push(user);
+                return _populateUserDetail(user);
+              });
+            } else {
+              return userFactory.update($scope.selectedUser.id, $scope.selectedUser, function(user) {
+                var userToUpdate = $filter('getById')($scope.users, $scope.selectedUser.id);
+                angular.copy(user, userToUpdate);
+                return _populateUserDetail(user);
+              });
+            }
+          }
+        };
+        $scope.deleteUser = function() {
+          if ($scope.anyUserSelected) {
+            return userFactory.destroy($scope.selectedUser.id, function() {
+              var user = $filter('getById')($scope.users, $scope.selectedUser.id);
+              $scope.users.splice($scope.users.indexOf(user), 1);
+              return _resetUserDetail();
+            });
+          }
+        };
+
+        $scope.showUserDetail = function(userId) {
+          if ($scope.anyUserSelected || $scope.selectedUser.id !== userId) {
+            userFactory.find(userId, function(user) {
+              return _populateUserDetail(user);
+            });
+          }
+        };
+        $scope.hideUserDetail = function() {
+          return _resetUserDetail();
+        }
+        _populateUserDetail = function(user) {
+          $scope.panelTitle   = user.name;
+          $scope.selectedUser = user;
+        };
+        _resetUserDetail = function() {
+          $scope.panelTitle   = 'Select a user';
+          $scope.selectedUser = undefined;
+        };
+      });
+    </script>
+  </body>
+</html>
