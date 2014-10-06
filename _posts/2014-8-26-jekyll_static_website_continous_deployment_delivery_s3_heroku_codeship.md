@@ -23,7 +23,7 @@ To find a viable solution to these needs, I would recommend [jekyll](http://jeky
 
 But what if you don't want to use Github to host your static websites or you want other options instead of hosting them on your own servers?
 
-This tutorial will explain own to use Jekyll and some of its plugins to develop a static website with a Rails-like assets pipeline and deploy it to [Amazon S3](https://aws.amazon.com/s3) and/or [Heroku](http://heroku.com) with a [Continuous Deployment/Delivery system](https://github.com/laurilehmijoki/s3_website).
+This tutorial will explain how to use Jekyll and some of its plugins to develop a static website with a Rails-like assets pipeline and deploy it to [Amazon S3](https://aws.amazon.com/s3) and/or [Heroku](http://heroku.com) with a [Continuous Deployment/Delivery system](https://github.com/laurilehmijoki/s3_website).
 
 Let's start by installing and configuring the basics.
 
