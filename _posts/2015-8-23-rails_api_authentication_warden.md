@@ -5,7 +5,6 @@ tagline: An updated version of my previous tutorials on building an authenticate
 description: Two years ago I published a series of tutorials to explain how to build a JSON API with Ruby on Rails and setting up an authentication with Devise. This new tutorial uses a test driven approach (RSpec) and rails-api with warden, so we can now build the same backend with even less code.
 category: tutorial
 tags: [Ruby on Rails, Warden, Ruby, authentication, API]
-draft: true
 ---
 
 In this tutorial I will build a small web application that provides a JSON API to manage <code>customers</code> through a REST interface. The requests to the endpoints will be authenticated through a token based authentication strategy, passing custom headers (<code>X-User-Email</code> and <code>X-Auth-Token</code>) containing the user's credentials.
