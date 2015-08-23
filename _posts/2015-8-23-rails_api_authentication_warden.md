@@ -1180,7 +1180,7 @@ end
 
 By adding a before block where we create a user and its token and set them in the headers, we can now test that our customers controller specs are still passsing.
 
-Add the shared example as well to be sure that the controller respect the authentication strategy as well in cases where it's not valid.
+Add the shared example as well to be sure that the controller respect the authentication strategy whenever it's not valid.
 
 {% highlight ruby %}
 # file: spec/controllers/customers_controller_spec.rb
@@ -1473,7 +1473,7 @@ end
 
 ## Conclusion
 
-It was a long tutorial and we just skimmed the surface of the topic. I will probably extend in the future the application with some more features and write other tutorials about. For example I would like to use this API on an Angular.js web app to show how you can buld a Single Page Application using these technologies.
+It was a long tutorial and we just skimmed the surface of the topic. I will probably extend in the future the application with some more features and write other tutorials about them. For example I would like to use this API on an Angular.js web app to show how you can buld a Single Page Application using these technologies.
 
 You can find the complete repository for the tutorial on [Github](https://github.com/lucatironi/example_rails_api).
 
