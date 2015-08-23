@@ -11,7 +11,7 @@ In this tutorial I will build a small web application that provides a JSON API t
 
 A <code>sessions</code> endpoint is available to issue a new authentication token on login and disposing it on logout.
 
-The goal of the tutorial is building the base of an up-to-date, well tested, minimal and functional backend API that can be used for client applications such as Angular, Ember web apps or even Mobile apps. Have a look to the previous tutorials to have an idea of the differences with the last examples.
+The goal of the tutorial is building the base of an up-to-date, well tested, minimal and functional backend API that can be used for clients such as Angular/Ember web apps or even Mobile applications. Take a look to the previous tutorials to have an idea of the differences with those examples.
 
 ## Requirements
 
@@ -1361,7 +1361,7 @@ If everything is working properly, you should receive the payload we created som
 
 ## Cross-origin resource sharing (CORS)
 
-The previous step marks the last pieace of the standard functionalities that I would require from a simple API application. I would still add one bonus step in order to make sure that our API can be used in client web applications through AJAX calls. In order to do this, the browser expects the API to provide Cross-origin resource sharing (CORS) headers. You can find more information about them [on Wikipedia](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
+The previous step marks the last piece of the standard functionalities that I would require from a simple API application. I would still add one bonus step in order to make sure that our API can be used in client web applications through AJAX calls. In order to do this, the browser expects the API to provide Cross-origin resource sharing (CORS) headers. You can find more information about them [on Wikipedia](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
 
 The most important thing is that all the responses of our application will contain these additional headers and a special route that respond to <code>OPTIONS</code> http requests is present.
 
