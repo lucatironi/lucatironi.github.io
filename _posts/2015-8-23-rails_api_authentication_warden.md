@@ -77,7 +77,7 @@ Once we have our testing framework up and running, we can start by creating our 
 
 ### Model
 
-Use the rails generator to create the model and the migration. Our model will have three attributes: <code>full_name</code>, <code>email</code> and <code>phone</code>. Remember to run the migration after the files are autmatically generated.
+Use the rails generator to create the model and the migration. Our model will have three attributes: <code>full_name</code>, <code>email</code> and <code>phone</code>. Remember to run the migration after the files are automatically generated.
 
 {% highlight bash %}
 bin/rails generate model customer full_name:string email:string phone:string
@@ -145,7 +145,7 @@ bin/rails generate controller customers index show create update destroy --no-vi
 I will start by adding the routing specs to be sure that our controller is routable as expected.
 
 {% highlight ruby %}
-# file: specs/routing/customers_routing_spec.rb
+# file: spec/routing/customers_routing_spec.rb
 require 'rails_helper'
 
 RSpec.describe CustomersController, type: :routing do
@@ -173,7 +173,7 @@ Launch again the <code>bin/rspec</code> command and see the specs pass.
 It's time to add real value to our API. Let's start by defining how our controller is expected to behave when is issued the canonical REST actions: <code>index</code>, <code>show</code>, <code>create</code>, <code>update</code> and <code>destroy</code>.
 
 {% highlight ruby %}
-# file: specs/controllers/customers_controller_spec.rb
+# file: spec/controllers/customers_controller_spec.rb
 require 'rails_helper'
 
 RSpec.describe CustomersController, type: :controller do
@@ -281,7 +281,7 @@ RSpec.describe CustomersController, type: :controller do
 end
 {% endhighlight %}
 
-The controller specs are long and detailed, but they are covering all the possible expectations about the controller. We are testing that our index actions return the right collection of <code>Customer</code> objects, the show action retrieves the right object, create is persisting a new object only if it's valid and update is modifying accordingly to the given new attributes. Finally we check that destroy actually deletes the given record from the database.
+The controller specs are long and detailed, but they are covering all the possible expectations about the controller. We are testing that our index action returns the right collection of <code>Customer</code> objects, the show action retrieves the right object, create is persisting a new object only if it's valid and update is modifying accordingly to the given new attributes. Finally we check that destroy actually deletes the given record from the database.
 
 {% highlight ruby %}
 # file: app/controllers/customers_controller.rb
@@ -475,14 +475,14 @@ Our endpoint is getting better and better, but we will encounter some issues whe
 Let's add first a shared example to our specs. Start by enabling the usage of the <code>spec/support</code> directory where wil create our shared example file.
 
 {% highlight ruby %}
-# file: specs/rails_helper.rb
+# file: spec/rails_helper.rb
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 {% endhighlight %}
 
 The spec will be used in controllers and defines that in case of <code>ActiveRecord::RecordNotFound</code> or <code>ActionController::ParameterMissing</code>, the payload will be JSON with the correct status code and error message.
 
 {% highlight ruby %}
-# file: specs/support/api_controller.rb
+# file: spec/support/api_controller.rb
 require 'rails_helper'
 
 RSpec.shared_examples "api_controller" do
@@ -529,7 +529,7 @@ end
 Add to the customer controller specs the shared example with the <code>it_behaves_like</code> method call.
 
 {% highlight ruby %}
-# file: specs/controllers/customer_controller_spec.rb
+# file: spec/controllers/customer_controller_spec.rb
 require 'rails_helper'
 
 RSpec.describe CustomersController, type: :controller do
@@ -566,7 +566,7 @@ By running again the <code>bin/rspec</code> command, the specs should pass as ex
 
 The second part of the tutorial will add an authentication layer to the API. Let's start by building a service that can issue secure tokens to an existing user in order to use them to make authenticated requests to the protected endpoints.
 
-Usually Ruby on Rails applications rely on complex setups to provide authentication (and user account management), tipically using Devise as a go-to solution. In this tutorial I would like to implment something from scratch, building the simplest working and secure authentication system possible, starting from the tools that Rails provide by default like [has_secure_password](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password) and [has_secure_token](https://github.com/robertomiranda/has_secure_token) (a backport of a functionality from Rails 5) and packing everything with a custom built strategy with [Warden](https://github.com/hassox/warden).
+Usually Ruby on Rails applications rely on complex setups to provide authentication (and user account management), tipically using Devise as a go-to solution. In this tutorial I would like to implement something from scratch, building the simplest working and secure authentication system possible, starting from the tools that Rails provide by default like [has_secure_password](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password) and [has_secure_token](https://github.com/robertomiranda/has_secure_token) (a backport of a functionality from Rails 5) and packing everything with a custom built strategy with [Warden](https://github.com/hassox/warden).
 
 ### Setup
 
@@ -613,7 +613,7 @@ end
 Let's then create the specs for our <code>TokenIssuer</code> class. Its responsabilities are to create and return tokens (the model will come later) and purge the expired tokens of a user.
 
 {% highlight ruby %}
-# file: specs/services/token_issuer_spec.rb
+# file: spec/services/token_issuer_spec.rb
 require 'rails_helper'
 
 RSpec.describe TokenIssuer, type: :model do
@@ -765,7 +765,7 @@ end
 {% endhighlight %}
 
 {% highlight ruby %}
-# file: specs/models/authentication_token_spec.rb
+# file: spec/models/authentication_token_spec.rb
 require 'rails_helper'
 
 RSpec.describe AuthenticationToken, type: :model do
@@ -798,7 +798,7 @@ end
 {% endhighlight %}
 
 {% highlight ruby %}
-# file: specs/models/user_spec.rb
+# file: spec/models/user_spec.rb
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -1079,7 +1079,7 @@ end
 In order to test the authentication layer, we need to add some helpers to config RSpec with Warden. I had some issues and found a solution in a StackOverflow post:
 
 {% highlight ruby %}
-# file: specs/support/warden.rb
+# file: spec/support/warden.rb
 # Based on http://stackoverflow.com/questions/13420923/configuring-warden-for-use-in-rspec-controller-specs
 module Warden
   # Warden::Test::ControllerHelpers provides a facility to test controllers in isolation
@@ -1144,12 +1144,12 @@ RSpec.configure do |config|
 end
 {% endhighlight %}
 
-Just add this code in a <code>specs/support/warden.rb</code> file and you will be fine.
+Just add this code in a <code>spec/support/warden.rb</code> file and you will be fine.
 
 Let's then add another shared example to gather the common specs for an authenticated controller.
 
 {% highlight ruby %}
-# file: specs/support/authenticated_api_controller.rb
+# file: spec/support/authenticated_api_controller.rb
 require 'rails_helper'
 
 RSpec.shared_examples "authenticated_api_controller" do
@@ -1183,7 +1183,7 @@ By adding a before block where we create a user and its token and set them in th
 Add the shared example as well to be sure that the controller respect the authentication strategy as well in cases where it's not valid.
 
 {% highlight ruby %}
-# file: specs/controllers/customers_controller_spec.rb
+# file: spec/controllers/customers_controller_spec.rb
 require 'rails_helper'
 
 RSpec.describe CustomersController, type: :controller do
@@ -1211,7 +1211,7 @@ Our last step in order to see some real results for our API is adding a way for 
 Let's add some routing with specs for the sessions controller:
 
 {% highlight ruby %}
-# file: specs/routing/sessions_routing_spec.rb
+# file: spec/routing/sessions_routing_spec.rb
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :routing do
@@ -1231,7 +1231,7 @@ end
 And write the controller specs for the create (login) and destroy (logout) actions:
 
 {% highlight ruby %}
-# file: specs/controllers/sessions_controller_spec.rb
+# file: spec/controllers/sessions_controller_spec.rb
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
@@ -1391,7 +1391,7 @@ end
 I also added to the <code>api_controller</code> shared example in the support directory, some specs that check the presence of those headers in all the responses.
 
 {% highlight ruby %}
-# file: specs/support/api_controller.rb
+# file: spec/support/api_controller.rb
 require 'rails_helper'
 
 RSpec.shared_examples "api_controller" do
