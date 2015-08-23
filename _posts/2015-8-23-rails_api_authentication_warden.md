@@ -361,7 +361,7 @@ Run the rake command to insert the seeds in your database and start the rails ap
 {% highlight bash %}
 bin/rake db:seed
 
-bin/rails s
+bin/rails server
 {% endhighlight %}
 
 Visit [localhost:3000/customers.json](http://localhost:3000/customers.json) to see the result:
@@ -540,7 +540,7 @@ RSpec.describe CustomersController, type: :controller do
 end
 {% endhighlight %}
 
-If you launche specs now, they will fail because we haven't define yet the code to rescue the two exceptions. Add the following code to the <code>application_controller.rb</code>:
+If you run the specs now, they will fail because we haven't define yet the code to rescue the two exceptions. Add the following code to the <code>application_controller.rb</code>:
 
 {% highlight ruby %}
 # file: app/controllers/application_controller.rb
