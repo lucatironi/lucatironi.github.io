@@ -16,8 +16,8 @@ The goal of the tutorial is building the base of an up-to-date, well tested, min
 ## Requirements
 
 * [Rails::API](https://github.com/rails-api/rails-api) is a subset of a normal Rails application, created for applications that don't require all functionality that a complete Rails application provides.
-* [Warden](https://github.com/hassox/warden) provides a mechanism for authentication in Rack based Ruby applications. It is used by many other libraries and gem, like [Devise](https://github.com/plataformatec/devise).
-* [RSpec](https://github.com/rspec/rspec-rails) is a gem to do Behaviour Driven Development in Ruby (on Rails). We will use the Rails helpers for our models, controllers, routes and integration tests.
+* [Warden](https://github.com/hassox/warden) provides a mechanism for authentication in Rack based Ruby applications. It is used by many other libraries and gems, like [Devise](https://github.com/plataformatec/devise).
+* [RSpec](https://github.com/rspec/rspec-rails) is a gem to do behavior-driven development in Ruby (on Rails). We will use the Rails helpers for our models, controllers, routes and integration tests.
 
 The complete code for this tutorial can be found on my [Github account](https://github.com/lucatironi/example_rails_api).
 
@@ -73,7 +73,7 @@ For more information about Spring, refer to the [official documentation](https:/
 
 ## Customers
 
-Once we have our testing framework up and running, we can start by creating our first model. I will use a <code>Customer</code> resource as an example to build the first (an only) endpoint. If you are building a real application, please create your model(s) accordingly.
+Once we have our testing framework up and running, we can start by creating our first model. I will use a <code>Customer</code> resource as an example to build the first (and only) endpoint. If you are building a real application, please create your model(s) accordingly.
 
 ### Model
 
@@ -566,7 +566,7 @@ By running again the <code>bin/rspec</code> command, the specs should pass as ex
 
 The second part of the tutorial will add an authentication layer to the API. Let's start by building a service that can issue secure tokens to an existing user in order to use them to make authenticated requests to the protected endpoints.
 
-Usually Ruby on Rails applications rely on complex setups to provide authentication (and user account management), tipically using Devise as a go-to solution. In this tutorial I would like to implement something from scratch, building the simplest working and secure authentication system possible, starting from the tools that Rails provide by default like [has_secure_password](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password) and [has_secure_token](https://github.com/robertomiranda/has_secure_token) (a backport of a functionality from Rails 5) and packing everything with a custom built strategy with [Warden](https://github.com/hassox/warden).
+Usually Ruby on Rails applications rely on complex setups to provide authentication (and user account management), typically using Devise as a go-to solution. In this tutorial I would like to implement something from scratch, building the simplest working and secure authentication system possible, starting from the tools that Rails provide by default like [has_secure_password](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password) and [has_secure_token](https://github.com/robertomiranda/has_secure_token) (a backport of a functionality from Rails 5) and packing everything with a custom build strategy with [Warden](https://github.com/hassox/warden).
 
 ### Setup
 
@@ -610,7 +610,7 @@ module ExampleApi
 end
 {% endhighlight %}
 
-Let's then create the specs for our <code>TokenIssuer</code> class. Its responsabilities are to create and return tokens (the model will come later) and purge the expired tokens of a user.
+Let's then create the specs for our <code>TokenIssuer</code> class. Its responsibilities are to create and return tokens (the model will come later) and purge the expired tokens of a user.
 
 {% highlight ruby %}
 # file: spec/services/token_issuer_spec.rb
@@ -1076,7 +1076,7 @@ class UnauthenticatedController < ActionController::Metal
 end
 {% endhighlight %}
 
-In order to test the authentication layer, we need to add some helpers to config RSpec with Warden. I had some issues and found a solution in a StackOverflow post:
+In order to test the authentication layer, we need to add some helpers to configure RSpec with Warden. I had some issues and found a solution in a StackOverflow post:
 
 {% highlight ruby %}
 # file: spec/support/warden.rb
@@ -1178,9 +1178,9 @@ RSpec.shared_examples "authenticated_api_controller" do
 end
 {% endhighlight %}
 
-By adding a before block where we create a user and its token and set them in the headers, we can now test that our customers controller specs are still passsing.
+By adding a before block where we create a user and its token and set them in the headers, we can now test that our customers controller specs are still passing.
 
-Add the shared example as well to be sure that the controller respect the authentication strategy whenever it's not valid.
+Add the shared example as well to be sure that the controller respects the authentication strategy whenever it's not valid.
 
 {% highlight ruby %}
 # file: spec/controllers/customers_controller_spec.rb
@@ -1300,9 +1300,9 @@ RSpec.describe SessionsController, type: :controller do
 end
 {% endhighlight %}
 
-The implementation uses the <code>TookenIssuer</code> to create and return a new token for the user with valid credentials while logging in and again uses the service to get rid of the expired token on logout.
+The implementation uses the <code>TokenIssuer</code> to create and return a new token for the user with valid credentials while logging in and again uses the service to get rid of the expired token on logout.
 
-As you might notice, I skip the <code>authenticate!</code> before_action on the create action since we want to enable the user to make this request while not been authenticated for obvious reasons.
+As you might notice, I skip the <code>authenticate!</code> before_action on the create action since we want to enable the user to make this request while not being authenticated for obvious reasons.
 
 The destroy (logout) action instead would still require the user to provide the authentication credentials to be executed.
 
@@ -1363,9 +1363,9 @@ If everything is working properly, you should receive the payload we created som
 
 The previous step marks the last piece of the standard functionalities that I would require from a simple API application. I would still add one bonus step in order to make sure that our API can be used in client web applications through AJAX calls. In order to do this, the browser expects the API to provide Cross-origin resource sharing (CORS) headers. You can find more information about them [on Wikipedia](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
 
-The most important thing is that all the responses of our application will contain these additional headers and a special route that respond to <code>OPTIONS</code> http requests is present.
+The most important thing is that all the responses of our application will contain these additional headers and a special route that respond to <code>OPTIONS</code> HTTP requests is present.
 
-Let's start by adding the <code>config.action_dispatch.default_headers</code> to the <code>config/application.rb</code> file. I user constants to set the headers so we can reuse them in other places centralizing the setup.
+Let's start by adding the <code>config.action_dispatch.default_headers</code> to the <code>config/application.rb</code> file. I use constants to set the headers so we can reuse them in other places centralizing the setup.
 
 {% highlight ruby %}
 # file: config/application.rb
@@ -1473,7 +1473,7 @@ end
 
 ## Conclusion
 
-It was a long tutorial and we just skimmed the surface of the topic. I will probably extend in the future the application with some more features and write other tutorials about them. For example I would like to use this API on an Angular.js web app to show how you can buld a Single Page Application using these technologies.
+It was a long tutorial and we just skimmed the surface of the topic. I will probably extend in the future the application with some more features and write other tutorials about them. For example I would like to use this API on an Angular.js web app to show how you can build a single-page application using these technologies.
 
 You can find the complete repository for the tutorial on [Github](https://github.com/lucatironi/example_rails_api).
 
