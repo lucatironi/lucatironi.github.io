@@ -85,7 +85,24 @@ bin/rails generate model customer full_name:string email:string phone:string
 bin/rake db:migrate
 {% endhighlight %}
 
-I will use [shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers) to test our models, specifying which database columns (and attributes) it should have. I add also the matcher for the validation that the model is expected to have.
+Before starting to create our first spec, we need to add [shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers) to the `spec/rails_helper.rb` file. Add `require 'shoulda/matchers'` at the beginning of the file:
+
+{% highlight ruby %}
+# file: spec/rails_helper.rb
+# This file is copied to spec/ when you run 'rails generate rspec:install'
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
+# Prevent database truncation if the environment is production
+abort("The Rails environment is running in production mode!") if Rails.env.production?
+require 'spec_helper'
+require 'rspec/rails'
+# Add additional requires below this line. Rails is not loaded until this point!
+require 'shoulda/matchers'
+
+# ...
+{% endhighlight %}
+
+I will use the `shoulda-matchers` matchers to test our models, specifying which database columns (and attributes) it should have. I add also the matcher for the validation that the model is expected to have.
 
 {% highlight ruby %}
 # file: spec/models/customer_spec.rb
