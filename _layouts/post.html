@@ -2,26 +2,20 @@
 layout: default
 ---
 
-<article class="post">
-
+<div class="post">
   <h1 class="post-title">{{ page.title }}</h1>
-
-  <div class="entry">
-    {% if page.tagline %}<p class="lead">{{ page.tagline }}</p>{% endif %}
-
-    <hr>
-
-    {{ content }}
+  <div class="post-meta">
+    Published on {{ page.date | date_to_long_string }} -
+    <a class="disqus-comment-count" href="{{ post.url }}#disqus_thread">Comments</a>
   </div>
-
+  {% if page.tagline %}<p class="lead">{{ page.tagline }}</p>{% endif %}
   <hr>
+  {{ content }}
 
-  <div class="date">
-    <small>Published on {{ page.date | date_to_long_string }}</small> <a style="float:right;" href="#">^Back to top</a>
-  </div>
+  <a style="float:right;" href="#">^Back to top</a>
+</div>
 
-  <hr>
-
+<div class="related">
   <div class="sharing">
     {% include sharing.html %}
   </div>
@@ -29,5 +23,4 @@ layout: default
   <div class="comments">
     {% include disqus.html %}
   </div>
-
-</article>
+</div>
