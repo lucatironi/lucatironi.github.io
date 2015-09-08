@@ -6,7 +6,7 @@ layout: default
   <h1 class="post-title">{{ page.title }}</h1>
   <div class="post-meta">
     Published on {{ page.date | date_to_long_string }} -
-    <a class="disqus-comment-count" href="{{ post.url }}#disqus_thread">Comments</a>
+    <a class="disqus-comment-count" href="{{ site.baseurl }}/{{ post.url }}#disqus_thread">Comments</a>
   </div>
   {% if page.tagline %}<p class="lead">{{ page.tagline }}</p>{% endif %}
   <hr>
