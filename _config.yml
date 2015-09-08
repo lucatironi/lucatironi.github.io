@@ -14,4 +14,3 @@ exclude: ["README.md"]
 highlighter: pygments
 markdown:   kramdown
 permalink:  pretty
-relative_permalinks: true
