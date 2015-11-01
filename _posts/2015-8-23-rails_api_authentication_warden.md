@@ -1462,7 +1462,7 @@ end
 
 Finally we create a "catch all" route (be sure it's at bottom of your list) that will respond to every <code>OPTIONS</code> HTTP request with only the CORS headers.
 
-In this way the browser pre-flight request to enable the usage of our API will be fullfilled and we will allow the requests as we like. Please customize the CORS header constants accordingly.
+In this way the browser pre-flight request to enable the usage of our API will be fulfilled and we will allow the requests as we like. Please customize the CORS header constants accordingly.
 
 {% highlight ruby %}
 # file: config/routes.rb
