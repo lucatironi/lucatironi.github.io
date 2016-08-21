@@ -13,6 +13,6 @@ I used the methods to bootstrap the application described in my [rails-docker](h
 
 I run the test and other scripts/rake commands with a simple <code>docker-compose run web bin/rspec</code> or I can even enter the docker container and run the command inside by using <code>docker-compose run web bash</code>.
 
-If you are curious about this setup, please send me an email to [luca.tironi@gmail.com](mailto:luca.tironi@gmail.com) or comment in the comment section.
+If you are curious about this setup, please send me an email to [luca.tironi@gmail.com](mailto:luca.tironi@gmail.com) or comment in the comments section below.
 
 Have fun!
