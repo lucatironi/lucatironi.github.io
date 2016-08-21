@@ -10,7 +10,7 @@ tags: [Ruby on Rails, Rubymotion, iPhone, iOS, Devise, authentication, API]
 
 **UPDATED on May 15th: fixed session storage bug, some typos and some small changes according to the [2.0 release of Rubymotion](http://blog.rubymotion.com/post/49943751398/rubymotion-goes-2-0-and-gets-os-x-support-templates).**
 
-Hi all and welcome back in 2013. In the first three tutorials (part [one](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one), [two](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two) and [three](/tutorial/2012/12/07/ruby_rails_android_app_authentication_devise_tutorial_part_three)) I walked you through the developing of a complete Android app backed by a web application in Ruby on Rails and communicating via a JSON API.
+Hi all and welcome back in 2013. In the first three tutorials (part [one](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one/), [two](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two/) and [three](/tutorial/2012/12/07/ruby_rails_android_app_authentication_devise_tutorial_part_three/)) I walked you through the developing of a complete Android app backed by a web application in Ruby on Rails and communicating via a JSON API.
 
 With this new series of two tutorials I want to help you develop an iOS app using the same Rails API coded in the first tutorials. The iOS app will use the [RubyMotion](http://www.rubymotion.com) toolchain that allows to create native app using the Ruby language instead of Objective-C.
 

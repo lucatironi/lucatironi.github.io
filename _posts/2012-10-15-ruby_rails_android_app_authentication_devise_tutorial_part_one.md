@@ -376,4 +376,4 @@ heroku run rake db:migrate
 Now go to the address that Heroku created for your app and see if everything worked or not. More details on issues can be spotted with the `heroku logs` command.
 
 ## Part Two: The Android App
-Proceed now to the [second part of the tutorial](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two), to learn how to build a fully featured Android App that can interact with the Ruby on Rails backend we just coded.
+Proceed now to the [second part of the tutorial](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two/), to learn how to build a fully featured Android App that can interact with the Ruby on Rails backend we just coded.

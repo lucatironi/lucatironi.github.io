@@ -7,7 +7,7 @@ category: tutorial
 tags: [Ruby on Rails, Rubymotion, iPhone, iOS, Devise, authentication, API]
 ---
 
-Welcome back to the second part of the tutorial on how to create a mobile ToDo list app for the iPhone with RubyMotion. In the [first part](http://lucatironi.github.io/tutorial/2013/05/05/ruby_rails_rubymotion_ios_app_authentication_devise_tutorial_part_one) of this tutorial we created the app delegate and the view controllers to allow the users to register and login with the Ruby on Rails backend and made a stub of the task lists view controller.
+Welcome back to the second part of the tutorial on how to create a mobile ToDo list app for the iPhone with RubyMotion. In the [first part](http://lucatironi.github.io/tutorial/2013/05/05/ruby_rails_rubymotion_ios_app_authentication_devise_tutorial_part_one/) of this tutorial we created the app delegate and the view controllers to allow the users to register and login with the Ruby on Rails backend and made a stub of the task lists view controller.
 
 In this second part we will complete the app with the missing features like displaying the tasks retrieved from the API, allowing the user to create new tasks and let him mark them as completed.
 

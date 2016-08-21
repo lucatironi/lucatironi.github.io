@@ -8,7 +8,7 @@ tags: [Ruby on Rails, Android, Devise, authentication]
 comments: true
 ---
 
-In the [first part of the tutorial](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one), you have been guided through the coding of a complete Ruby on Rails backend that can be used to register and login users through a JSON API.
+In the [first part of the tutorial](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one/), you have been guided through the coding of a complete Ruby on Rails backend that can be used to register and login users through a JSON API.
 
 In the second part then, you'll learn how to code an Android native app that will consume that API. This tutorial doesn't want to start from scratch about Android development, so I advice you to take a look at this series of tutorials from [mobile.tutsplus.com](http://mobile.tutsplus.com/articles/news/learn-android-sdk-development-from-scratch) that will guide you during the first steps of setting up the Eclipse environment.
 

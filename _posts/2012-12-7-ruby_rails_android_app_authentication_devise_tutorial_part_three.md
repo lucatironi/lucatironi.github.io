@@ -7,7 +7,7 @@ category: tutorial
 tags: [Ruby on Rails, Android, Devise, authentication, API]
 ---
 
-In the previous two parts of the tutorial ([first part](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one) and [second part](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two)), you have been guided through the coding of a complete Ruby on Rails backend in part one, that can be used to register and login users through a JSON API that can be consumed by the Android native app we coded in part two.
+In the previous two parts of the tutorial ([first part](/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one/) and [second part](/tutorial/2012/10/16/ruby_rails_android_app_authentication_devise_tutorial_part_two/)), you have been guided through the coding of a complete Ruby on Rails backend in part one, that can be used to register and login users through a JSON API that can be consumed by the Android native app we coded in part two.
 
 In this third part of the tutorial I want to further extend the functionalities of our Android app and its Rails backend in order to allow the actual creation and editing of tasks through the exposed API.
 
