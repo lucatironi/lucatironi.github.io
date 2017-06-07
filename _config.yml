@@ -11,6 +11,6 @@ twitter_username:  lucatironi
 github_username:   lucatironi
 
 exclude: ["README.md"]
-highlighter: pygments
+highlighter: rouge
 markdown:   kramdown
 permalink:  pretty
