@@ -4,7 +4,6 @@ tagline:     Code snippets and tutorials
 description: "Ruby (on Rails), Mobile Development, Android/iOS, Rubymotion, API development tutorials"
 
 url:               http://lucatironi.net
-baseurl:           /
 
 email:             luca.tironi@gmail.com
 twitter_username:  lucatironi

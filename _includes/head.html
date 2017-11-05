@@ -16,12 +16,12 @@
   <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="{{ "assets/application.css" | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ "/assets/application.css" | relative_url }}">
 
   <!-- Icons -->
-  <link rel="shortcut icon" href="{{ "favicon.ico" | prepend: site.baseurl }}">
+  <link rel="shortcut icon" href="{{ "/favicon.ico" | prelative_url }}">
 
   <!-- RSS -->
-  <link rel="canonical" href="{{ page.url | replace: 'index.html', '' | prepend: site.url }}">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ "atom.xml" | prepend: site.baseurl }}">
+  <link rel="canonical" href="{{ page.url | replace: 'index.html', '' | absolute_url }}">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ "/atom.xml" | relative_url }}">
 </head>
