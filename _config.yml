@@ -1,6 +1,6 @@
 # Site settings
-title :      code - lucatironi
-tagline:     Code snippets and tutorials
+title :      lucatironi.net
+tagline:     Code snippets, tutorials and stuff
 description: "Ruby (on Rails), Mobile Development, Android/iOS, Rubymotion, API development tutorials"
 
 url:               http://lucatironi.net
