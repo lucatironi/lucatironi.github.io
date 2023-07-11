@@ -3,6 +3,8 @@ layout: page
 sidebar: true
 title: Astrophotography
 astro_list:
+  - name: Soul Nebula
+    label: soul_nebula
   - name: Messier 31
     label: m31
   - name: Messier 27
