@@ -3,7 +3,9 @@ layout: page
 title: Soul Nebula
 ---
 
-<p class="page-meta">Westerhout 5</p>
+<p class="page-meta">
+  Westerhout 5 - <a href="/astro/">back to list</a>
+</p>
 [![Soul Nebula](/assets/astro/soul_nebula_mid.jpg)](/assets/astro/soul_nebula_big.jpg){:target="_blank"}
 <p class="caption">
   click image to see full size (3008x3008px)
