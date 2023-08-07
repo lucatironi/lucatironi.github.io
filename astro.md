@@ -5,6 +5,8 @@ title: Astrophotography
 astro_list:
   - name: Soul Nebula
     label: soul_nebula
+  - name: Heart Nebula
+    label: heart_nebula
   - name: Messier 31
     label: m31
   - name: Messier 27

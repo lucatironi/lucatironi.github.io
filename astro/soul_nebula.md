@@ -33,7 +33,7 @@ title: Soul Nebula
 
 I stacked the lights frames in [Siril](https://siril.org/) using the [OSC Preprocessing Without DBF (Darks, Biases, Flats)](https://free-astro.org/index.php?title=Siril:scripts) script. I decided not to use any Dark, Bias or Flat frames. I might try to create a dark frame library later, but the ASI533MC-Pro is considered a camera that can do without darks given the absence of amp glow.
 
-I tried to process the image to replicate the so called "Hubble Palette" where Hydrogen gas usually has a orange hue and Oxygen gas is blue. At the bottomo of the page there is an example of the same image but processed in a more "natural" way, where the nebula is appearing only red.
+I tried to process the image to replicate the so called "Hubble Palette" where Hydrogen gas usually has a orange hue and Oxygen gas is blue. At the bottom of the page there is an example of the same image but processed in a more "natural" way, where the nebula is appearing only red.
 
 I then used the following tools:
 - Photometric Color Calibration
