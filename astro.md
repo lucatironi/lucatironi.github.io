@@ -3,6 +3,10 @@ layout: page
 sidebar: true
 title: Astrophotography
 astro_list:
+  - name: Messier 81 and 82
+    label: m81_m82
+  - name: Messier 101
+    label: m101
   - name: Soul Nebula
     label: soul_nebula
   - name: Heart Nebula
