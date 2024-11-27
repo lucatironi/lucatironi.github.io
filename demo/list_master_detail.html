@@ -120,7 +120,7 @@
       var appFactories = angular.module('appFactories', []);
 
       appFactories.factory('userFactory', function($http) {
-        var userApiUrl = 'http://jsonplaceholder.typicode.com/users';
+        var userApiUrl = 'https://jsonplaceholder.typicode.com/users';
         return {
           list: function(callback) {
             $http({
