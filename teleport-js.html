@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Teleport.js Basic Sample</title>
+    <style>
+      body { margin: 0; overflow: hidden; background: #222; }
+      canvas { display: block; width: 100vw; height: 100vh; }
+      #loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        border: 5px solid #333;
+        border-top: 5px solid #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        z-index: 10;
+      }
+
+      @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+
+      #loader.hidden {
+        display: none;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+          "teleport": "https://d1ziouw89q7sp5.cloudfront.net/teleport-js/0.0.2/teleport.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="loader"></div>
+    <script type="module">
+      import * as THREE from "three";
+      import * as TELEPORT from "teleport";
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
+      const renderer = new THREE.WebGLRenderer({ antialias: false, logarithmicDepthBuffer: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      document.body.appendChild(renderer.domElement);
+
+      const teleportManager = new TELEPORT.Manager({ renderer: renderer, scene: scene, camera: camera });
+
+      const loader = document.getElementById("loader");
+      teleportManager.addEventListener("captureLoaded", (event) => {
+        loader.classList.add("hidden");
+      });
+
+      const capture = await teleportManager.loadCapture("524ee89f293a4a2e907009191ba7b9f4");
+
+      if (capture.startingCamera)
+        capture.startingCamera.applyTo(camera);
+      camera.lookAt(0, 0, 0);
+
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      renderer.setAnimationLoop(() => {
+        renderer.render(scene, camera);
+      });
+    </script>
+  </body>
+</html>
