@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katja & Luca - 11/04/2026</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: #111;
+            color: #fff;
+            padding: 40px 20px;
+        }
+
+        /* Typography Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: #aaa;
+            margin: 0;
+            letter-spacing: 0.2px;
+        }
+
+        /* Masonry Layout */
+        .masonry-grid {
+            column-count: 4;
+            column-gap: 15px;
+        }
+        @media (max-width: 1024px) { .masonry-grid { column-count: 3; } }
+        @media (max-width: 768px) { .masonry-grid { column-count: 2; } }
+        @media (max-width: 480px) { .masonry-grid { column-count: 1; } }
+
+        /* Masonry Items with Loading Animation */
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 15px;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #222;
+            min-height: 150px;
+            position: relative;
+        }
+
+        .masonry-item::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, #222 25%, #333 50%, #222 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            z-index: 1;
+        }
+        .masonry-item.loaded::before {
+            display: none;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease, transform 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .masonry-item.loaded img {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .masonry-item.loaded:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Top-Right Icon Controls Stacked Vertically */
+        .lightbox-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1010;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            backdrop-filter: blur(4px);
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.08);
+        }
+        .icon-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* Spinner for Lightbox Loading */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            position: absolute;
+            display: none;
+        }
+        .lightbox.loading .spinner {
+            display: block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 4px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .lightbox img.loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Katja & Luca</h1>
+        <p class="subtitle">April 11th, 2026</p>
+    </header>
+
+    <div class="masonry-grid" id="galleryGrid"></div>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-controls">
+            <!-- Close Button (Top) -->
+            <button class="icon-btn" id="closeBtn" title="Close (Esc)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+            <!-- Download Button (Under Close) -->
+            <a id="downloadBtn" href="" class="icon-btn" target="_blank" download title="Download Original">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+            </a>
+        </div>
+
+        <div class="spinner"></div>
+        <img id="lightboxImg" src="" alt="Zoomed Image">
+    </div>
+
+    <script>
+        const imageUrls = [
+            "//drive.google.com/uc?export=view&id=1TtgVFNqSJRhVERDck0zcAOlZ_OZrHxvn",
+            "//drive.google.com/uc?export=view&id=1JD9NEdVMgmKFAztNH3OxPAB9s987h80B",
+            "//drive.google.com/uc?export=view&id=1ACQBvBEZWOW2lBjseX29pzjCp33iO6r4",
+            "//drive.google.com/uc?export=view&id=1Hc1iYyhki1nsT5T6psRlkZ81Zvo0XaoT",
+            "//drive.google.com/uc?export=view&id=164eIotqDIPsTF436eYZ5OzCLCYOyjRB7",
+            "//drive.google.com/uc?export=view&id=1xv74-S4HitoV34S2qd9p1cswyW1BwLnU",
+            "//drive.google.com/uc?export=view&id=1LHZu36mVrs_BUWOjfEL2-U7H0xMoiFHY",
+            "//drive.google.com/uc?export=view&id=1sUCyGuHrf8Vm0qj3Y31_FI5bE8llNQTY",
+            "//drive.google.com/uc?export=view&id=1tU7WeHQYY4N4SVD5Usuzh0_1MaOD9JTc",
+            "//drive.google.com/uc?export=view&id=1wRO2aMNbLS92pGfbl5jxSdXBaqEbFMjh",
+            "//drive.google.com/uc?export=view&id=1PZuKg26z-UFUOT70mc98WRgvMBh1-ppE",
+            "//drive.google.com/uc?export=view&id=155xhulp8U7yaTGnpnCDTDD-YES9cgL91",
+            "//drive.google.com/uc?export=view&id=1rWghSq6M5VTVFRUYWkWflk4xcJ7Gp_MO",
+            "//drive.google.com/uc?export=view&id=1rm3oKzPQBTJiPV5eroxQAvNCgZ7U1v1G",
+            "//drive.google.com/uc?export=view&id=1KjjXmhi8lIR1ldTITDGskhh5GSUHh-Je",
+            "//drive.google.com/uc?export=view&id=1QgOuSBk94og6oAoaALPUiGMq1qMes6bU",
+            "//drive.google.com/uc?export=view&id=1v48Mh8ZwieF24LC8pptW2D-g0XQJcrua",
+            "//drive.google.com/uc?export=view&id=1StclmwowhhJ0GDuajcCxK6MppUGSzWi4",
+            "//drive.google.com/uc?export=view&id=1hb-QrHjrtlb5JqxSacUj6axuxaKPhQGg",
+            "//drive.google.com/uc?export=view&id=1nPaZ75RKDF5jNS6F7uVH_jsb0NNM2FVc",
+            "//drive.google.com/uc?export=view&id=15UlMjlIPZ3kkPz_vQ1erVe9MCqOEHwlH",
+            "//drive.google.com/uc?export=view&id=1iBJ9SXj9oE8GC7BTgR--nXY-ghitfAM4",
+            "//drive.google.com/uc?export=view&id=1kVZM8gSedm8HZBG9A78fDWxhlrk4Zd2F",
+            "//drive.google.com/uc?export=view&id=1sABJ0zD3AHw_fr2um2Uut93qsYkMgIjr",
+            "//drive.google.com/uc?export=view&id=1xeOTBop0I1_chdzog9ne8R4NJ6z4jUWi",
+            "//drive.google.com/uc?export=view&id=19LbbHjbKyHB1xZDaPUhHvYQ9LFuqWTHO",
+            "//drive.google.com/uc?export=view&id=16M_SCGfingF5rUlZMRzG1DGEKCI9BAz2",
+            "//drive.google.com/uc?export=view&id=1NO8axw97Ol7Kb3AFuZtfyCWri0Q_fX2h",
+            "//drive.google.com/uc?export=view&id=1nZOjVfNvY3InMAFr0IxKY52GuChikquv",
+            "//drive.google.com/uc?export=view&id=1pVe7HUzJnDfsyhzz-VBFU36_6s-g_riz",
+            "//drive.google.com/uc?export=view&id=17wZu7seIg4js2_IguPdbDwioyT15-bDV",
+            "//drive.google.com/uc?export=view&id=1yPoEtW9hW3dELxcLfYuF3WfFC0DYaIly",
+            "//drive.google.com/uc?export=view&id=11uAU6tzijzSIUM_ysJsPgJ0Jy8YMeivi",
+            "//drive.google.com/uc?export=view&id=13dEaOW3wRBo2kLJ__xuNs5FFRxQPLXYH",
+            "//drive.google.com/uc?export=view&id=1I1l29fffatIgK720N3-MCna6ADNWSB6y",
+            "//drive.google.com/uc?export=view&id=1gcvhDDj-jWolbcVh6Va3394AX-H_Gwzw",
+            "//drive.google.com/uc?export=view&id=1jIfAClQL_46U0LsCrkWR1gg0WRRDitLC",
+            "//drive.google.com/uc?export=view&id=1rhEBhtovaaYb2Dw_qOP3Tyt2PrKaUym4",
+            "//drive.google.com/uc?export=view&id=11Gi4HfxmBGTQ09Rxn5Y0B1Mawq2DfQgm",
+            "//drive.google.com/uc?export=view&id=1BGLb4-BEyP0ecoECKD8jlOF5WV5Q2ivH",
+            "//drive.google.com/uc?export=view&id=16GLsFAhxjDtEDAR4WO8cO6-542P5Uycs",
+            "//drive.google.com/uc?export=view&id=1Hnd4DE2nNEqnNfgk-MtDih9lX2KJ4vl6",
+            "//drive.google.com/uc?export=view&id=1OvmVz7nVRXNq9Jxq5ykdh1fRQiwFQY5q",
+            "//drive.google.com/uc?export=view&id=1Y5E-P2k3Rx9IoRF2ZHuoK6RBj2aPcGiI",
+            "//drive.google.com/uc?export=view&id=1lRIbYQHUDlp3SdHN-GDm0opKMwkQ6jCI",
+            "//drive.google.com/uc?export=view&id=12EahAl68-ZSyN0_3ZXQyX8U7xiLfHp-E",
+            "//drive.google.com/uc?export=view&id=13J4MmK4N36Com6-0vSYdRL6CHu8WlPK8",
+            "//drive.google.com/uc?export=view&id=1IjXrJj6XMJXcKg3fTiCeKGsfrlItmP8Y",
+            "//drive.google.com/uc?export=view&id=1gTrCvKoBbi9DrCwH7bknN5uNWkDNjfZF",
+            "//drive.google.com/uc?export=view&id=1gk0A1uFORvl_iQD18sc5UewzbVs0yehp",
+            "//drive.google.com/uc?export=view&id=1qGIMq37Yq5kweO2bPVTdcxkyIn2ZQB01",
+            "//drive.google.com/uc?export=view&id=12qRUQxxik57hDxpqvYuxtTzQrGb6u5y_",
+            "//drive.google.com/uc?export=view&id=1iuH7ulKJ2R6hXRJXFnNtzmQFRLQBm2NM",
+            "//drive.google.com/uc?export=view&id=1oubFoo_iQvHNfDW2FU7ZDDx25M-X1ib1",
+            "//drive.google.com/uc?export=view&id=11S8TMrYm-iI6Q2Vh-ndL-Q7tPGAF_3Zn",
+            "//drive.google.com/uc?export=view&id=1Hq8Zi-FQ__4mu41dzVI68x9owko7qpYB",
+            "//drive.google.com/uc?export=view&id=1KAKP5W67259dWTAfgimtWaBecjtLHM0A",
+            "//drive.google.com/uc?export=view&id=1w9_pLEQiBb3VHTUssk_bbE3Wr30YVmA0",
+            "//drive.google.com/uc?export=view&id=1OoAwJq1njfUkk1lJQ_njXBHX0ROs6SCn",
+            "//drive.google.com/uc?export=view&id=1S0zI8BdQFejgLyfjeXCf7EvOMJese_6n",
+            "//drive.google.com/uc?export=view&id=1b_Dpc73XwsFQZqb6XaaIHesGmWN31aH5",
+            "//drive.google.com/uc?export=view&id=1k6FCJ26ZdG0sSu_Kz5Y3_GwsCFrHqZb9",
+            "//drive.google.com/uc?export=view&id=1AfTTyiyhxhLK35gW23NIof7PBdz9055S",
+            "//drive.google.com/uc?export=view&id=1YFn2MYolhOUNwkvox4dGAlC770Xeqw9T",
+            "//drive.google.com/uc?export=view&id=1MqNrqmTtAl5OtFuZTDx8m6Dsq0xWISJF",
+            "//drive.google.com/uc?export=view&id=1Yx-r15xyMTy0KKZZATykKUXa972-F97f",
+            "//drive.google.com/uc?export=view&id=1qPLYT2ZuLt7s7KAtWlqN-k3NMTpp4NbI",
+            "//drive.google.com/uc?export=view&id=1wVfNakcYXH2w4refIVB1GQ1cmvMAjo9-",
+            "//drive.google.com/uc?export=view&id=1FxIWKVLXZ5MkYoLvZiLmKHheqaHjWqCF",
+            "//drive.google.com/uc?export=view&id=10Fq-hPpet8ydHX7RJWY8NCpY9UHquvM8",
+            "//drive.google.com/uc?export=view&id=1HnfbAMP4gafNVRndcRRymW-NKxndQqeJ",
+            "//drive.google.com/uc?export=view&id=1mUZs5OMFpP1CheP2hAugLn93-INOo_G0",
+            "//drive.google.com/uc?export=view&id=1xJVD7WJWxnPCNw5-gliFAA1es5ItNCq0",
+            "//drive.google.com/uc?export=view&id=1Or6qgu_7znBnUBxGpAVwGbl7TS3L9uKp",
+            "//drive.google.com/uc?export=view&id=1PG5YUwjTZLixjRJ1_hjTXaPNk_DRQ_Eh",
+            "//drive.google.com/uc?export=view&id=1yAvCpR8eRd0hD5p18OlyySl2sTY_oBHz",
+            "//drive.google.com/uc?export=view&id=149G-MIoYJldFDRhJk5GIc0Ka4fovj7-0",
+            "//drive.google.com/uc?export=view&id=1ILCmjixkC8y8Fzy-28QhgcjboAe0jZhw",
+            "//drive.google.com/uc?export=view&id=1QD_9i7iC7-t9V-0cwuVSKRqO6SpDzH1Q",
+            "//drive.google.com/uc?export=view&id=1yGoUzVfXW0t4LafK9AkSULwSkkZ2d95_",
+            "//drive.google.com/uc?export=view&id=1pfgoP_66ixqxoZpH3j-fBofBek7JT17h",
+            "//drive.google.com/uc?export=view&id=1ugRhoEoRuQlmYQuIh0kvII_AxcF9DHHY",
+            "//drive.google.com/uc?export=view&id=1vrTjiY9JeAaLJqOo1NgMAoOH0w2fmwOE",
+            "//drive.google.com/uc?export=view&id=1GNxqhN687KAKJlF09tHGdy4bbIOXpNfj",
+            "//drive.google.com/uc?export=view&id=1Q5gAptyMW6ik2eTCUqRfHj5la6eaqvg6",
+            "//drive.google.com/uc?export=view&id=1dcTnXMxwYGF2q04FnXisce6NIo6XMj_7",
+            "//drive.google.com/uc?export=view&id=1eXHkc5mGVId0aOEIuTQz7-w4nr5KxuNM",
+            "//drive.google.com/uc?export=view&id=1fz6fnRbkh2jIOr6pvfu4e8_L9ntwln_E",
+            "//drive.google.com/uc?export=view&id=13gSgHM9Zmk54kFeF_V9B97yVLb6g-Ipz",
+            "//drive.google.com/uc?export=view&id=1DP9p0BCHPk2VSoS0ZL6_KIouucgDXZt6",
+            "//drive.google.com/uc?export=view&id=1g-rFkoqNm139YZx84UZzXKgWar3diByq",
+            "//drive.google.com/uc?export=view&id=14hfUEhKsdPk7Vm_UiMEh3WL6uGPn0fwE",
+            "//drive.google.com/uc?export=view&id=1SGhnDc1gYoWLlMq4jxyL3tESUi5QzsZk",
+            "//drive.google.com/uc?export=view&id=129FBachU4udtq8if8feL3K_yY9GRd3Jx",
+            "//drive.google.com/uc?export=view&id=13FB55kLscmGN3pNLuJLBoP_yokynA95x",
+            "//drive.google.com/uc?export=view&id=1HAoPxaCxaK249ahTtlpVOqGH09ZWuuWC",
+            "//drive.google.com/uc?export=view&id=1Q-y5X78PCXILnuvFd7M3SzuFIUX0giqu",
+            "//drive.google.com/uc?export=view&id=1u0LgTnTPj1xSRqOAdNPuUzIzP9QLFuGF",
+            "//drive.google.com/uc?export=view&id=1mSdQ4eIiBxOL6Z3Ql2Z9Mjjdr4ZplTeE",
+            "//drive.google.com/uc?export=view&id=1BE6kwItihDk3O_Rw-7HajWJC34ivfqft",
+            "//drive.google.com/uc?export=view&id=1_HB7iI3v57bwfKM_eXvku-dTvv5ZNv54",
+            "//drive.google.com/uc?export=view&id=1sGXI3SmbJ_yrPeMGRSGKw2bgsaZk3skL",
+            "//drive.google.com/uc?export=view&id=1wkfkwDV9JGTAPIlI9Yrf-iMEgZt46E2U",
+            "//drive.google.com/uc?export=view&id=1-rh9e4zS8hhvIrYqWnABiux5N5I0PHSa",
+            "//drive.google.com/uc?export=view&id=17Wwtokc_1gfgsYe8rk2p-c0EarJwG09S",
+            "//drive.google.com/uc?export=view&id=1KkEE1oDzWEyig4m3LOqW0Z_2uBw2J1m5",
+            "//drive.google.com/uc?export=view&id=1-9yriBoEt4bwAUFWJxKNu9JPKBaQ3lGc",
+            "//drive.google.com/uc?export=view&id=1OG8z91ljcxvr3atTNUM1MrG16--7xfYO",
+            "//drive.google.com/uc?export=view&id=1oHpALa5VPWRXWE0OZKkaxRd4PdjndI_C",
+            "//drive.google.com/uc?export=view&id=192bMgDwkzk49chgWtX477nrdq4kR2eZ4",
+            "//drive.google.com/uc?export=view&id=1vB7GN36SUKpjWbrjUv6ATCW80PrjfJXs",
+            "//drive.google.com/uc?export=view&id=19tSFbFVCfzByi-esRbQzyqpOk97ywEkw",
+            "//drive.google.com/uc?export=view&id=1JdjTbJBBXp_mzBaPQArs_3zZWyuOqUC0"
+        ];
+
+        const grid = document.getElementById('galleryGrid');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const closeBtn = document.getElementById('closeBtn');
+
+        imageUrls.forEach(url => {
+            const item = document.createElement('div');
+            item.className = 'masonry-item';
+
+            const img = document.createElement('img');
+            // img.loading = 'lazy';
+            img.src = `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=400&fit=cover`;
+
+            img.onload = () => item.classList.add('loaded');
+
+            item.appendChild(img);
+            grid.appendChild(item);
+
+            item.addEventListener('click', () => {
+                lightboxImg.classList.remove('loaded');
+                lightboxImg.src = '';
+                lightbox.classList.add('loading');
+                lightbox.classList.add('active');
+
+                const highResUrl = `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=1200&fit=inside`;
+
+                // Convert 'export=view' to 'export=download' to force browser file download
+                downloadBtn.href = url.replace('export=view', 'export=download');
+
+                const tempImg = new Image();
+                tempImg.src = highResUrl;
+                tempImg.onload = () => {
+                    lightboxImg.src = highResUrl;
+                    lightboxImg.classList.add('loaded');
+                    lightbox.classList.remove('loading');
+                };
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('active', 'loading');
+            lightboxImg.classList.remove('loaded');
+            lightboxImg.src = '';
+        };
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>
